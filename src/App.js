@@ -181,44 +181,44 @@ class App extends Component {
         {/* Add new expense or revenue form */}
         <form className="addExpenseOrRevenueForm" onSubmit={this.handleAdd}>
           <Row className="input-field">
-            <Col sm={2} smOffset={1} className="input-field">
-              <FormControl
-                componentClass="select"
+            <Col sm={2} /*smOffset={1}*/ className="input-field">
+              {/* <FormControl
+                componentclass="select"
                 onChange = {this.handleTypeChange}
                 value={this.state.newType ? this.state.newType : 'choose'}
                 >
                 <option value="choose" disabled={true}>Select Type</option>
                 <option value="revenue">Revenue</option>
                 <option value="expenses">Expense</option>
-              </FormControl>
+              </FormControl> */}
             </Col>
             <Col sm={3} className="input-field">
-              <FormControl
+              {/* <FormControl
                 type="text"
                 placeholder="Name"
                 onChange = {this.handleNameChange}
                 value={this.state.newName ? this.state.newName : ''}
-              />
+              /> */}
             </Col>
             <Col sm={2} className="input-field">
-              <FormControl
+              {/* <FormControl
                 type="number"
                 placeholder="One-Time Amount"
                 onChange = {this.handleOneTimeChange}
                 step="0.01"
                 min="0"
                 value={(this.state.newOneTime || this.state.newOneTime === 0) ? this.state.newOneTime : ''}
-              />
+              /> */}
             </Col>
             <Col sm={2} className="input-field">
-              <FormControl
+              {/* <FormControl
                 type="number"
                 placeholder="Monthly Amount"
                 onChange = {this.handleMonthlyChange}
                 step="0.01"
                 min="0"
                 value={(this.state.newMonthly || this.state.newMonthly === 0) ? this.state.newMonthly : ''}
-              />
+              /> */}
             </Col>
             <Col sm={1} className="add-form-button">
               <Button type="submit">
