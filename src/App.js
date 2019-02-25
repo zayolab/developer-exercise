@@ -3,7 +3,8 @@ import {
   Row,
   Col,
   Button,
-  FormControl } from 'react-bootstrap'
+  Form
+ } from 'react-bootstrap'
 import './App.css';
 
 class App extends Component {
@@ -179,21 +180,21 @@ class App extends Component {
       <div>
         <h1 className="text-center">ROI Calculator</h1>
         {/* Add new expense or revenue form */}
-        <form className="addExpenseOrRevenueForm" onSubmit={this.handleAdd}>
+        <Form className="addExpenseOrRevenueForm" onSubmit={this.handleAdd}>
           <Row className="input-field">
-            <Col sm={2} smOffset={1} className="input-field">
-              <FormControl
-                componentClass="select"
+            <Col sm={{ span: 2, offset: 1}} className="input-field">
+              <Form.Control
+                as="select"
                 onChange = {this.handleTypeChange}
                 value={this.state.newType ? this.state.newType : 'choose'}
                 >
                 <option value="choose" disabled={true}>Select Type</option>
                 <option value="revenue">Revenue</option>
                 <option value="expenses">Expense</option>
-              </FormControl>
+              </Form.Control>
             </Col>
             <Col sm={3} className="input-field">
-              <FormControl
+              <Form.Control
                 type="text"
                 placeholder="Name"
                 onChange = {this.handleNameChange}
@@ -201,7 +202,7 @@ class App extends Component {
               />
             </Col>
             <Col sm={2} className="input-field">
-              <FormControl
+              <Form.Control
                 type="number"
                 placeholder="One-Time Amount"
                 onChange = {this.handleOneTimeChange}
@@ -211,7 +212,7 @@ class App extends Component {
               />
             </Col>
             <Col sm={2} className="input-field">
-              <FormControl
+              <Form.Control
                 type="number"
                 placeholder="Monthly Amount"
                 onChange = {this.handleMonthlyChange}
@@ -226,7 +227,7 @@ class App extends Component {
               </Button>
             </Col>
           </Row>
-        </form>
+        </Form>
         {/* form errors */}
         { this.state.error &&
           <h4 className="error text-center">Please fill out all fields</h4>
