@@ -2,9 +2,9 @@
 #### Zayo Labs
 ###
 
-#### ROI Calculator
+### ROI Calculator
 
-This application is an ROI Calculator built with React.
+This application is a ROI Calculator built with React. A ROI (Return of Investment) calculator is an investment calculator that allows you to estimate profit and loss of investments and is particularly helpful when making financial decisions.
 
 **Your goal: Modernize the application. Refactor App.js into reusable components. Utilize ES6+ features. There is no right way to "refactor" the app. Creativity is welcomed.**
 
