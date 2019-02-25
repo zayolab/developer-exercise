@@ -10,7 +10,7 @@ This application is an ROI Calculator built with React.
 
 The app was built to mimic the functionality of the spreadsheet below.
 
-![ROI Spreadsheet](sample_roi_calculator.png)
+<img src="sample_roi_spreadsheet.png" alt="ROI Spreadsheet" width="450">
 
 All of the bold fields are calculated fields and should not be editable.  As additional revenue and expense items are added, the calculated fields should update automatically on the page.  As items are deleted, the calculated fields should also update automatically on the page.
 
