@@ -6,7 +6,15 @@
 
 This application is a ROI Calculator built with React. A ROI (Return of Investment) calculator is an investment calculator that allows you to estimate profit and loss of investments and is particularly helpful when making financial decisions.
 
-**Your goal: Modernize the application. Refactor App.js into reusable components. Utilize ES6+ features. There is no right way to "refactor" the app. Creativity is welcomed.**
+#### Tasks - Do as many as you'd like. Show us what you've got!
+- Break App.js down into reusable components.
+- Move calculation tool/utils to its own file.
+- Create a Node/Express backend (or stack of your choice) with a rest route to handle the calculations built in the render function of App.js
+- Make the totals (revenue, expenses, contribution profit, contribution margin, etc.) reflect a 24 month term (rather than 12) or make the term dynamic, allowing the user to specify a 12, 24, 36, 48, or 60 month term.
+- Any other improvements of the application.
+
+**Once you have completed the exercise, submit a PR with the base fork as zayo-labs/developer-exercise master. In the body of the PR, write a PRO/CON list addressing the original state of the application. What was done well? What was done poorly?**
+
 
 The app was built to mimic the functionality of the spreadsheet below.
 
@@ -37,6 +45,5 @@ $ yarn                       // to install dependencies
 $ yarn start                 // to start the server
 ```
 
-**Once you have completed the exercise, submit a PR with the base fork as zayo-labs/developer-exercise master.**
 
 Feel free to reach out with any questions.
