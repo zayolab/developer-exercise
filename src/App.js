@@ -63,6 +63,7 @@ class App extends Component {
   handleDelete(type, index) {
     // listType will be 'expenses' or 'revenue' depending on item to delete
     let listType = this.state[type]
+
     // recalculate and set totals in state
     if (type === 'expenses') {
       this.setState({
@@ -150,7 +151,12 @@ class App extends Component {
           <td>{item.name}</td>
           <td>${item.oneTime.toFixed(2)}</td>
           <td>${item.monthly.toFixed(2)}</td>
-          <td><Button onClick={() => this.handleDelete('revenue', index)}>Delete</Button></td>
+          <td>
+            <Button
+                className="btn btn-outline-danger"
+                onClick={() => this.handleDelete('revenue', index)}> Delete
+            </Button>
+          </td>
         </tr>
       )
     })
@@ -161,7 +167,12 @@ class App extends Component {
           <td>{expense.name}</td>
           <td>${expense.oneTime.toFixed(2)}</td>
           <td>${expense.monthly.toFixed(2)}</td>
-          <td><Button onClick={() => this.handleDelete('expenses', index)}>Delete</Button></td>
+          <td>
+            <Button
+                className="btn btn-outline-danger"
+                onClick={() => this.handleDelete('expenses', index)}> Delete
+            </Button>
+          </td>
         </tr>
       )
     })
@@ -196,7 +207,7 @@ class App extends Component {
             <Col sm={3} className="input-field">
               <Form.Control
                 type="text"
-                placeholder="Name"
+                placeholder="Revenue / Expense Name"
                 onChange = {this.handleNameChange}
                 value={this.state.newName ? this.state.newName : ''}
               />
@@ -204,7 +215,7 @@ class App extends Component {
             <Col sm={2} className="input-field">
               <Form.Control
                 type="number"
-                placeholder="One-Time Amount"
+                placeholder="One-Time"
                 onChange = {this.handleOneTimeChange}
                 step="0.01"
                 min="0"
@@ -214,7 +225,7 @@ class App extends Component {
             <Col sm={2} className="input-field">
               <Form.Control
                 type="number"
-                placeholder="Monthly Amount"
+                placeholder="Monthly"
                 onChange = {this.handleMonthlyChange}
                 step="0.01"
                 min="0"
@@ -222,7 +233,7 @@ class App extends Component {
               />
             </Col>
             <Col sm={1} className="add-form-button">
-              <Button type="submit">
+              <Button type="submit" className="btn btn-outline-primary">
                 Add
               </Button>
             </Col>

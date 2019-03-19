@@ -1,13 +1,14 @@
 .addExpenseOrRevenueForm {
-  padding-top: 3em;
+  padding-top: 1.24em;
 }
 
 .input-field, .add-form-button {
-  padding-bottom: 1em;
+  padding-bottom: 0.5em;
+  color: red;
 }
 
 .roi-tables {
-  padding-top: 2em;
+  padding-top: 1.22em;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -21,11 +22,12 @@
   width: 150px;
 }
 .expenses-table td, .revenue-table td, .totals-table td {
-  width: 100px
+  width: 125px
 }
 
 .error {
   color: red;
+  font-style: italic;
 }
 
 @media only screen and (max-width:775px) {
@@ -36,4 +38,22 @@
   .roi-tables {
     padding-left: 1.5em;
   }
+}
+
+thead > tr > th:first-of-type {
+    font-size: 19px;
+}
+
+tr td {
+    padding: 0.24em;
+}
+
+input {
+    text-align: center;
+    font-size: 2em;
+}
+
+h1 {
+    margin-top: 0.24em;
+    text-shadow: 1px 1px 1px white, 2px 2px 1px gray;
 }
