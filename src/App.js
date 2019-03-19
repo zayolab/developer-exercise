@@ -38,6 +38,7 @@ class App extends Component {
         oneTime: 200,
         monthly: 40
       }],
+      term: 12,
       oneTimeRevenue: 175,
       oneTimeExpense: 700,
       monthlyRevenue: 160,
@@ -54,6 +55,7 @@ class App extends Component {
 
     // controlled form elements functions
     this.handleTypeChange = this.handleTypeChange.bind(this)
+    this.handleTermChange = this.handleTermChange.bind(this)
     this.handleNameChange = this.handleNameChange.bind(this)
     this.handleOneTimeChange = this.handleOneTimeChange.bind(this)
     this.handleMonthlyChange = this.handleMonthlyChange.bind(this)
@@ -105,6 +107,12 @@ class App extends Component {
     })
   }
 
+  handleTermChange(e) {
+    this.setState({
+      term: Number(e.target.value)
+    })
+  }
+
   // add new expense or revenue
   handleAdd(e) {
     e.preventDefault()
@@ -137,7 +145,8 @@ class App extends Component {
         newName: '',
         newMonthly: '',
         newOneTime: '',
-        newType: ''
+        newType: '',
+        term: ''
       })
     }
   }
@@ -167,8 +176,8 @@ class App extends Component {
     })
 
     // Calculations for totals
-    let totalRevenue = this.state.oneTimeRevenue + (this.state.monthlyRevenue * 12)
-    let totalExpense = this.state.oneTimeExpense + (this.state.monthlyExpense * 12)
+    let totalRevenue = this.state.oneTimeRevenue + (this.state.monthlyRevenue * this.state.term)
+    let totalExpense = this.state.oneTimeExpense + (this.state.monthlyExpense * this.state.term)
     let monthlyContributionProfit = this.state.monthlyRevenue - this.state.monthlyExpense
     let totalContributionProfit = totalRevenue - totalExpense
     // handle case where totalRevenue is 0 (to avoid -Infinity and NaN)
@@ -270,8 +279,11 @@ class App extends Component {
           {/* Totals Table */}
           <table className="totals-table">
             <thead>
+            <tr>
+                <th>Totals</th>
+              </tr>
               <tr>
-                <th></th>
+              <th></th>
                 <th>One-Time</th>
                 <th>Monthly</th>
                 <th>Total</th>
@@ -293,8 +305,8 @@ class App extends Component {
               <tr>
                 <td>Contribution Profit</td>
                 <td></td>
-                <td>${ monthlyContributionProfit.toFixed(2)}</td>
-                <td>${ totalContributionProfit.toFixed(2)}</td>
+                <td>${monthlyContributionProfit.toFixed(2)}</td>
+                <td>${totalContributionProfit.toFixed(2)}</td>
               </tr>
               <tr>
                 <td>Contribution Margin</td>
@@ -308,8 +320,35 @@ class App extends Component {
                 <td></td>
                 <td>{capitalROI}</td>
               </tr>
+              <tr>
+                <td>Term (Months)</td>
+                <td></td>
+                <td></td>
+                <td>{(this.state.term)}</td>
+              </tr>
+
+        <Form className="addTermForm" onSubmit={this.handleAdd}>
+          <Row className="input-field">
+            <Col sm={{ span: 20, offset: 1}} className="input-field">
+              <Form.Control
+                as="select"
+                onChange = {this.handleTermChange}
+                value={this.state.term ? this.state.term : 'choose'}
+                >
+                <option value="choose" disabled={true}>Select Term</option>
+                <option value="12">12</option>
+                <option value="24">24</option>
+                <option value="36">36</option>
+                <option value="48">48</option>
+                <option value="60">60</option>
+              </Form.Control>
+            </Col>
+  
+          </Row>
+        </Form>
             </tbody>
           </table>
+
         </div>
       </div>
     );

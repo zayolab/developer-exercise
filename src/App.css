@@ -16,12 +16,20 @@
 
 .expenses-table, .revenue-table, .totals-table {
   margin-bottom: 3em;
+  
 }
 .expenses-table th, .revenue-table th, .totals-table th {
   width: 150px;
+  border: 1px solid #eee;
+  box-shadow: 0 2px 3px #ccc;
+  padding: 16px;
+  text-align: left;
+  background-color: #ccc
+  
 }
 .expenses-table td, .revenue-table td, .totals-table td {
-  width: 100px
+  width: 100px;
+  border: 2px solid #eee;
 }
 
 .error {
