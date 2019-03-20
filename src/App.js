@@ -37,6 +37,11 @@ class App extends Component {
         name: 'Expense 2',
         oneTime: 200,
         monthly: 40
+      },
+      {
+      name: 'Expense 3',
+      oneTime: 240,
+      monthly: 22
       }],
       oneTimeRevenue: 175,
       oneTimeExpense: 700,
@@ -144,6 +149,15 @@ class App extends Component {
   }
 
   render() {
+    // changing the css classes
+    const revClasses =[];
+    const expClasses = [];
+
+    if(this.state.revenue.length <= 2) revClasses.push('red');
+    if(this.state.expenses.length <= 2) expClasses.push('red');
+    if(this.state.revenue.length <= 1) revClasses.push('bold');
+    if(this.state.expenses.length <= 1) expClasses.push('bold');
+
     // create table rows from revenue state list
     let revenueTableData = this.state.revenue.map((item, index) => {
       return (
@@ -257,7 +271,7 @@ class App extends Component {
                 <th></th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className={revClasses.join(' ')}>
               {revenueTableData}
             </tbody>
           </table>
@@ -274,7 +288,7 @@ class App extends Component {
                 <th></th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className={expClasses.join(' ')}>
               {expensesTableData}
             </tbody>
           </table>

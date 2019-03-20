@@ -57,3 +57,11 @@ h1 {
     margin-top: 0.24em;
     text-shadow: 1px 1px 1px white, 2px 2px 1px gray;
 }
+
+.red {
+    color: red;
+}
+
+.bold {
+    font-weight: bold;
+}
