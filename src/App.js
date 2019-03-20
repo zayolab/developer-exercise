@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import Delete from './delete';
+import Add from './add';
+
 import {
   Row,
   Col,
@@ -46,40 +49,31 @@ class App extends Component {
       newName: '',
       newOneTime: '',
       newMonthly: '',
-      error: false
+      error: false,
+      terms: '',
     }
 
-    this.handleDelete = this.handleDelete.bind(this)
-    this.handleAdd = this.handleAdd.bind(this)
+
+    try {
+      this.delete = Delete.delete.bind(this)
+    } catch (error) {
+      this.setState({ error });
+    }
+
+    try {
+      this.add = Add.add.bind(this)
+    } catch (error) {
+      this.setState({ error });
+    }
+    
+    // this.handleDelete = Delete.handleDelete.bind(this)
+    // this.handleAdd = this.handleAdd.bind(this)
 
     // controlled form elements functions
     this.handleTypeChange = this.handleTypeChange.bind(this)
     this.handleNameChange = this.handleNameChange.bind(this)
     this.handleOneTimeChange = this.handleOneTimeChange.bind(this)
     this.handleMonthlyChange = this.handleMonthlyChange.bind(this)
-  }
-
-  // Delete expense or revenue from list
-  handleDelete(type, index) {
-    // listType will be 'expenses' or 'revenue' depending on item to delete
-    let listType = this.state[type]
-    // recalculate and set totals in state
-    if (type === 'expenses') {
-      this.setState({
-        oneTimeExpense: this.state.oneTimeExpense - this.state.expenses[index]['oneTime'],
-        monthlyExpense: this.state.monthlyExpense - this.state.expenses[index]['monthly'],
-      })
-    } else {
-      // for revenue
-      this.setState({
-        oneTimeRevenue: this.state.oneTimeRevenue - this.state.revenue[index]['oneTime'],
-        monthlyRevenue: this.state.monthlyRevenue - this.state.revenue[index]['monthly'],
-      })
-    }
-    // remove list item from state array
-    this.setState({
-      [listType]: listType.splice(index, 1),
-    })
   }
 
   // controlled form elements, watch for changes
@@ -105,42 +99,13 @@ class App extends Component {
     })
   }
 
-  // add new expense or revenue
-  handleAdd(e) {
-    e.preventDefault()
-    // handle form errors, allows one-time and revenue amounts to be 0
-    if (!this.state.newType || !this.state.newName || (!this.state.newOneTime && this.state.newOneTime !== 0) || (!this.state.newMonthly && this.state.newMonthly !== 0)) {
-      this.setState({
-        error: true
-      })
-    }
-    // if there are no form errors, add accordingly
-    else {
-      // typeOfAmount will be either 'expenses' or 'revenue'
-      let typeOfAmount = this.state.newType
-      let monthly = typeOfAmount === 'expenses' ? 'monthlyExpense' : 'monthlyRevenue'
-      let oneTime = typeOfAmount === 'expenses' ? 'oneTimeExpense' : 'oneTimeRevenue'
-      // grab state array of revenues or expenses
-      let items = this.state[typeOfAmount]
-      items.push({
-        name: this.state.newName,
-        oneTime:this.state.newOneTime,
-        monthly: this.state.newMonthly
-      })
-      // set state with new totals and items array, clear errors displaying and form contents
-      this.setState({
-        error: false,
-        [typeOfAmount]: items,
-        [monthly]: this.state[monthly] + this.state.newMonthly,
-        [oneTime]: this.state[oneTime] + this.state.newOneTime,
-        //  Clear values in form
-        newName: '',
-        newMonthly: '',
-        newOneTime: '',
-        newType: ''
-      })
-    }
+  //added
+  handleTermChange(e) {
+    this.setState({
+      terms: Number(e.target.value)
+    })
   }
+  
 
   render() {
     // create table rows from revenue state list
@@ -150,7 +115,7 @@ class App extends Component {
           <td>{item.name}</td>
           <td>${item.oneTime.toFixed(2)}</td>
           <td>${item.monthly.toFixed(2)}</td>
-          <td><Button onClick={() => this.handleDelete('revenue', index)}>Delete</Button></td>
+          <td><Button onClick={() => Delete.delete('revenue', index)}>Delete</Button></td>
         </tr>
       )
     })
@@ -161,14 +126,15 @@ class App extends Component {
           <td>{expense.name}</td>
           <td>${expense.oneTime.toFixed(2)}</td>
           <td>${expense.monthly.toFixed(2)}</td>
-          <td><Button onClick={() => this.handleDelete('expenses', index)}>Delete</Button></td>
+          <td><Button onClick={() => Delete.delete('expenses', index)}>Delete</Button></td>
         </tr>
       )
     })
 
     // Calculations for totals
-    let totalRevenue = this.state.oneTimeRevenue + (this.state.monthlyRevenue * 12)
-    let totalExpense = this.state.oneTimeExpense + (this.state.monthlyExpense * 12)
+    //24 months
+    let totalRevenue = this.state.oneTimeRevenue + (this.state.monthlyRevenue * 24)
+    let totalExpense = this.state.oneTimeExpense + (this.state.monthlyExpense * 24)
     let monthlyContributionProfit = this.state.monthlyRevenue - this.state.monthlyExpense
     let totalContributionProfit = totalRevenue - totalExpense
     // handle case where totalRevenue is 0 (to avoid -Infinity and NaN)
@@ -180,7 +146,7 @@ class App extends Component {
       <div>
         <h1 className="text-center">ROI Calculator</h1>
         {/* Add new expense or revenue form */}
-        <Form className="addExpenseOrRevenueForm" onSubmit={this.handleAdd}>
+        <Form className="addExpenseOrRevenueForm" onSubmit={Add.add}>
           <Row className="input-field">
             <Col sm={{ span: 2, offset: 1}} className="input-field">
               <Form.Control
@@ -219,6 +185,17 @@ class App extends Component {
                 step="0.01"
                 min="0"
                 value={(this.state.newMonthly || this.state.newMonthly === 0) ? this.state.newMonthly : ''}
+              />
+            </Col>
+            <Col sm={1} className="input-field">
+              <Form.Control
+                type="number"
+                placeholder="Terms"
+                // onChange = {this.handleTermChange}
+                // value = {this.state.terms}
+                step="1"
+                min="12"
+                // value={(this.state.terms || this.state.terms === 0) ? this.state.newMonthly : ''}
               />
             </Col>
             <Col sm={1} className="add-form-button">
