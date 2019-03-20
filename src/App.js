@@ -4,8 +4,10 @@ import {
   Col,
   Button,
   Form
- } from 'react-bootstrap'
+} from 'react-bootstrap'
 import './App.css';
+import Revenue from './Revenue.js';
+import Expenses from './Expenses.js';
 
 class App extends Component {
   constructor() {
@@ -13,22 +15,22 @@ class App extends Component {
     // "seed" data initially
     this.state = {
       revenue: [
-      {
-        name: 'Item 1',
-        oneTime: 100,
-        monthly: 50
-      },
-      {
-        name: 'Item 2',
-        oneTime: 50,
-        monthly: 25
-      },
-      {
-        name: 'Item 3',
-        oneTime: 25,
-        monthly: 85
-      }],
-      expenses:[{
+        {
+          name: 'Item 1',
+          oneTime: 100,
+          monthly: 50
+        },
+        {
+          name: 'Item 2',
+          oneTime: 50,
+          monthly: 25
+        },
+        {
+          name: 'Item 3',
+          oneTime: 25,
+          monthly: 85
+        }],
+      expenses: [{
         name: 'Expense 1',
         oneTime: 500,
         monthly: 20.00
@@ -132,7 +134,7 @@ class App extends Component {
       let items = this.state[typeOfAmount]
       items.push({
         name: this.state.newName,
-        oneTime:this.state.newOneTime,
+        oneTime: this.state.newOneTime,
         monthly: this.state.newMonthly
       })
       // set state with new totals and items array, clear errors displaying and form contents
@@ -191,12 +193,12 @@ class App extends Component {
         {/* Add new expense or revenue form */}
         <Form className="addExpenseOrRevenueForm" onSubmit={this.handleAdd}>
           <Row className="input-field">
-            <Col sm={{ span: 2, offset: 1}} className="input-field">
+            <Col sm={{ span: 2, offset: 1 }} className="input-field">
               <Form.Control
                 as="select"
-                onChange = {this.handleTypeChange}
+                onChange={this.handleTypeChange}
                 value={this.state.newType ? this.state.newType : 'choose'}
-                >
+              >
                 <option value="choose" disabled={true}>Select Type</option>
                 <option value="revenue">Revenue</option>
                 <option value="expenses">Expense</option>
@@ -205,8 +207,8 @@ class App extends Component {
             <Col sm={3} className="input-field">
               <Form.Control
                 type="text"
-                placeholder="Name"
-                onChange = {this.handleNameChange}
+                placeholder="Item Name"
+                onChange={this.handleNameChange}
                 value={this.state.newName ? this.state.newName : ''}
               />
             </Col>
@@ -214,7 +216,7 @@ class App extends Component {
               <Form.Control
                 type="number"
                 placeholder="One-Time Amount"
-                onChange = {this.handleOneTimeChange}
+                onChange={this.handleOneTimeChange}
                 step="0.01"
                 min="0"
                 value={(this.state.newOneTime || this.state.newOneTime === 0) ? this.state.newOneTime : ''}
@@ -224,7 +226,7 @@ class App extends Component {
               <Form.Control
                 type="number"
                 placeholder="Monthly Amount"
-                onChange = {this.handleMonthlyChange}
+                onChange={this.handleMonthlyChange}
                 step="0.01"
                 min="0"
                 value={(this.state.newMonthly || this.state.newMonthly === 0) ? this.state.newMonthly : ''}
@@ -238,52 +240,34 @@ class App extends Component {
           </Row>
         </Form>
         {/* form errors */}
-        { this.state.error &&
+        {this.state.error &&
           <h4 className="error text-center">Please fill out all fields</h4>
         }
         <div className="roi-tables">
           {/* Revenue Table */}
-          <table className="revenue-table">
-            <thead>
-              <tr>
-                <th>Revenue</th>
-              </tr>
-              <tr>
-                <th></th>
-                <th>One-Time</th>
-                <th>Monthly</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {revenueTableData}
-            </tbody>
-          </table>
+          <Revenue
+            name={this.state.revenue.name}
+            oneTime={this.state.revenue.oneTime}
+            monthly={this.state.revenue.monthly}
+            delete={revenueTableData}
+          />
           {/* Expenses Table */}
-          <table className="expenses-table">
-            <thead>
-              <tr>
-                <th>Expenses</th>
-              </tr>
-              <tr>
-                <th></th>
-                <th>One-Time</th>
-                <th>Monthly</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {expensesTableData}
-            </tbody>
-          </table>
+          <Expenses
+            name={this.state.expenses.name}
+            oneTime={this.state.expenses.oneTime}
+            monthly={this.state.expenses.monthly}
+            delete={expensesTableData}
+          />
+
           {/* Totals Table */}
+     
           <table className="totals-table">
             <thead>
-            <tr>
+              <tr>
                 <th>Totals</th>
               </tr>
               <tr>
-              <th></th>
+                <th></th>
                 <th>One-Time</th>
                 <th>Monthly</th>
                 <th>Total</th>
@@ -324,28 +308,28 @@ class App extends Component {
                 <td>Term (Months)</td>
                 <td></td>
                 <td></td>
-                <td>{(this.state.term)}</td>
+                {/* <td>{(this.state.term)}</td> */}
+                <td>
+                  <Form className="addTermForm" onSubmit={this.handleAdd}>
+                    <Row className="input-field">
+                      <Col sm={{ span: 6, offset: 1 }} className="input-field">
+                        <Form.Control
+                          as="select"
+                          onChange={this.handleTermChange}
+                          value={this.state.term ? this.state.term : 'choose'}
+                        >
+                          <option value="choose" disabled={true}>Select Term</option>
+                          <option value="12">12</option>
+                          <option value="24">24</option>
+                          <option value="36">36</option>
+                          <option value="48">48</option>
+                          <option value="60">60</option>
+                        </Form.Control>
+                      </Col>
+                    </Row>
+                  </Form>
+                </td>
               </tr>
-
-        <Form className="addTermForm" onSubmit={this.handleAdd}>
-          <Row className="input-field">
-            <Col sm={{ span: 20, offset: 1}} className="input-field">
-              <Form.Control
-                as="select"
-                onChange = {this.handleTermChange}
-                value={this.state.term ? this.state.term : 'choose'}
-                >
-                <option value="choose" disabled={true}>Select Term</option>
-                <option value="12">12</option>
-                <option value="24">24</option>
-                <option value="36">36</option>
-                <option value="48">48</option>
-                <option value="60">60</option>
-              </Form.Control>
-            </Col>
-  
-          </Row>
-        </Form>
             </tbody>
           </table>
 
