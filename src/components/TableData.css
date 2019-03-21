@@ -1,0 +1,44 @@
+table.revenue-table.expenses-table {
+    margin-bottom: 0;
+    margin-top: 1em;
+    width: 60%;
+}
+
+table + div + tr {
+    padding-top: 1.22em;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 150px;
+}
+
+td {
+    width: 125px;
+}
+
+.roi-tables {
+  padding-top: 1.22em;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.expenses-table, .revenue-table, .totals-table, .rows {
+  margin-bottom: 3em;
+}
+.expenses-table th, .revenue-table th, .totals-table th {
+  width: 150px;
+}
+.expenses-table td, .revenue-table td, .totals-table td {
+  width: 125px;
+}
+
+thead > tr > th:first-of-type {
+    font-size: 19px;
+}
+
+tr td {
+    padding: 0.24em;
+}

@@ -6,6 +6,7 @@ import {
   Form
  } from 'react-bootstrap'
 import './App.css';
+import TableData from './components/TableData';
 
 class App extends Component {
   constructor() {
@@ -94,6 +95,7 @@ class App extends Component {
       newType: e.target.value
     })
   }
+
   handleNameChange(e) {
     this.setState({
       newName: e.target.value
@@ -105,6 +107,7 @@ class App extends Component {
       newMonthly: Number(e.target.value)
     })
   }
+
   handleOneTimeChange(e) {
     this.setState({
       newOneTime: Number(e.target.value)
@@ -174,6 +177,7 @@ class App extends Component {
         </tr>
       )
     })
+
     // create table rows from expenses state list
     let expensesTableData = this.state.expenses.map((expense, index) => {
       return (
@@ -196,8 +200,10 @@ class App extends Component {
     let totalExpense = this.state.oneTimeExpense + (this.state.monthlyExpense * 12)
     let monthlyContributionProfit = this.state.monthlyRevenue - this.state.monthlyExpense
     let totalContributionProfit = totalRevenue - totalExpense
+
     // handle case where totalRevenue is 0 (to avoid -Infinity and NaN)
     let contributionMargin = totalRevenue !== 0 ? (totalContributionProfit / totalRevenue * 100).toFixed(0) : 0
+
     // handle case where totalExpense and totalRevenue are 0 (to avoid NaN)
     let capitalROI = (totalExpense === 0 && totalRevenue === 0) ? 0 : ((this.state.oneTimeExpense - this.state.oneTimeRevenue) / monthlyContributionProfit).toFixed(1)
 
@@ -253,45 +259,24 @@ class App extends Component {
             </Col>
           </Row>
         </Form>
+
         {/* form errors */}
         { this.state.error &&
           <h4 className="error text-center">Please fill out all fields</h4>
         }
         <div className="roi-tables">
-          {/* Revenue Table */}
-          <table className="revenue-table">
-            <thead>
-              <tr>
-                <th>Revenue</th>
-              </tr>
-              <tr>
-                <th></th>
-                <th>One-Time</th>
-                <th>Monthly</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody className={revClasses.join(' ')}>
-              {revenueTableData}
-            </tbody>
-          </table>
-          {/* Expenses Table */}
-          <table className="expenses-table">
-            <thead>
-              <tr>
-                <th>Expenses</th>
-              </tr>
-              <tr>
-                <th></th>
-                <th>One-Time</th>
-                <th>Monthly</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody className={expClasses.join(' ')}>
-              {expensesTableData}
-            </tbody>
-          </table>
+            {/* Revenue Table*/}
+            <TableData name="Revenue" />
+                <div className={revClasses.join(' ')}>
+                    {revenueTableData}
+                </div>
+
+            {/* Expenses Table */}
+            <TableData name="Expenses" />
+                <div className={expClasses.join(' ')}>
+                  {expensesTableData}
+                </div>
+
           {/* Totals Table */}
           <table className="totals-table">
             <thead>

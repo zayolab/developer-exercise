@@ -65,3 +65,7 @@ h1 {
 .bold {
     font-weight: bold;
 }
+
+table.totals-table {
+    margin-top: 3em;
+}
