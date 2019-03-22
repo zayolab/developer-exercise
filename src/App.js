@@ -6,6 +6,8 @@ import {
   Form
  } from 'react-bootstrap'
 import './App.css';
+import Revenue from './components/Revenue.js';
+import Expenses from './components/Expenses.js';
 
 class App extends Component {
   constructor() {
@@ -167,8 +169,8 @@ class App extends Component {
     })
 
     // Calculations for totals
-    let totalRevenue = this.state.oneTimeRevenue + (this.state.monthlyRevenue * 12)
-    let totalExpense = this.state.oneTimeExpense + (this.state.monthlyExpense * 12)
+    let totalRevenue = this.state.oneTimeRevenue + (this.state.monthlyRevenue * 24)
+    let totalExpense = this.state.oneTimeExpense + (this.state.monthlyExpense * 24)
     let monthlyContributionProfit = this.state.monthlyRevenue - this.state.monthlyExpense
     let totalContributionProfit = totalRevenue - totalExpense
     // handle case where totalRevenue is 0 (to avoid -Infinity and NaN)
@@ -234,44 +236,28 @@ class App extends Component {
         }
         <div className="roi-tables">
           {/* Revenue Table */}
-          <table className="revenue-table">
-            <thead>
-              <tr>
-                <th>Revenue</th>
-              </tr>
-              <tr>
-                <th></th>
-                <th>One-Time</th>
-                <th>Monthly</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {revenueTableData}
-            </tbody>
-          </table>
+          <Revenue
+            name={this.state.revenue.name}
+            oneTime={this.state.revenue.oneTime}
+            monthly={this.state.revenue.monthly}
+            delete={revenueTableData}
+          />
           {/* Expenses Table */}
-          <table className="expenses-table">
-            <thead>
-              <tr>
-                <th>Expenses</th>
-              </tr>
-              <tr>
-                <th></th>
-                <th>One-Time</th>
-                <th>Monthly</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {expensesTableData}
-            </tbody>
-          </table>
+          <Expenses
+            name={this.state.expenses.name}
+            oneTime={this.state.expenses.oneTime}
+            monthly={this.state.expenses.monthly}
+            delete={expensesTableData}
+          />          
+
           {/* Totals Table */}
           <table className="totals-table">
             <thead>
+            <tr>
+                <th>24 Month Term</th>
+              </tr>
               <tr>
-                <th></th>
+                <th>Total</th>
                 <th>One-Time</th>
                 <th>Monthly</th>
                 <th>Total</th>
