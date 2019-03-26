@@ -11,7 +11,6 @@ class DataEntry extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      newType: '',
       newName: '',
       newOneTime: '',
       newMonthly: '',
@@ -19,18 +18,12 @@ class DataEntry extends Component {
     }
 
     // controlled form elements functions
-    this.handleTypeChange = this.handleTypeChange.bind(this)
     this.handleNameChange = this.handleNameChange.bind(this)
     this.handleOneTimeChange = this.handleOneTimeChange.bind(this)
     this.handleMonthlyChange = this.handleMonthlyChange.bind(this)
   }
 
   // controlled form elements, watch for changes
-  handleTypeChange(e) {
-    this.setState({
-      newType: e.target.value
-    })
-  }
   handleNameChange(e) {
     this.setState({
       newName: e.target.value
@@ -48,24 +41,51 @@ class DataEntry extends Component {
     })
   }
 
+  handleAdd(e) {
+    e.preventDefault()
+    // handle form errors, allows one-time and revenue amounts to be 0
+    if (!this.state.newName || (!this.state.newOneTime && this.state.newOneTime !== 0) || (!this.state.newMonthly && this.state.newMonthly !== 0)) {
+      this.setState({
+        error: true
+      })
+    }
+    // if there are no form errors, add accordingly
+    else {
+      // typeOfAmount will be either 'expenses' or 'revenue'
+      // let typeOfAmount = this.state.newType
+      // let monthly = typeOfAmount === 'expenses' ? 'monthlyExpense' : 'monthlyRevenue'
+      // let oneTime = typeOfAmount === 'expenses' ? 'oneTimeExpense' : 'oneTimeRevenue'
+      // // grab state array of revenues or expenses
+      // let items = this.state[typeOfAmount]
+      items.push({
+        name: this.state.newName,
+        oneTime:this.state.newOneTime,
+        monthly: this.state.newMonthly
+      })
+      // set state with new totals and items array, clear errors displaying and form contents
+      this.setState({
+        error: false,
+        // [typeOfAmount]: items,
+        [monthly]: this.state[monthly] + this.state.newMonthly,
+        [oneTime]: this.state[oneTime] + this.state.newOneTime,
+        //  Clear values in form
+        newName: '',
+        newMonthly: '',
+        newOneTime: '',
+        newType: ''
+      })
+    }
+  }
+
+
   render() {
+    // const { title, data } = this.props;
+
     return (
       <div>
-        <h1 className="text-center">ROI Calculator</h1>
         {/* Add new expense or revenue form */}
         <Form className="addExpenseOrRevenueForm" onSubmit={this.handleAdd}>
           <Row className="input-field">
-            <Col sm={{ span: 2, offset: 1}} className="input-field">
-              <Form.Control
-                as="select"
-                onChange = {this.handleTypeChange}
-                value={this.state.newType ? this.state.newType : 'choose'}
-                >
-                <option value="choose" disabled={true}>Select Type</option>
-                <option value="revenue">Revenue</option>
-                <option value="expenses">Expense</option>
-              </Form.Control>
-            </Col>
             <Col sm={3} className="input-field">
               <Form.Control
                 type="text"

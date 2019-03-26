@@ -7,20 +7,19 @@ import {
 } from 'react-bootstrap'
 import './Data.css';
 
-class DataTotal extends Component {
+class Calculations extends Component {
   constructor(props) {
     super(props);
     // "seed" data initially
     this.state = {
-      oneTimeRevenue: 175,
-      oneTimeExpense: 700,
-      monthlyRevenue: 160,
-      monthlyExpense: 60
+      // oneTimeRevenue: 175,
+      // oneTimeExpense: 700,
+      // monthlyRevenue: 160,
+      // monthlyExpense: 60
     }
   }
 
   render() {
-    // MOVE THESE
     // Calculations for totals
     let totalRevenue = this.state.oneTimeRevenue + (this.state.monthlyRevenue * 24)
     let totalExpense = this.state.oneTimeExpense + (this.state.monthlyExpense * 24)
@@ -86,4 +85,4 @@ class DataTotal extends Component {
   }
 }
 
-export default DataTotal;
+export default Calculations;
