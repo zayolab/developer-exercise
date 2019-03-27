@@ -16,11 +16,6 @@ class DataEntry extends Component {
       newMonthly: '',
       error: false
     }
-
-    // controlled form elements functions
-    this.handleNameChange = this.handleNameChange.bind(this)
-    this.handleOneTimeChange = this.handleOneTimeChange.bind(this)
-    this.handleMonthlyChange = this.handleMonthlyChange.bind(this)
   }
 
   // controlled form elements, watch for changes
@@ -43,32 +38,18 @@ class DataEntry extends Component {
 
   handleAdd(e) {
     e.preventDefault()
+    const { newName, newOneTime, newMonthly } = this.state;
     // handle form errors, allows one-time and revenue amounts to be 0
-    if (!this.state.newName || (!this.state.newOneTime && this.state.newOneTime !== 0) || (!this.state.newMonthly && this.state.newMonthly !== 0)) {
+    if (!newName || (!newOneTime && newOneTime !== 0) || (!newMonthly && newMonthly !== 0)) {
       this.setState({
         error: true
       })
     }
     // if there are no form errors, add accordingly
     else {
-      // typeOfAmount will be either 'expenses' or 'revenue'
-      // let typeOfAmount = this.state.newType
-      // let monthly = typeOfAmount === 'expenses' ? 'monthlyExpense' : 'monthlyRevenue'
-      // let oneTime = typeOfAmount === 'expenses' ? 'oneTimeExpense' : 'oneTimeRevenue'
-      // // grab state array of revenues or expenses
-      // let items = this.state[typeOfAmount]
-      items.push({
-        name: this.state.newName,
-        oneTime:this.state.newOneTime,
-        monthly: this.state.newMonthly
-      })
-      // set state with new totals and items array, clear errors displaying and form contents
+      this.props.onAddData( newName, newOneTime, newMonthly );
       this.setState({
         error: false,
-        // [typeOfAmount]: items,
-        [monthly]: this.state[monthly] + this.state.newMonthly,
-        [oneTime]: this.state[oneTime] + this.state.newOneTime,
-        //  Clear values in form
         newName: '',
         newMonthly: '',
         newOneTime: '',
@@ -77,41 +58,40 @@ class DataEntry extends Component {
     }
   }
 
-
   render() {
-    // const { title, data } = this.props;
+    const { newName, newOneTime, newMonthly, error } = this.state;
 
     return (
       <div>
         {/* Add new expense or revenue form */}
-        <Form className="addExpenseOrRevenueForm" onSubmit={this.handleAdd}>
+        <Form className="addExpenseOrRevenueForm" onSubmit={(e) => this.handleAdd(e)}>
           <Row className="input-field">
             <Col sm={3} className="input-field">
               <Form.Control
                 type="text"
                 placeholder="Name"
-                onChange = {this.handleNameChange}
-                value={this.state.newName ? this.state.newName : ''}
+                onChange = {(e) => this.handleNameChange(e)}
+                value={newName ? newName : ''}
               />
             </Col>
             <Col sm={2} className="input-field">
               <Form.Control
                 type="number"
                 placeholder="One-Time Amount"
-                onChange = {this.handleOneTimeChange}
+                onChange = {(e) => this.handleOneTimeChange(e)}
                 step="0.01"
                 min="0"
-                value={(this.state.newOneTime || this.state.newOneTime === 0) ? this.state.newOneTime : ''}
+                value={(newOneTime || newOneTime === 0) ? newOneTime : ''}
               />
             </Col>
             <Col sm={2} className="input-field">
               <Form.Control
                 type="number"
                 placeholder="Monthly Amount"
-                onChange = {this.handleMonthlyChange}
+                onChange = {(e) => this.handleMonthlyChange(e)}
                 step="0.01"
                 min="0"
-                value={(this.state.newMonthly || this.state.newMonthly === 0) ? this.state.newMonthly : ''}
+                value={(newMonthly || newMonthly === 0) ? newMonthly : ''}
               />
             </Col>
             <Col sm={1} className="add-form-button">

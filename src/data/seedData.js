@@ -24,6 +24,9 @@ export default {
     name: 'Expense 2',
     oneTime: 200,
     monthly: 40
-  }]
-
+  }],
+  oneTimeRevenue: 175,
+  oneTimeExpense: 700,
+  monthlyRevenue: 160,
+  monthlyExpense: 60
 };

@@ -10,10 +10,6 @@ class App extends Component {
     this.state = {
       revenue: seedData.revenue,
       expenses: seedData.expenses,
-      oneTimeRevenue: 175,
-      oneTimeExpense: 700,
-      monthlyRevenue: 160,
-      monthlyExpense: 60
     }
   }
 
@@ -35,7 +31,10 @@ class App extends Component {
           data={expenses}
           onUpdateTableData={(expenses) => this.setState({ expenses })}
         />
-        <Calculations />
+        <Calculations
+          revenue={revenue}
+          expenses={expenses}
+        />
       </div>
     );
   }

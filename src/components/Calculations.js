@@ -6,30 +6,46 @@ import {
   Form
 } from 'react-bootstrap'
 import './Data.css';
+// import seedData from '../data/seedData';
 
 class Calculations extends Component {
   constructor(props) {
     super(props);
-    // "seed" data initially
     this.state = {
-      // oneTimeRevenue: 175,
-      // oneTimeExpense: 700,
-      // monthlyRevenue: 160,
-      // monthlyExpense: 60
+      monthTerm: 24
     }
   }
 
   render() {
+    const { monthTerm } = this.state;
+    const { revenue, expenses } = this.props;
     // Calculations for totals
-    let totalRevenue = this.state.oneTimeRevenue + (this.state.monthlyRevenue * 24)
-    let totalExpense = this.state.oneTimeExpense + (this.state.monthlyExpense * 24)
-    let monthlyContributionProfit = this.state.monthlyRevenue - this.state.monthlyExpense
+    let oneTimeRevenue = revenue.reduce(function (prev, cur) {
+      return prev + cur.oneTime;
+    }, 0);
+
+    let oneTimeExpense = expenses.reduce(function (prev, cur) {
+      return prev + cur.oneTime;
+    }, 0);
+
+    let monthlyRevenue = revenue.reduce(function (prev, cur) {
+      return prev + cur.monthly;
+    }, 0);
+
+    let monthlyExpense = expenses.reduce(function (prev, cur) {
+      return prev + cur.monthly;
+    }, 0);
+
+    let totalRevenue = oneTimeRevenue + (monthlyRevenue * monthTerm)
+    let totalExpense = oneTimeExpense + (monthlyExpense * monthTerm)
+    let monthlyContributionProfit = monthlyRevenue - monthlyExpense
     let totalContributionProfit = totalRevenue - totalExpense
     // handle case where totalRevenue is 0 (to avoid -Infinity and NaN)
     let contributionMargin = totalRevenue !== 0 ? (totalContributionProfit / totalRevenue * 100).toFixed(0) : 0
     // handle case where totalExpense and totalRevenue are 0 (to avoid NaN)
-    let capitalROI = (totalExpense === 0 && totalRevenue === 0) ? 0 : ((this.state.oneTimeExpense - this.state.oneTimeRevenue) / monthlyContributionProfit).toFixed(1)
-    
+    let capitalROI = (totalExpense === 0 && totalRevenue === 0) ? 0 : ((oneTimeExpense - oneTimeRevenue) / monthlyContributionProfit).toFixed(1)
+
+
     return (
       <div>
         <div className="roi-tables">
@@ -37,7 +53,7 @@ class Calculations extends Component {
           <table className="totals-table">
             <thead>
               <tr>
-                <th>24 Month Term</th>
+                <th>{monthTerm} Month Term</th>
               </tr>
               <tr>
                 <th>Total</th>
@@ -49,14 +65,14 @@ class Calculations extends Component {
             <tbody>
               <tr>
                 <td>Revenue</td>
-                <td>${(this.state.oneTimeRevenue).toFixed(2)}</td>
-                <td>${(this.state.monthlyRevenue).toFixed(2)}</td>
+                <td>${(oneTimeRevenue).toFixed(2)}</td>
+                <td>${(monthlyRevenue).toFixed(2)}</td>
                 <td>${totalRevenue.toFixed(2)}</td>
               </tr>
               <tr>
                 <td>Expenses</td>
-                <td>${(this.state.oneTimeExpense).toFixed(2)}</td>
-                <td>${(this.state.monthlyExpense).toFixed(2)}</td>
+                <td>${(oneTimeExpense).toFixed(2)}</td>
+                <td>${(monthlyExpense).toFixed(2)}</td>
                 <td>${totalExpense.toFixed(2)}</td>
               </tr>
               <tr>

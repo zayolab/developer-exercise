@@ -13,7 +13,6 @@ class DataTable extends Component {
     super(props);
     this.state = {}
   }
-
   // Delete expense or revenue from list
   handleDelete(index) {
     const { data, onUpdateTableData } = this.props;
@@ -31,6 +30,7 @@ class DataTable extends Component {
     })
     onUpdateTableData(data);
   }
+
 
   render() {
     const { title, data } = this.props;
