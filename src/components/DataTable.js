@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
-import {
-  Row,
-  Col,
-  Button,
-  Form
-} from 'react-bootstrap'
-import './Data.css';
+import { Button } from 'react-bootstrap'
 import DataEntry from './DataEntry.js';
+import './Data.css';
 
 class DataTable extends Component {
   constructor(props) {
@@ -30,7 +25,6 @@ class DataTable extends Component {
     })
     onUpdateTableData(data);
   }
-
 
   render() {
     const { title, data } = this.props;

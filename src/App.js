@@ -22,12 +22,12 @@ class App extends Component {
       <div>
         <h1 className="text-center">ROI Calculator</h1>
         <DataTable
-          title={'Revenue'}
+          title={'Revenue Items'}
           data={revenue}
           onUpdateTableData={(revenue) => this.setState({ revenue })}
         />
         <DataTable
-          title={'Expenses'}
+          title={'Expense Items '}
           data={expenses}
           onUpdateTableData={(expenses) => this.setState({ expenses })}
         />

@@ -59,7 +59,7 @@ class DataEntry extends Component {
   }
 
   render() {
-    const { newName, newOneTime, newMonthly, error } = this.state;
+    const { newName, newOneTime, newMonthly } = this.state;
 
     return (
       <div>

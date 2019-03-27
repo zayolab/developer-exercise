@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Row,
-  Col,
-  Button,
-  Form
-} from 'react-bootstrap'
 import './Data.css';
-// import seedData from '../data/seedData';
 
 class Calculations extends Component {
   constructor(props) {
@@ -19,6 +12,7 @@ class Calculations extends Component {
   render() {
     const { monthTerm } = this.state;
     const { revenue, expenses } = this.props;
+
     // Calculations for totals
     let oneTimeRevenue = revenue.reduce(function (prev, cur) {
       return prev + cur.oneTime;
@@ -44,7 +38,6 @@ class Calculations extends Component {
     let contributionMargin = totalRevenue !== 0 ? (totalContributionProfit / totalRevenue * 100).toFixed(0) : 0
     // handle case where totalExpense and totalRevenue are 0 (to avoid NaN)
     let capitalROI = (totalExpense === 0 && totalRevenue === 0) ? 0 : ((oneTimeExpense - oneTimeRevenue) / monthlyContributionProfit).toFixed(1)
-
 
     return (
       <div>
