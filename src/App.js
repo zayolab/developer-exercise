@@ -7,6 +7,8 @@ import {
  } from 'react-bootstrap'
 import './App.css';
 
+import Todos from './components/Todos';
+
 class App extends Component {
   constructor() {
     super()
@@ -228,6 +230,7 @@ class App extends Component {
             </Col>
           </Row>
         </Form>
+        <Todos/>
         {/* form errors */}
         { this.state.error &&
           <h4 className="error text-center">Please fill out all fields</h4>

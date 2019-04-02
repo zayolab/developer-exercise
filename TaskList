@@ -1,0 +1,13 @@
+Take return statement inside App.js (the HTML that is returned) and create a reusable componet with it. 
+Also take render function and abstract it to allow the information to be sent to it, and then it grabs the information from the various different files and returns.
+Run the calculations inside the return statement using Rest Route (server side). 
+
+Take seed data and allow for input from file.
+
+Make it so you can input one time, monthly, variable term, or both for input of revenue or expense.
+
+It would be better to break this main app componet into multiple components allowing for separat, reusable, componets.
+	- Add Rev/Exp component
+	- Rev section component
+	- Exp section component
+	- Stats section component
