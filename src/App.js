@@ -8,6 +8,7 @@ import {
 import './App.css';
 
 import RevenueTable from './components/RevenueTable';
+import ExpenseTable from './components/ExpenseTable';
 
 class App extends Component {
   constructor() {
@@ -159,16 +160,16 @@ class App extends Component {
     //   )
     // })
     // create table rows from expenses state list
-    let expensesTableData = this.state.expenses.map((expense, index) => {
-      return (
-        <tr key={"expense" + index}>
-          <td>{expense.name}</td>
-          <td>${expense.oneTime.toFixed(2)}</td>
-          <td>${expense.monthly.toFixed(2)}</td>
-          <td><Button onClick={() => this.handleDelete('expenses', index)}>Delete</Button></td>
-        </tr>
-      )
-    })
+    // let expensesTableData = this.state.expenses.map((expense, index) => {
+    //   return (
+    //     <tr key={"expense" + index}>
+    //       <td>{expense.name}</td>
+    //       <td>${expense.oneTime.toFixed(2)}</td>
+    //       <td>${expense.monthly.toFixed(2)}</td>
+    //       <td><Button onClick={() => this.handleDelete('expenses', index)}>Delete</Button></td>
+    //     </tr>
+    //   )
+    // })
 
     // Calculations for totals
     let totalRevenue = this.state.oneTimeRevenue + (this.state.monthlyRevenue * 12)
@@ -256,7 +257,7 @@ class App extends Component {
           </table> */}
           <RevenueTable handleDelete={this.handleDelete} revenue={this.state.revenue}/>
           {/* Expenses Table */}
-          <table className="expenses-table">
+          {/* <table className="expenses-table">
             <thead>
               <tr>
                 <th>Expenses</th>
@@ -271,7 +272,8 @@ class App extends Component {
             <tbody>
               {expensesTableData}
             </tbody>
-          </table>
+          </table> */}
+          <ExpenseTable handleDelete={this.handleDelete} expense={this.state.expenses} />
           {/* Totals Table */}
           <table className="totals-table">
             <thead>
