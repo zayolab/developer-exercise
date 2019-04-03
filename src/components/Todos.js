@@ -9,11 +9,9 @@ import './../App.css';
 
 class Todos extends Component {
     render() {
-        return (
-            <div>
-                <h1 className="text-center">Add Expense or Revenue Component Placeholder</h1>
-            </div>
-        );
+        return this.props.revenueArray.map((revenueComp) => (
+                <h6 className="text-center" key={revenueComp.name}>{revenueComp.name}</h6>
+            ));
     }
 }
 

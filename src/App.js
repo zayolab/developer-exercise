@@ -7,7 +7,7 @@ import {
  } from 'react-bootstrap'
 import './App.css';
 
-import Todos from './components/Todos';
+import RevenueTable from './components/RevenueTable';
 
 class App extends Component {
   constructor() {
@@ -30,6 +30,7 @@ class App extends Component {
         oneTime: 25,
         monthly: 85
       }],
+
       expenses:[{
         name: 'Expense 1',
         oneTime: 500,
@@ -40,6 +41,7 @@ class App extends Component {
         oneTime: 200,
         monthly: 40
       }],
+
       oneTimeRevenue: 175,
       oneTimeExpense: 700,
       monthlyRevenue: 160,
@@ -146,16 +148,16 @@ class App extends Component {
 
   render() {
     // create table rows from revenue state list
-    let revenueTableData = this.state.revenue.map((item, index) => {
-      return (
-        <tr key={"revenue" + index}>
-          <td>{item.name}</td>
-          <td>${item.oneTime.toFixed(2)}</td>
-          <td>${item.monthly.toFixed(2)}</td>
-          <td><Button onClick={() => this.handleDelete('revenue', index)}>Delete</Button></td>
-        </tr>
-      )
-    })
+    // let revenueTableData = this.state.revenue.map((item, index) => {
+    //   return (
+    //     <tr key={"revenue" + index}>
+    //       <td>{item.name}</td>
+    //       <td>${item.oneTime.toFixed(2)}</td>
+    //       <td>${item.monthly.toFixed(2)}</td>
+    //       <td><Button onClick={() => this.handleDelete('revenue', index)}>Delete</Button></td>
+    //     </tr>
+    //   )
+    // })
     // create table rows from expenses state list
     let expensesTableData = this.state.expenses.map((expense, index) => {
       return (
@@ -197,7 +199,7 @@ class App extends Component {
             </Col>
             <Col sm={3} className="input-field">
               <Form.Control
-                type="text"
+                type="text" 
                 placeholder="Name"
                 onChange = {this.handleNameChange}
                 value={this.state.newName ? this.state.newName : ''}
@@ -230,14 +232,13 @@ class App extends Component {
             </Col>
           </Row>
         </Form>
-        <Todos/>
         {/* form errors */}
         { this.state.error &&
           <h4 className="error text-center">Please fill out all fields</h4>
         }
         <div className="roi-tables">
           {/* Revenue Table */}
-          <table className="revenue-table">
+          {/* <table className="revenue-table">
             <thead>
               <tr>
                 <th>Revenue</th>
@@ -252,7 +253,8 @@ class App extends Component {
             <tbody>
               {revenueTableData}
             </tbody>
-          </table>
+          </table> */}
+          <RevenueTable handleDelete={this.handleDelete} revenue={this.state.revenue}/>
           {/* Expenses Table */}
           <table className="expenses-table">
             <thead>
