@@ -9,6 +9,7 @@ import './App.css';
 
 import RevenueTable from './components/RevenueTable';
 import ExpenseTable from './components/ExpenseTable';
+import TotalsTable from './components/TotalsTable';
 
 class App extends Component {
   constructor() {
@@ -275,7 +276,12 @@ class App extends Component {
           </table> */}
           <ExpenseTable handleDelete={this.handleDelete} expense={this.state.expenses} />
           {/* Totals Table */}
-          <table className="totals-table">
+          <TotalsTable 
+            oneTimeRevenue={this.state.oneTimeRevenue} monthlyRevenue={this.state.monthlyRevenue} oneTimeExpense={this.state.oneTimeExpense} monthlyExpense={this.state.monthlyExpense}
+            totalRevenue={totalRevenue} totalExpense={totalExpense} monthlyContributionProfit={monthlyContributionProfit} totalContributionProfit={totalContributionProfit}
+            contributionMargin={contributionMargin} capitalROI={capitalROI}
+          />
+          {/* <table className="totals-table">
             <thead>
               <tr>
                 <th></th>
@@ -316,7 +322,7 @@ class App extends Component {
                 <td>{capitalROI}</td>
               </tr>
             </tbody>
-          </table>
+          </table> */}
         </div>
       </div>
     );
