@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Row,
-  Col,
-  Button,
-  Form
+  Button
  } from 'react-bootstrap'
 import './../App.css';
 
