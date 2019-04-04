@@ -8,6 +8,36 @@ import {
 import './../App.css';
 
 class AddTableItem extends Component {
+    state = {
+        newType: "",
+        newName: "",
+        newOneTime: "",
+        newMonthly: "",
+    }
+
+    // set state of form variables 
+    handleChange = (e) => this.setState({[e.target.name]: e.target.value});
+    handleNumberChange = (e) => this.setState({[e.target.name]: Number(e.target.value)});
+
+    // set state of form variables to app 
+
+    onSubmit = (e) => {
+        e.preventDefault();
+
+        if (!this.state.newType || !this.state.newName || (!this.state.newOneTime && this.state.newOneTime !== 0) || (!this.state.newMonthly && this.state.newMonthly !== 0)) {
+            this.props.setError()
+        } else {
+            this.props.addItem(this.state.newType, this.state.newName, this.state.newMonthly, this.state.newOneTime)
+
+            this.setState({
+                newType: "",
+                newName: "",
+                newOneTime: "",
+                newMonthly: ""
+            })
+        }
+    }
+
     render() {
         // const{ 
         //     oneTimeRevenue, monthlyRevenue, totalRevenue, oneTimeExpense, monthlyExpense, totalExpense,
@@ -15,13 +45,14 @@ class AddTableItem extends Component {
         // } = this.props;
         
         return (
-            <Form className="addExpenseOrRevenueForm" onSubmit={this.props.handleAdd}>
+            <Form className="addExpenseOrRevenueForm" onSubmit={this.onSubmit}>
             <Row className="input-field">
                 <Col sm={{ span: 2, offset: 1}} className="input-field">
                 <Form.Control
                     as="select"
-                    onChange = {this.props.handleTypeChange}
-                    value={this.props.newType ? this.props.newType : 'choose'}
+                    name="newType"
+                    onChange = {this.handleChange}
+                    value={this.state.newType ? this.state.newType : 'choose'}
                     >
                     <option value="choose" disabled={true}>Select Type</option>
                     <option value="revenue">Revenue</option>
@@ -30,30 +61,33 @@ class AddTableItem extends Component {
                 </Col>
                 <Col sm={3} className="input-field">
                 <Form.Control
-                    type="text" 
+                    type="text"
+                    name="newName"
                     placeholder="Name"
-                    onChange = {this.props.handleNameChange}
-                    defaultValue={this.props.newName ? this.props.newName : ''}
+                    onChange = {this.handleChange}
+                    value={this.state.newName}
                 />
                 </Col>
                 <Col sm={2} className="input-field">
                 <Form.Control
                     type="number"
+                    name="newOneTime"
                     placeholder="One-Time Amount"
-                    onChange = {this.props.handleOneTimeChange}
+                    onChange = {this.handleNumberChange}
                     step="0.01"
                     min="0"
-                    defaultValue={(this.props.newOneTime || this.props.newOneTime === 0) ? this.props.newOneTime : ''}
+                    value={(this.state.newOneTime || this.state.newOneTime === 0) ? this.state.newOneTime : ''}
                 />
                 </Col>
                 <Col sm={2} className="input-field">
                 <Form.Control
                     type="number"
+                    name="newMonthly"
                     placeholder="Monthly Amount"
-                    onChange = {this.props.handleMonthlyChange}
+                    onChange = {this.handleNumberChange}
                     step="0.01"
                     min="0"
-                    defaultValue={(this.props.newMonthly || this.props.newMonthly === 0) ? this.props.newMonthly : ''}
+                    value={(this.state.newMonthly || this.state.newMonthly === 0) ? this.state.newMonthly : ''}
                 />
                 </Col>
                 <Col sm={1} className="add-form-button">

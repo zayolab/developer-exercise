@@ -1,10 +1,4 @@
 import React, { Component } from 'react';
-import {
-  Row,
-  Col,
-  Button,
-  Form
- } from 'react-bootstrap'
 import './App.css';
 
 import Header from './components/Header';
@@ -60,7 +54,6 @@ class App extends Component {
       newMonthly: "",
       error: false
     };
-    let newType1 = "";
 
     this.handleDelete = this.handleDelete.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
@@ -119,6 +112,19 @@ class App extends Component {
   handleOneTimeChange(e) {
     this.setState({
       newOneTime: Number(e.target.value)
+    });
+  }
+
+  addItem = (newType, newName, newMonthly, newOneTime) => {
+    console.log(newType)
+    console.log(newName)
+    console.log(newMonthly)
+    console.log(newOneTime)
+  }
+
+  setError = (e) => {
+    this.setState({
+      error: true
     });
   }
 
@@ -194,19 +200,8 @@ class App extends Component {
         {/* Header component */}
         <Header />
         {/* Add new expense or revenue form */}
-        {/* <AddTableItem
-          newType1={this.newType}
-          newType={this.state.newType}
-          handleAdd={this.handleAdd}
-          handleTypeChange={this.handleTypeChange}
-          handleNameChange={this.state.handleNameChange}
-          newName={this.state.newName}
-          handleOneTimeChange={this.state.handleOneTimeChange}
-          newOneTime={this.newOneTime}
-          handleMonthlyChange={this.state.handleMonthlyChange}
-          newMonthly={this.state.newMonthly}
-        /> */}
-        <Form className="addExpenseOrRevenueForm" onSubmit={this.handleAdd}>
+        <AddTableItem addItem={this.addItem} setError={this.setError}/>
+        {/* <Form className="addExpenseOrRevenueForm" onSubmit={this.handleAdd}>
           <Row className="input-field">
             <Col sm={{ span: 2, offset: 1}} className="input-field">
               <Form.Control
@@ -253,7 +248,7 @@ class App extends Component {
               </Button>
             </Col>
           </Row>
-        </Form>
+        </Form> */}
         {/* Form Errors and Error Component*/}
         {this.state.error && <InputError />}
         <div className="roi-tables">
