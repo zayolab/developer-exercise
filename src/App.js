@@ -6,8 +6,8 @@ import {
   Form
  } from 'react-bootstrap'
 import './App.css';
-import Revenue from './rev.js'
-import Expenses from './exp.js'
+import Revenue from './rev.js'  // modular component
+import Expenses from './exp.js' // modular component
 
 class App extends Component {
   constructor() {
@@ -235,14 +235,14 @@ class App extends Component {
           <h4 className="error text-center">Please fill out all fields</h4>
         }
         <div className="roi-tables">
-          {/* Revenue Table */}
+          {/* Revenue Table */} // revenue table is now modular
           <Revenue
           	name={this.state.revenue.name}
           	oneTime={this.state.revenue.oneTime}
           	monthly={this.state.revenue.monthly}
           	delete={revenueTableData}
           	/>
-          {/* Expenses Table */}
+          {/* Expenses Table */} // expenses table is now modular
          <Expenses
          	name={this.state.expenses.name}
          	oneTime={this.state.expenses.oneTime}

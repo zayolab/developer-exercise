@@ -1,5 +1,5 @@
 import React from 'react';
-const exp = (props) => {
+const exp = (props) => { // table code from app.js
 	return (
 		<div className="Expenses">
 				<table className="expenses-table">

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const rev = (props) => {
+const rev = (props) => { // table code from app.js
 	
 	return (
 		<div className="Revenue">
