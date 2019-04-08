@@ -143,23 +143,23 @@ class App extends Component {
     });
   }
 
+  // Function to update state based on variables from AddTableItem component 
   addItem = (nType, nName, nMonthly, nOneTime) => {
-    this.state.newType = nType
-    this.state.newName = nName
-    this.state.newMonthly = nMonthly
-    this.state.newOneTime = nOneTime
+    this.setState({
+      newType: nType,
+      newName: nName,
+      newMonthly: nMonthly,
+      newOneTime: nOneTime
+    }, function() {
+      this.validateAdd();
+    });
+  }
 
-    // This setState is how I wanted to implement this but for some reason it would cause a bug
-    //    The first time a user input with the AddItem component it would just be blank. I would 
-    //    have to ask someone how this should work
-    // this.setState({
-    //   newType: nType,
-    //   newName: nName,
-    //   newMonthly: nMonthly,
-    //   newOneTime: nOnetime
-    // });
-
-    this.handleAdd()
+  // Function used to make sure state is updated before running handleAdd()
+  validateAdd = () => {
+    if(this.state.newType !== "") {
+      this.handleAdd()
+    }
   }
 
   setError = (e) => {
