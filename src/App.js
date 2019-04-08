@@ -55,17 +55,10 @@ class App extends Component {
       error: false
     };
 
-    this.handleDelete = this.handleDelete.bind(this);
-
-    // controlled form elements functions
-    this.handleTypeChange = this.handleTypeChange.bind(this);
-    this.handleNameChange = this.handleNameChange.bind(this);
-    this.handleOneTimeChange = this.handleOneTimeChange.bind(this);
-    this.handleMonthlyChange = this.handleMonthlyChange.bind(this);
   }
 
   // Delete expense or revenue from list
-  handleDelete(type, index) {
+  handleDelete = (type, index) => {
     // listType will be 'expenses' or 'revenue' depending on item to delete
     let listType = this.state[type];
     // recalculate and set totals in state
@@ -88,29 +81,6 @@ class App extends Component {
     // remove list item from state array
     this.setState({
       [listType]: listType.splice(index, 1)
-    });
-  }
-
-  // controlled form elements, watch for changes
-  handleTypeChange(e) {
-    this.setState({
-      newType: e.target.value
-    });
-  }
-  handleNameChange(e) {
-    this.setState({
-      newName: e.target.value
-    });
-  }
-
-  handleMonthlyChange(e) {
-    this.setState({
-      newMonthly: Number(e.target.value)
-    });
-  }
-  handleOneTimeChange(e) {
-    this.setState({
-      newOneTime: Number(e.target.value)
     });
   }
 
@@ -197,54 +167,7 @@ class App extends Component {
         <Header />
         {/* Add new expense or revenue form */}
         <AddTableItem addItem={this.addItem} setError={this.setError}/>
-        {/* <Form className="addExpenseOrRevenueForm" onSubmit={this.handleAdd}>
-          <Row className="input-field">
-            <Col sm={{ span: 2, offset: 1}} className="input-field">
-              <Form.Control
-                as="select"
-                onChange = {this.handleTypeChange}
-                value={this.state.newType ? this.state.newType : 'choose'}
-                >
-                <option value="choose" disabled={true}>Select Type</option>
-                <option value="revenue">Revenue</option>
-                <option value="expenses">Expense</option>
-              </Form.Control>
-            </Col>
-            <Col sm={3} className="input-field">
-              <Form.Control
-                type="text" 
-                placeholder="Name"
-                onChange = {this.handleNameChange}
-                value={this.state.newName ? this.state.newName : ''}
-              />
-            </Col>
-            <Col sm={2} className="input-field">
-              <Form.Control
-                type="number"
-                placeholder="One-Time Amount"
-                onChange = {this.handleOneTimeChange}
-                step="0.01"
-                min="0"
-                value={(this.state.newOneTime || this.state.newOneTime === 0) ? this.state.newOneTime : ''}
-              />
-            </Col>
-            <Col sm={2} className="input-field">
-              <Form.Control
-                type="number"
-                placeholder="Monthly Amount"
-                onChange = {this.handleMonthlyChange}
-                step="0.01"
-                min="0"
-                value={(this.state.newMonthly || this.state.newMonthly === 0) ? this.state.newMonthly : ''}
-              />
-            </Col>
-            <Col sm={1} className="add-form-button">
-              <Button type="submit">
-                Add
-              </Button>
-            </Col>
-          </Row>
-        </Form> */}
+
         {/* Form Errors and Error Component*/}
         {this.state.error && <InputError />}
         <div className="roi-tables">
