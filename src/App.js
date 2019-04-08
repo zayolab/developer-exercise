@@ -56,7 +56,6 @@ class App extends Component {
     };
 
     this.handleDelete = this.handleDelete.bind(this);
-    this.handleAdd = this.handleAdd.bind(this);
 
     // controlled form elements functions
     this.handleTypeChange = this.handleTypeChange.bind(this);
@@ -115,61 +114,58 @@ class App extends Component {
     });
   }
 
-  addItem = (newType, newName, newMonthly, newOneTime) => {
-    console.log(newType)
-    console.log(newName)
-    console.log(newMonthly)
-    console.log(newOneTime)
+  // add new expense or revenue
+  handleAdd = (e) => {
+    // typeOfAmount will be either 'expenses' or 'revenue'
+    let typeOfAmount = this.state.newType;
+    let monthly =
+      typeOfAmount === "expenses" ? "monthlyExpense" : "monthlyRevenue";
+    let oneTime =
+      typeOfAmount === "expenses" ? "oneTimeExpense" : "oneTimeRevenue";
+    // grab state array of revenues or expenses
+    let items = this.state[typeOfAmount];
+    items.push({
+      name: this.state.newName,
+      oneTime: this.state.newOneTime,
+      monthly: this.state.newMonthly
+    });
+    // set state with new totals and items array, clear errors displaying and form contents
+    this.setState({
+      error: false,
+      [typeOfAmount]: items,
+      [monthly]: this.state[monthly] + this.state.newMonthly,
+      [oneTime]: this.state[oneTime] + this.state.newOneTime,
+      //  Clear values in form
+      newName: "",
+      newMonthly: "",
+      newOneTime: "",
+      newType: ""
+    });
+  }
+
+  addItem = (nType, nName, nMonthly, nOneTime) => {
+    this.state.newType = nType
+    this.state.newName = nName
+    this.state.newMonthly = nMonthly
+    this.state.newOneTime = nOneTime
+
+    // This setState is how I wanted to implement this but for some reason it would cause a bug
+    //    The first time a user input with the AddItem component it would just be blank. I would 
+    //    have to ask someone how this should work
+    // this.setState({
+    //   newType: nType,
+    //   newName: nName,
+    //   newMonthly: nMonthly,
+    //   newOneTime: nOnetime
+    // });
+
+    this.handleAdd()
   }
 
   setError = (e) => {
     this.setState({
       error: true
     });
-  }
-
-  // add new expense or revenue
-  handleAdd(e) {
-    e.preventDefault();
-    // handle form errors, allows one-time and revenue amounts to be 0
-    if (
-      !this.state.newType ||
-      !this.state.newName ||
-      (!this.state.newOneTime && this.state.newOneTime !== 0) ||
-      (!this.state.newMonthly && this.state.newMonthly !== 0)
-    ) {
-      this.setState({
-        error: true
-      });
-    }
-    // if there are no form errors, add accordingly
-    else {
-      // typeOfAmount will be either 'expenses' or 'revenue'
-      let typeOfAmount = this.state.newType;
-      let monthly =
-        typeOfAmount === "expenses" ? "monthlyExpense" : "monthlyRevenue";
-      let oneTime =
-        typeOfAmount === "expenses" ? "oneTimeExpense" : "oneTimeRevenue";
-      // grab state array of revenues or expenses
-      let items = this.state[typeOfAmount];
-      items.push({
-        name: this.state.newName,
-        oneTime: this.state.newOneTime,
-        monthly: this.state.newMonthly
-      });
-      // set state with new totals and items array, clear errors displaying and form contents
-      this.setState({
-        error: false,
-        [typeOfAmount]: items,
-        [monthly]: this.state[monthly] + this.state.newMonthly,
-        [oneTime]: this.state[oneTime] + this.state.newOneTime,
-        //  Clear values in form
-        newName: "",
-        newMonthly: "",
-        newOneTime: "",
-        newType: ""
-      });
-    }
   }
 
   render() {
