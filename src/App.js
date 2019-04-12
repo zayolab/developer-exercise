@@ -87,20 +87,16 @@ class App extends Component {
       [listType]: listType.splice(index, 1),
     })
   }
-
-  // controlled form elements, watch for changes
-  handleTermChange(e){
-    this.setState({
-      tempterm: e.target.value
-    })
-  }
+  //set the term to the one specified by user
   setTerm(e){
     e.preventDefault()
+    //check that a term is selected
     if (this.state.tempterm===''){
       this.setState({
         error: true
       })
     }
+    //if there are no errors set term
     else{
       this.setState({
           error:false,
@@ -111,11 +107,16 @@ class App extends Component {
       })
     }
   }
+  // controlled form elements, watch for changes
+  handleTermChange(e){
+    this.setState({
+      tempterm: e.target.value
+    })
+  }
   handleTypeChange(e) {
     this.setState({
       newType: e.target.value
     })
-    console.log(this.state)
   }
   handleNameChange(e) {
     this.setState({
