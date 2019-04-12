@@ -21,15 +21,22 @@
   width: 150px;
 }
 .expenses-table td, .revenue-table td, .totals-table td {
-  width: 100px
-}
+  width: 100px;
+  border-bottom-style:solid;
+  }
 
 .error {
   color: red;
 }
 
+.term-message{
+  font-weight: bold;
+  border-radius: 2px;
+  padding-top: 5px;
+}
+
 @media only screen and (max-width:775px) {
-  .input-field, .add-form-button {
+  .input-field, .add-form-button, .term-input-button {
     margin-left: .25em;
     margin-right: .25em;
   }
