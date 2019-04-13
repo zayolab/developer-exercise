@@ -6,12 +6,12 @@ import {
     Form
 } from 'react-bootstrap';
 import {ledger, LedgerTable} from "./ledger.js";
+import TotalsTable from "./totals.js";
 import './App.css';
 
 class App extends Component {
     constructor() {
         super()
-        // "seed" data initially
         this.state = {
             newType: '',
             newName: '',
@@ -19,9 +19,9 @@ class App extends Component {
             newMonthly: '',
             error: false
         }
-
         this.revenue = new ledger();
         this.expenses = new ledger();
+
         this.handleDelete = this.handleDelete.bind(this);
         this.handleAdd = this.handleAdd.bind(this);
 
@@ -91,20 +91,6 @@ class App extends Component {
     }
 
     render() {
-        // create table rows from revenue state list
-        let revenueTable = new LedgerTable(this.revenue, "revenue");
-        let expensesTable = new LedgerTable(this.expenses, "expenses");
-
-        // Calculations for totals
-        let totalRevenue = this.revenue.oneTimeTotal + (this.revenue.monthlyTotal * 12);
-        let totalExpense = this.expenses.oneTimeTotal + (this.expenses.monthlyTotal * 12);
-        let monthlyContributionProfit = this.revenue.monthlyTotal - this.expenses.monthlyTotal;
-        let totalContributionProfit = totalRevenue - totalExpense;
-        // handle case where totalRevenue is 0 (to avoid -Infinity and NaN)
-        let contributionMargin = totalRevenue !== 0 ? (totalContributionProfit / totalRevenue * 100).toFixed(0) : 0;
-        // handle case where totalExpense and totalRevenue are 0 (to avoid NaN)
-        let capitalROI = (totalExpense === 0 && totalRevenue === 0) ? 0 : ((this.expenses.oneTimeTotal - this.revenue.oneTimeTotal) / monthlyContributionProfit).toFixed(1);
-
         return (
                 <div>
                 <h1 className="text-center">ROI Calculator</h1>
@@ -167,48 +153,7 @@ class App extends Component {
                 {/* Expenses Table */}
                 <LedgerTable name="expenses" ledger={this.expenses} deleteCallback={this.handleDelete} />
                 {/* Totals Table */}
-                <table className="totals-table">
-                <thead>
-                <tr>
-                <th></th>
-                <th>One-Time</th>
-                <th>Monthly</th>
-                <th>Total</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                <td>Revenue</td>
-                <td>${(this.revenue.oneTimeTotal).toFixed(2)}</td>
-                <td>${(this.revenue.monthlyTotal).toFixed(2)}</td>
-                <td>${totalRevenue.toFixed(2)}</td>
-                </tr>
-                <tr>
-                <td>Expenses</td>
-                <td>${(this.expenses.oneTimeTotal).toFixed(2)}</td>
-                <td>${(this.expenses.monthlyTotal).toFixed(2)}</td>
-                <td>${totalExpense.toFixed(2)}</td>
-                </tr>
-                <tr>
-                <td>Contribution Profit</td>
-                <td></td>
-                <td>${ monthlyContributionProfit.toFixed(2)}</td>
-                <td>${ totalContributionProfit.toFixed(2)}</td>
-                </tr>
-                <tr>
-                <td>Contribution Margin</td>
-                <td></td>
-                <td></td>
-                <td>{contributionMargin}%</td>
-                </tr>
-                <tr>
-                <td>Capital ROI (monthly)</td>
-                <td></td>
-                <td></td>
-                <td>{capitalROI}</td>
-                </tr>
-                </tbody>
-                </table>
+                <TotalsTable revenueLedger={this.revenue} expensesLedger={this.expenses} />
                 </div>
                 </div>
     );

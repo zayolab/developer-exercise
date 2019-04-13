@@ -6,8 +6,8 @@ This application is a ROI Calculator built with React. A ROI (Return of Investme
 
 
 **** Tasks - Do as many as you'd like. Show us what you've got!
-     - [ ] Break App.js down into reusable components.
-     - [ ] Move calculation tool/utils to its own file.
+     - [X] Break App.js down into reusable components.
+     - [X] Move calculation tool/utils to its own file.
      - [ ] Create a Node/Express backend (or stack of your choice) with a rest route to handle the calculations built in the render function of App.js
      - [ ] Make the totals (revenue, expenses, contribution profit, contribution margin, etc.) reflect a 24 month term (rather than 12) or make the term dynamic, allowing the user to specify a 12, 24, 36, 48, or 60 month term.
      - [ ] Any other improvements of the application.
