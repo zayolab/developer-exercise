@@ -15,7 +15,6 @@ export class ledger {
 
     // Delete expense or revenue from list
     deleteItem(index) {
-        console.log("Deleting item");
         // recalculate and set totals
         this.oneTimeTotal -= this.entries[index]['oneTime'];
         this.monthlyTotal -= this.entries[index]['monthly'];
@@ -29,7 +28,6 @@ export class ledger {
      * Form values are validated in App.js, so we don't need to check here.
      */
     addItem(formName, formOneTime, formMonthly) {
-        console.log("Adding item " + formName + " " + formOneTime + " " + formMonthly);
         // add new data to entries array
         this.entries.push({
             name: formName,
