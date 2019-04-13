@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import {Button} from 'react-bootstrap';
+import {capitalize} from "./helper.js";
+
 export class ledger {
     constructor() {
         this.entries = [
@@ -76,7 +78,7 @@ export class LedgerTable extends Component {
                 <thead>
                 <tr>
                 {/* Capitalize first letter of table title */}
-                <th>{tableName.charAt(0).toUpperCase() + tableName.slice(1)}</th>
+                <th>{capitalize(tableName)}</th>
                 </tr>
                 <tr>
                 <th></th>
