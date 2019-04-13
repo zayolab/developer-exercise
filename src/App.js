@@ -107,92 +107,92 @@ class App extends Component {
 
     render() {
         return (
-                <div>
-                <h1 className="text-center">ROI Calculator</h1>
-                <Row className="input-field">
-                <Col sm={{ span: 2, offset: 1}} className="input-field">
-                <p className="font-weight-bold">Investment Term:</p>
-                </Col>
-                <Col className="input-field">
-                <input type="text" placeholder={this.state.term} name="investmentTerm" list="terms" onChange={this.handleTermChange}/>
-                <datalist id="terms">
-                <option value="12">12 Months</option>
-                <option value="24">24 Months</option>
-                <option value="36">36 Months</option>
-                <option value="48">48 Months</option>
-                <option value="60">60 Months</option>
-                </datalist>
-                </Col>
-                <Col>
-                { this.state.termError &&
-                  <h4 className="error text-center">Investment term must be a number</h4>
-                }
+    <div>
+        <h1 className="text-center">ROI Calculator</h1>
+       <Row className="input-field">
+            <Col sm={{ span: 2, offset: 1}} className="input-field">
+            <p className="font-weight-bold">Investment Term:</p>
+                    </Col>
+                    <Col className="input-field">
+                    <input type="text" placeholder={this.state.term} name="investmentTerm" list="terms" onChange={this.handleTermChange}/>
+                    <datalist id="terms">
+                        <option value="12">12 Months</option>
+                        <option value="24">24 Months</option>
+                        <option value="36">36 Months</option>
+                        <option value="48">48 Months</option>
+                        <option value="60">60 Months</option>
+                    </datalist>
             </Col>
-                </Row>
-                {/* Add new expense or revenue form */}
-                <Form className="addExpenseOrRevenueForm" onSubmit={this.handleAdd}>
-                <Row className="input-field">
+            <Col>
+            { this.state.termError &&
+                <h4 className="error text-center">Investment term must be a number</h4>
+            }
+            </Col>
+        </Row>
+        {/* Add new expense or revenue form */}
+        <Form className="addExpenseOrRevenueForm" onSubmit={this.handleAdd}>
+            <Row className="input-field">
                 <Col sm={{ span: 2, offset: 1}} className="input-field">
                 <Form.Control
-            as="select"
-            onChange = {this.handleTypeChange}
-            value={this.state.newType ? this.state.newType : 'choose'}
+                    as="select"
+                    onChange = {this.handleTypeChange}
+                    value={this.state.newType ? this.state.newType : 'choose'}
                 >
-                <option value="choose" disabled={true}>Select Type</option>
-                <option value="revenue">Revenue</option>
-                <option value="expenses">Expense</option>
+                    <option value="choose" disabled={true}>Select Type</option>
+                    <option value="revenue">Revenue</option>
+                    <option value="expenses">Expense</option>
                 </Form.Control>
-                </Col>
-                <Col sm={3} className="input-field">
-                <Form.Control
-            type="text"
-            placeholder="Name"
-            onChange = {this.handleNameChange}
-            value={this.state.newName ? this.state.newName : ''}
-                />
-                </Col>
-                <Col sm={2} className="input-field">
-                <Form.Control
-            type="number"
-            placeholder="One-Time Amount"
-            onChange = {this.handleOneTimeChange}
-            step="0.01"
-            min="0"
-            value={(this.state.newOneTime || this.state.newOneTime === 0) ? this.state.newOneTime : ''}
-                />
-                </Col>
-                <Col sm={2} className="input-field">
-                <Form.Control
-            type="number"
-            placeholder="Monthly Amount"
-            onChange = {this.handleMonthlyChange}
-            step="0.01"
-            min="0"
-            value={(this.state.newMonthly || this.state.newMonthly === 0) ? this.state.newMonthly : ''}
-                />
-                </Col>
-                <Col sm={1} className="add-form-button">
-                <Button type="submit">
+            </Col>
+            <Col sm={3} className="input-field">
+            <Form.Control
+                type="text"
+                placeholder="Name"
+                onChange = {this.handleNameChange}
+                value={this.state.newName ? this.state.newName : ''}
+            />
+            </Col>
+            <Col sm={2} className="input-field">
+            <Form.Control
+                type="number"
+                placeholder="One-Time Amount"
+                onChange = {this.handleOneTimeChange}
+                step="0.01"
+                min="0"
+                value={(this.state.newOneTime || this.state.newOneTime === 0) ? this.state.newOneTime : ''}
+            />
+            </Col>
+            <Col sm={2} className="input-field">
+            <Form.Control
+                type="number"
+                placeholder="Monthly Amount"
+                onChange = {this.handleMonthlyChange}
+                step="0.01"
+                min="0"
+                value={(this.state.newMonthly || this.state.newMonthly === 0) ? this.state.newMonthly : ''}
+            />
+            </Col>
+            <Col sm={1} className="add-form-button">
+            <Button type="submit">
                 Add
             </Button>
-                </Col>
-                </Row>
-                </Form>
-                {/* form errors */}
-            { this.state.ledgerError &&
-              <h4 className="error text-center">Please fill out all fields</h4>
-            }
-                <div className="roi-tables">
-                {/* Revenue Table */}
-                <LedgerTable name="revenue" ledger={this.revenue} deleteCallback={this.handleDelete} />
-                {/* Expenses Table */}
-                <LedgerTable name="expenses" ledger={this.expenses} deleteCallback={this.handleDelete} />
-                {/* Totals Table */}
-                <TotalsTable revenueLedger={this.revenue} expensesLedger={this.expenses} term={this.state.term} />
-                </div>
-                </div>
-    );
-  }
+            </Col>
+            </Row>
+        </Form>
+        {/* form errors */}
+        { this.state.ledgerError &&
+            <h4 className="error text-center">Please fill out all fields</h4>
+        }
+        <div className="roi-tables">
+            {/* Revenue Table */}
+            <LedgerTable name="revenue" ledger={this.revenue} deleteCallback={this.handleDelete} />
+            {/* Expenses Table */}
+            <LedgerTable name="expenses" ledger={this.expenses} deleteCallback={this.handleDelete} />
+            {/* Totals Table */}
+            <TotalsTable revenueLedger={this.revenue} expensesLedger={this.expenses} term={this.state.term} />
+        </div>
+    </div>
+        );
+    }
 }
 
 export default App;
