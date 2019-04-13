@@ -17,8 +17,8 @@ This application is a ROI Calculator built with React. A ROI (Return of Investme
 
 The app was built to mimic the functionality of the spreadsheet below.
 
+#+ATTR_HTML: width="450"
 [[./sample_roi_spreadsheet.png]]
-# <img src="sample_roi_spreadsheet.png" alt="ROI Spreadsheet" width="450">
 
 All of the bold fields are calculated fields and should not be editable.  As additional revenue and expense items are added, the calculated fields should update automatically on the page.  As items are deleted, the calculated fields should also update automatically on the page.
 
