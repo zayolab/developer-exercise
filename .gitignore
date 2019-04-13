@@ -60,4 +60,7 @@ typings/
 # next.js build output
 .next
 
+# Personal notes on project
+notes.org
+
 .DS_Store
