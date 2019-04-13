@@ -11,10 +11,11 @@ export default class TotalsTable extends Component {
         // convenient references to revenue and expenses ledgers
         let revenue = this.props.revenueLedger;
         let expenses = this.props.expensesLedger;
+        let term = this.props.term;
 
         // Calculations for totals
-        let totalRevenue = revenue.oneTimeTotal + (revenue.monthlyTotal * 12);
-        let totalExpense = expenses.oneTimeTotal + (expenses.monthlyTotal * 12);
+        let totalRevenue = revenue.oneTimeTotal + (revenue.monthlyTotal * term);
+        let totalExpense = expenses.oneTimeTotal + (expenses.monthlyTotal * term);
         let monthlyContributionProfit = revenue.monthlyTotal - expenses.monthlyTotal;
         let totalContributionProfit = totalRevenue - totalExpense;
         // handle case where totalRevenue is 0 (to avoid -Infinity and NaN)

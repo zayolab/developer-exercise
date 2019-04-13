@@ -13,11 +13,13 @@ class App extends Component {
     constructor() {
         super()
         this.state = {
+            term: 12, // reflect a 1 year term by default
             newType: '',
             newName: '',
             newOneTime: '',
             newMonthly: '',
-            error: false
+            ledgerError: false,
+            termError: false
         }
         this.revenue = new ledger();
         this.expenses = new ledger();
@@ -26,6 +28,7 @@ class App extends Component {
         this.handleAdd = this.handleAdd.bind(this);
 
         // controlled form elements functions
+        this.handleTermChange = this.handleTermChange.bind(this);
         this.handleTypeChange = this.handleTypeChange.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handleOneTimeChange = this.handleOneTimeChange.bind(this);
@@ -33,6 +36,18 @@ class App extends Component {
     }
 
     // controlled form elements, watch for changes
+    handleTermChange(e) {
+        if(isNaN(e.target.value)) { //make sure the term is a number
+            this.setState({
+                termError: true
+            })
+            return false;
+        }
+        this.setState({
+            term: e.target.value
+        });
+        this.state.termError = false; //clear termError if the term is valid
+    }
     handleTypeChange(e) {
         this.setState({
             newType: e.target.value
@@ -69,7 +84,7 @@ class App extends Component {
         // handle form errors, allows one-time and revenue amounts to be 0
         if (!this.state.newType || !this.state.newName || (!this.state.newOneTime && this.state.newOneTime !== 0) || (!this.state.newMonthly && this.state.newMonthly !== 0)) {
             this.setState({
-                error: true
+                ledgerError: true
             });
         }
         // if there are no form errors, add accordingly
@@ -94,6 +109,26 @@ class App extends Component {
         return (
                 <div>
                 <h1 className="text-center">ROI Calculator</h1>
+                <Row className="input-field">
+                <Col sm={{ span: 2, offset: 1}} className="input-field">
+                <p className="font-weight-bold">Investment Term:</p>
+                </Col>
+                <Col className="input-field">
+                <input type="text" placeholder={this.state.term} name="investmentTerm" list="terms" onChange={this.handleTermChange}/>
+                <datalist id="terms">
+                <option value="12">12 Months</option>
+                <option value="24">24 Months</option>
+                <option value="36">36 Months</option>
+                <option value="48">48 Months</option>
+                <option value="60">60 Months</option>
+                </datalist>
+                </Col>
+                <Col>
+                { this.state.termError &&
+                  <h4 className="error text-center">Investment term must be a number</h4>
+                }
+            </Col>
+                </Row>
                 {/* Add new expense or revenue form */}
                 <Form className="addExpenseOrRevenueForm" onSubmit={this.handleAdd}>
                 <Row className="input-field">
@@ -144,7 +179,7 @@ class App extends Component {
                 </Row>
                 </Form>
                 {/* form errors */}
-            { this.state.error &&
+            { this.state.ledgerError &&
               <h4 className="error text-center">Please fill out all fields</h4>
             }
                 <div className="roi-tables">
@@ -153,7 +188,7 @@ class App extends Component {
                 {/* Expenses Table */}
                 <LedgerTable name="expenses" ledger={this.expenses} deleteCallback={this.handleDelete} />
                 {/* Totals Table */}
-                <TotalsTable revenueLedger={this.revenue} expensesLedger={this.expenses} />
+                <TotalsTable revenueLedger={this.revenue} expensesLedger={this.expenses} term={this.state.term} />
                 </div>
                 </div>
     );
