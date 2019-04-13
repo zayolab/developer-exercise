@@ -44,9 +44,9 @@ class App extends Component {
             return false;
         }
         this.setState({
-            term: e.target.value
+            term: e.target.value,
+            termError: false
         });
-        this.state.termError = false; //clear termError if the term is valid
     }
     handleTypeChange(e) {
         this.setState({
