@@ -73,6 +73,8 @@ class App extends Component {
     }
 
     // Delete expense or revenue from list
+    // Item deletion has no validation, so I could just use deleteItem in ledger
+    // I chose to leave this function in case a future developer needs to add additional application-specific behavior
     handleDelete(type, index) {
         // type will be 'expenses' or 'revenue' depending on item to delete
         let ledger = this[type];

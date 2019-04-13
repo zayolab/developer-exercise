@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import {Button} from 'react-bootstrap';
 import {capitalize} from "./helper.js";
 
+/**
+ * Class representing an account ledger with one-time and monthly revenue/expenses
+ * Constructor arguments:
+ * name: The name of the table
+ * deleteCallback: The function to call when a ledger item is deleted
+ */
 export class ledger {
     constructor() {
         this.entries = [];
