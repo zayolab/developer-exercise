@@ -22,61 +22,61 @@ class App extends Component {
             error: false
         }
 
-        this.handleDelete = this.handleDelete.bind(this)
-        this.handleAdd = this.handleAdd.bind(this)
+        this.handleDelete = this.handleDelete.bind(this);
+        this.handleAdd = this.handleAdd.bind(this);
 
         // controlled form elements functions
-        this.handleTypeChange = this.handleTypeChange.bind(this)
-        this.handleNameChange = this.handleNameChange.bind(this)
-        this.handleOneTimeChange = this.handleOneTimeChange.bind(this)
-        this.handleMonthlyChange = this.handleMonthlyChange.bind(this)
+        this.handleTypeChange = this.handleTypeChange.bind(this);
+        this.handleNameChange = this.handleNameChange.bind(this);
+        this.handleOneTimeChange = this.handleOneTimeChange.bind(this);
+        this.handleMonthlyChange = this.handleMonthlyChange.bind(this);
     }
 
     // controlled form elements, watch for changes
     handleTypeChange(e) {
         this.setState({
             newType: e.target.value
-        })
+        });
     }
     handleNameChange(e) {
         this.setState({
             newName: e.target.value
-        })
+        });
     }
 
     handleMonthlyChange(e) {
         this.setState({
             newMonthly: Number(e.target.value)
-        })
+        });
     }
     handleOneTimeChange(e) {
         this.setState({
             newOneTime: Number(e.target.value)
-        })
+        });
     }
 
     // Delete expense or revenue from list
     handleDelete(type, index) {
         // listType will be 'expenses' or 'revenue' depending on item to delete
         let ledger = this.state[type];
-        ledger.deleteItem(type, index);
-        this.forceUpdate(); //otherwise the page doesn't refresh after deletion
+        ledger.deleteItem(index);
+        this.forceUpdate(); //Since we don't set any state for this, the page doesn't otherwise refresh after deletion
     }
 
     // add new expense or revenue
     handleAdd(e) {
-        e.preventDefault()
+        e.preventDefault();
         // handle form errors, allows one-time and revenue amounts to be 0
         if (!this.state.newType || !this.state.newName || (!this.state.newOneTime && this.state.newOneTime !== 0) || (!this.state.newMonthly && this.state.newMonthly !== 0)) {
             this.setState({
                 error: true
-            })
+            });
         }
         // if there are no form errors, add accordingly
         else {
             // typeOfAmount will be either 'expenses' or 'revenue'
             // grab state revenues or expenses ledger
-            let ledger = this.state[this.state.newType]
+            let ledger = this.state[this.state.newType];
             ledger.addItem(this.state.newName, this.state.newOneTime, this.state.newMonthly);
             // set state with new totals and items array, clear errors displaying and form contents
             this.setState({
@@ -86,7 +86,7 @@ class App extends Component {
                 newMonthly: '',
                 newOneTime: '',
                 newType: ''
-            })
+            });
         }
     }
 
@@ -100,8 +100,8 @@ class App extends Component {
                     <td>${item.monthly.toFixed(2)}</td>
                     <td><Button onClick={() => this.handleDelete('revenue', index)}>Delete</Button></td>
                     </tr>
-            )
-        })
+            );
+        });
         // create table rows from expenses state list
         let expensesTableData = this.state.expenses.entries.map((expense, index) => {
             return (
@@ -111,18 +111,18 @@ class App extends Component {
                     <td>${expense.monthly.toFixed(2)}</td>
                     <td><Button onClick={() => this.handleDelete('expenses', index)}>Delete</Button></td>
                     </tr>
-            )
-        })
+            );
+        });
 
         // Calculations for totals
-        let totalRevenue = this.state.revenue.oneTimeTotal + (this.state.revenue.monthlyTotal * 12)
-        let totalExpense = this.state.expenses.oneTimeTotal + (this.state.expenses.monthlyTotal * 12)
-        let monthlyContributionProfit = this.state.revenue.monthlyTotal - this.state.expenses.monthlyTotal
-        let totalContributionProfit = totalRevenue - totalExpense
+        let totalRevenue = this.state.revenue.oneTimeTotal + (this.state.revenue.monthlyTotal * 12);
+        let totalExpense = this.state.expenses.oneTimeTotal + (this.state.expenses.monthlyTotal * 12);
+        let monthlyContributionProfit = this.state.revenue.monthlyTotal - this.state.expenses.monthlyTotal;
+        let totalContributionProfit = totalRevenue - totalExpense;
         // handle case where totalRevenue is 0 (to avoid -Infinity and NaN)
-        let contributionMargin = totalRevenue !== 0 ? (totalContributionProfit / totalRevenue * 100).toFixed(0) : 0
+        let contributionMargin = totalRevenue !== 0 ? (totalContributionProfit / totalRevenue * 100).toFixed(0) : 0;
         // handle case where totalExpense and totalRevenue are 0 (to avoid NaN)
-        let capitalROI = (totalExpense === 0 && totalRevenue === 0) ? 0 : ((this.state.expenses.oneTimeTotal - this.state.revenue.oneTimeTotal) / monthlyContributionProfit).toFixed(1)
+        let capitalROI = (totalExpense === 0 && totalRevenue === 0) ? 0 : ((this.state.expenses.oneTimeTotal - this.state.revenue.oneTimeTotal) / monthlyContributionProfit).toFixed(1);
 
         return (
                 <div>
