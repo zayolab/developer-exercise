@@ -37,7 +37,9 @@ class App extends Component {
 
     // controlled form elements, watch for changes
     handleTermChange(e) {
-        if(isNaN(e.target.value)) { //make sure the term is a number
+        if(!e.target.value || //check for empty string
+           isNaN(e.target.value) || //check for non-numeric string
+           e.target.value.indexOf(' ') >= 0) { //check for whitespace in string
             this.setState({
                 termError: true
             })
@@ -72,7 +74,7 @@ class App extends Component {
 
     // Delete expense or revenue from list
     handleDelete(type, index) {
-        // listType will be 'expenses' or 'revenue' depending on item to delete
+        // type will be 'expenses' or 'revenue' depending on item to delete
         let ledger = this[type];
         ledger.deleteItem(index);
         this.forceUpdate(); //Since we don't set any state for this, the page doesn't otherwise refresh after deletion
@@ -89,7 +91,6 @@ class App extends Component {
         }
         // if there are no form errors, add accordingly
         else {
-            // typeOfAmount will be either 'expenses' or 'revenue'
             // grab state revenues or expenses ledger
             let ledger = this[this.state.newType];
             ledger.addItem(this.state.newName, this.state.newOneTime, this.state.newMonthly);
