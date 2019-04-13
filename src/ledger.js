@@ -4,17 +4,9 @@ import {capitalize} from "./helper.js";
 
 export class ledger {
     constructor() {
-        this.entries = [
-            {
-                name: "test",
-                oneTime: 40,
-                monthly: 50
-            }
-        ];
-        this.oneTimeTotal = 40;
-        this.monthlyTotal = 50;
-        // this.oneTime = 0;
-        // this.monthly = 0;
+        this.entries = [];
+        this.oneTimeTotal = 0;
+        this.monthlyTotal = 0;
 
         // bind class methods
         this.addItem = this.addItem.bind(this);
