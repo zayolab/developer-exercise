@@ -359,7 +359,7 @@ class App extends Component {
             {/* <LedgerTable ledger={this.ledgers.expenses} deleteCallback={this.handleDeleteItem} /> */}
             <h3 className="text-center">Expense Accounts</h3>
             {this.ledgers.expenses.length ? expenseTables :
-             <p className="empty-table-message">There are currently no Expense accounts. Add one above to start tracking revenue.</p>}
+             <p className="empty-table-message">There are currently no Expense accounts. Add one above to start tracking expenses.</p>}
             {/* Totals Table */}
             <h3 className="text-center">Totals</h3>
             <TotalsTable revenueLedgers={this.ledgers.revenue} expenseLedgers={this.ledgers.expenses} term={this.state.term} />
