@@ -1,5 +1,5 @@
-.addExpenseOrRevenueForm {
-  padding-top: 3em;
+.addExpenseOrRevenueForm, .addLedgerForm {
+  padding-top: 1em;
 }
 
 .input-field, .add-form-button {

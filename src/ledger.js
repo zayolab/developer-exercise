@@ -6,10 +6,11 @@ import {capitalize} from "./helper.js";
  * Class representing an account ledger with one-time and monthly revenue/expenses
  * Constructor arguments:
  * name: The name of the table
- * deleteCallback: The function to call when a ledger item is deleted
  */
 export class ledger {
-    constructor() {
+    constructor(name, type) {
+        this.name = name;
+        this.type = type;
         this.entries = [];
         this.oneTimeTotal = 0;
         this.monthlyTotal = 0;
@@ -56,25 +57,24 @@ export class ledger {
  */
 export class LedgerTable extends Component {
     render() {
-        let tableName = this.props.name;
         let ledger = this.props.ledger;
+        let tableName = ledger.name;
         let tableData = ledger.entries.map((item, index) => {
             return (
                     <tr key={tableName + index}>
                     <td>{item.name}</td>
                     <td>${item.oneTime.toFixed(2)}</td>
                     <td>${item.monthly.toFixed(2)}</td>
-                    <td><Button onClick={() => this.props.deleteCallback(tableName, index)}>Delete</Button></td>
+                    <td><Button onClick={() => this.props.deleteCallback(ledger, index)}>Delete</Button></td>
                     </tr>
             );
         });
 
         return (
-                <table className={tableName + "-table"}>
+                <table className={ledger.type + "-table"}>
                 <thead>
                 <tr>
-                {/* Capitalize first letter of table title */}
-                <th>{capitalize(tableName)}</th>
+                <th>{tableName}</th>
                 </tr>
                 <tr>
                 <th></th>

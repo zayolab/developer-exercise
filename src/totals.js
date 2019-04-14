@@ -8,20 +8,39 @@ import React, { Component } from 'react';
  */
 export default class TotalsTable extends Component {
     render() {
-        // convenient references to revenue and expenses ledgers
-        let revenue = this.props.revenueLedger;
-        let expenses = this.props.expensesLedger;
+        // convenient references to application variables
+        let revenueLedgers = this.props.revenueLedgers;
+        let expenseLedgers = this.props.expenseLedgers;
         let term = this.props.term;
 
-        // Calculations for totals
-        let totalRevenue = revenue.oneTimeTotal + (revenue.monthlyTotal * term);
-        let totalExpense = expenses.oneTimeTotal + (expenses.monthlyTotal * term);
-        let monthlyContributionProfit = revenue.monthlyTotal - expenses.monthlyTotal;
+        let oneTimeTotals = {
+            revenue: 0,
+            expenses: 0
+        };
+        let monthlyTotals = {
+            revenue: 0,
+            expenses: 0
+        };
+
+        // Calculate one time and monthly totals
+        for(const ledger of revenueLedgers) {
+            oneTimeTotals.revenue += ledger.oneTimeTotal;
+            monthlyTotals.revenue += ledger.monthlyTotal;
+        }
+        for(const ledger of expenseLedgers) {
+            oneTimeTotals.expenses += ledger.oneTimeTotal;
+            monthlyTotals.expenses += ledger.monthlyTotal;
+        }
+
+        // Calculate variables dependent on one time/monthly revenue/expenses
+        let totalRevenue = oneTimeTotals.revenue + (monthlyTotals.revenue * term);
+        let totalExpense = oneTimeTotals.expenses + (monthlyTotals.expenses * term);
+        let monthlyContributionProfit = monthlyTotals.revenue - monthlyTotals.expenses;
         let totalContributionProfit = totalRevenue - totalExpense;
         // handle case where totalRevenue is 0 (to avoid -Infinity and NaN)
         let contributionMargin = totalRevenue !== 0 ? (totalContributionProfit / totalRevenue * 100).toFixed(0) : 0;
         // handle case where totalExpense and totalRevenue are 0 (to avoid NaN)
-        let capitalROI = (totalExpense === 0 && totalRevenue === 0) ? 0 : ((expenses.oneTimeTotal - revenue.oneTimeTotal) / monthlyContributionProfit).toFixed(1);
+        let capitalROI = (totalExpense === 0 && totalRevenue === 0) ? 0 : ((oneTimeTotals.expenses - oneTimeTotals.revenues) / monthlyContributionProfit).toFixed(1);
 
         return (
                 <table className="totals-table">
@@ -36,14 +55,14 @@ export default class TotalsTable extends Component {
                 <tbody>
                 <tr>
                 <td>Revenue</td>
-                <td>${(revenue.oneTimeTotal).toFixed(2)}</td>
-                <td>${(revenue.monthlyTotal).toFixed(2)}</td>
+                <td>${(oneTimeTotals.revenue).toFixed(2)}</td>
+                <td>${(monthlyTotals.revenue).toFixed(2)}</td>
                 <td>${totalRevenue.toFixed(2)}</td>
                 </tr>
                 <tr>
                 <td>Expenses</td>
-                <td>${(expenses.oneTimeTotal).toFixed(2)}</td>
-                <td>${(expenses.monthlyTotal).toFixed(2)}</td>
+                <td>${(oneTimeTotals.expenses).toFixed(2)}</td>
+                <td>${(monthlyTotals.expenses).toFixed(2)}</td>
                 <td>${totalExpense.toFixed(2)}</td>
                 </tr>
                 <tr>
