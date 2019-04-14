@@ -40,7 +40,7 @@ export default class TotalsTable extends Component {
         // handle case where totalRevenue is 0 (to avoid -Infinity and NaN)
         let contributionMargin = totalRevenue !== 0 ? (totalContributionProfit / totalRevenue * 100).toFixed(0) : 0;
         // handle case where totalExpense and totalRevenue are 0 (to avoid NaN)
-        let capitalROI = (totalExpense === 0 && totalRevenue === 0) ? 0 : ((oneTimeTotals.expenses - oneTimeTotals.revenues) / monthlyContributionProfit).toFixed(1);
+        let capitalROI = (totalExpense === 0 && totalRevenue === 0) ? 0 : ((oneTimeTotals.expenses - oneTimeTotals.revenue) / monthlyContributionProfit).toFixed(1);
 
         return (
                 <table className="totals-table">
