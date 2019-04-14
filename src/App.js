@@ -33,6 +33,7 @@ class App extends Component {
             ]
         };
 
+        // helper functions
         this.ledgerAt = this.ledgerAt.bind(this);
 
         this.handleDeleteItem = this.handleDeleteItem.bind(this);
@@ -53,17 +54,25 @@ class App extends Component {
     }
 
     /**
-     * Return the ledger at overall index 'index'
-     * Since we have two separate ledger types and assign indices to the concatenated array,
-     * this method is convenient for finding the _actual_ ledger at a given index.
+     * Return the ledger group (revenue or expenses) and index within said group at the given total index
      * I always concat revenues first, expenses after
+     * Returns:
+     * {
+     *     ledgerGroup: this.ledgers.revenues or this.ledgers.expenses
+     *     index: The index *within the group* of the selected ledger
+     * }
      */
     ledgerAt(index) {
+        // check input errors
         if(index < 0) throw new TypeError("Index must be >= 0");
-        // if index is below the number of revenue ledgers, we're referring to one of them
-        if(index < this.ledgers.revenue.length) return this.ledgers.revenue[index];
-        // otherwise, it will be in expenses, but offset by the length of the revenues array
-        return this.ledgers.expenses[index - this.ledgers.revenue.length];
+        if(isNaN(index)) throw new TypeError("Index must be a number");
+
+        //Find ledger type.
+        //Since I concat revenue:expenses in generating indices, (index<revenue.length) belongs to revenue, otherwise expenses
+        if(index < this.ledgers.revenue.length) {
+            return {ledgerGroup: this.ledgers.revenue, index: index};
+        }
+        return {ledgerGroup: this.ledgers.expenses, index: index - this.ledgers.revenue.length};
     }
 
     // controlled ledger form elements, watch for changes
@@ -149,7 +158,8 @@ class App extends Component {
         // if there are no form errors, add accordingly
         else {
             // grab state revenues or expenses ledger.
-            let ledger = this.ledgerAt(this.state.selectedLedgerIndex);
+            let ledgerInfo = this.ledgerAt(this.state.selectedLedgerIndex);
+            let ledger = ledgerInfo.ledgerGroup[ledgerInfo.index];
             ledger.addItem(this.state.newName, this.state.newOneTime, this.state.newMonthly);
             // set state with new totals and items array, clear errors displaying and form contents
             this.setState({
@@ -163,8 +173,17 @@ class App extends Component {
         }
     }
 
+    // delete a ledger/account
     handleDeleteLedger(index) {
-        
+        let ledgerInfo = this.ledgerAt(index);
+        let ledger = ledgerInfo.ledgerGroup[ledgerInfo.index];
+        ledgerInfo.ledgerGroup.splice(index, 1);
+
+        //Clear the ledger select field to ensure that this.selectedLedgerIndex is updated to reflect the change
+        this.setState({
+            selectedLedgerIndex: undefined
+        });
+        this.forceUpdate();
     }
 
     //add a new ledger/account of type revenue or expense
@@ -189,20 +208,20 @@ class App extends Component {
     }
 
     render() {
-        let ledgerList = this.ledgers.revenue.concat(this.ledgers.expenses);
-        let ledgerOptions = ledgerList.map((ledger, index) => {
+        let ledgers = this.ledgers.revenue.concat(this.ledgers.expenses);
+        let ledgerOptions = ledgers.map((ledger, index) => {
             return (
                     <option value={index}>{ledger.name}</option>
             );
         });
         let revenueTables = this.ledgers.revenue.map((ledger, index) => {
             return (
-                    <LedgerTable ledger={ledger} deleteCallback={this.handleDeleteItem} />
+                    <LedgerTable index={index} ledger={ledger} deleteItemCallback={this.handleDeleteItem} deleteLedgerCallback={this.handleDeleteLedger}/>
             );
         });
         let expenseTables = this.ledgers.expenses.map((ledger, index) => {
             return (
-                <LedgerTable ledger={ledger} deleteCallback={this.handleDeleteItem} />
+                    <LedgerTable index={index} ledger={ledger} deleteItemCallback={this.handleDeleteItem} deleteLedgerCallback={this.handleDeleteLedger}/>
             );
         });
 

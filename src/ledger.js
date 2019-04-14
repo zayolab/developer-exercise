@@ -53,7 +53,8 @@ export class ledger {
  * Properties:
  * name: The name of the ledger. Must be the same as one of the ledgers in the app.
  * ledger: The ledger object which holds the investments/accounts
- * deleteCallback: The function to call when a row in the ledger is deleted
+ * deleteItemCallback: The function to call when a row in the ledger is deleted
+ * deleteLedgercallback: The function to call when the ledger itself is deleted
  */
 export class LedgerTable extends Component {
     render() {
@@ -65,7 +66,7 @@ export class LedgerTable extends Component {
                     <td>{item.name}</td>
                     <td>${item.oneTime.toFixed(2)}</td>
                     <td>${item.monthly.toFixed(2)}</td>
-                    <td><Button onClick={() => this.props.deleteCallback(ledger, index)}>Delete</Button></td>
+                    <td><Button onClick={() => this.props.deleteItemCallback(ledger, index)}>Delete Item</Button></td>
                     </tr>
             );
         });
@@ -75,6 +76,9 @@ export class LedgerTable extends Component {
                 <thead>
                 <tr>
                 <th>{tableName}</th>
+                <td></td>
+                <td></td>
+                <td><Button onClick={() => this.props.deleteLedgerCallback(this.props.index)}>Delete Ledger</Button></td>
                 </tr>
                 <tr>
                 <th></th>
