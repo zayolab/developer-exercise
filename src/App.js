@@ -162,13 +162,13 @@ class App extends Component {
             let ledger = ledgerInfo.ledgerGroup[ledgerInfo.index];
             ledger.addItem(this.state.newName, this.state.newOneTime, this.state.newMonthly);
             // set state with new totals and items array, clear errors displaying and form contents
+            // I no longer clear the 'account' (formerly 'type') field so that multiple entries can be added quickly
             this.setState({
                 entryError: false,
                 //  Clear values in form
                 newName: '',
                 newMonthly: '',
                 newOneTime: '',
-                newType: ''
             });
         }
     }
@@ -186,7 +186,7 @@ class App extends Component {
         this.forceUpdate();
     }
 
-    //add a new ledger/account of type revenue or expense
+    // add a new ledger/account of type revenue or expense
     handleAddLedger(e) {
         e.preventDefault();
         if(!this.state.newLedgerType || !this.state.newLedgerName) {
@@ -194,24 +194,36 @@ class App extends Component {
                 ledgerError: true
             });
         } else {
-            //Add the new ledger to the correct ledger group. newLedgerType will be "revenue" or "expenses"
+            // Add the new ledger to the correct ledger group. newLedgerType will be "revenue" or "expenses"
             let ledgerGroup = (this.state.newLedgerType === "revenue" ? this.ledgers.revenue : this.ledgers.expenses);
             ledgerGroup.push(new ledger(this.state.newLedgerName, this.state.newLedgerType));
 
-            //clear error flags and reset form values
+            // clear error flags and reset form values
             this.setState({
                 ledgerError: false,
                 newLedgerType: '',
-                newLedgerName: ''
+                newLedgerName: '',
+                // if an expense ledger is selected and a revenue ledger is added, the selected index will point at the incorrect ledger
+                selectedLedgerIndex: undefined
             });
         }
     }
 
     render() {
         let ledgers = this.ledgers.revenue.concat(this.ledgers.expenses);
+        let header = '';
         let ledgerOptions = ledgers.map((ledger, index) => {
+            // Before the first (merged) list item, print the revenue ledger indicator
+            if(!index) header = <option value="revenue-header" disabled={true}>---- Revenue Ledgers ----</option>;
+            // Before the first expense item, print the expense ledger indicator
+            else if(index == this.ledgers.revenue.length) header = <option value="expenses-header" disabled={true}>---- Expense Ledgers ----</option>;
+            else header = '';
+            console.log("Adding header " + header);
             return (
+                <>
+                    {header}
                     <option value={index}>{ledger.name}</option>
+                </>
             );
         });
         let revenueTables = this.ledgers.revenue.map((ledger, index) => {
@@ -279,6 +291,10 @@ class App extends Component {
                 </Col>
                 </Row>
                 </Form>
+                {/* Ledger form errors */}
+            {this.state.ledgerError &&
+             <h4 className="error text-center">Please fill out all fields.</h4>
+            }
         {/* Add new expense or revenue form */}
             <h3 className="text-center">Add New Line Item</h3>
         <Form className="addExpenseOrRevenueForm" onSubmit={this.handleAddItem}>
@@ -329,7 +345,7 @@ class App extends Component {
             </Col>
             </Row>
         </Form>
-        {/* form errors */}
+        {/* Item form errors */}
             { this.state.entryError &&
             <h4 className="error text-center">Please fill out all fields</h4>
         }
@@ -338,12 +354,12 @@ class App extends Component {
             {/* <LedgerTable ledger={this.ledgers.revenue} deleteCallback={this.handleDeleteItem} /> */}
             <h3 className="text-center">Revenue Accounts</h3>
             {this.ledgers.revenue.length ? revenueTables :
-             <p className="emptyTable">There are currently no Revenue accounts. Add one above to start tracking revenue.</p>}
+             <p className="empty-table-message">There are currently no Revenue accounts. Add one above to start tracking revenue.</p>}
             {/* Expenses Table */}
             {/* <LedgerTable ledger={this.ledgers.expenses} deleteCallback={this.handleDeleteItem} /> */}
             <h3 className="text-center">Expense Accounts</h3>
             {this.ledgers.expenses.length ? expenseTables :
-             <p className="emptyTable">There are currently no Revenue accounts. Add one above to start tracking revenue.</p>}
+             <p className="empty-table-message">There are currently no Revenue accounts. Add one above to start tracking revenue.</p>}
             {/* Totals Table */}
             <h3 className="text-center">Totals</h3>
             <TotalsTable revenueLedgers={this.ledgers.revenue} expenseLedgers={this.ledgers.expenses} term={this.state.term} />
