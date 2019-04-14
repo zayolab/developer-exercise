@@ -177,7 +177,7 @@ class App extends Component {
     handleDeleteLedger(index) {
         let ledgerInfo = this.ledgerAt(index);
         let ledger = ledgerInfo.ledgerGroup[ledgerInfo.index];
-        ledgerInfo.ledgerGroup.splice(index, 1);
+        ledgerInfo.ledgerGroup.splice(ledgerInfo.index, 1);
 
         //Clear the ledger select field to ensure that this.selectedLedgerIndex is updated to reflect the change
         this.setState({
@@ -221,7 +221,7 @@ class App extends Component {
         });
         let expenseTables = this.ledgers.expenses.map((ledger, index) => {
             return (
-                    <LedgerTable index={index} ledger={ledger} deleteItemCallback={this.handleDeleteItem} deleteLedgerCallback={this.handleDeleteLedger}/>
+                    <LedgerTable index={this.ledgers.revenue.length + index} ledger={ledger} deleteItemCallback={this.handleDeleteItem} deleteLedgerCallback={this.handleDeleteLedger}/>
             );
         });
 
@@ -337,11 +337,13 @@ class App extends Component {
             {/* Revenue Table */}
             {/* <LedgerTable ledger={this.ledgers.revenue} deleteCallback={this.handleDeleteItem} /> */}
             <h3 className="text-center">Revenue Accounts</h3>
-            {revenueTables}
+            {this.ledgers.revenue.length ? revenueTables :
+             <p className="emptyTable">There are currently no Revenue accounts. Add one above to start tracking revenue.</p>}
             {/* Expenses Table */}
             {/* <LedgerTable ledger={this.ledgers.expenses} deleteCallback={this.handleDeleteItem} /> */}
             <h3 className="text-center">Expense Accounts</h3>
-            {expenseTables}
+            {this.ledgers.expenses.length ? expenseTables :
+             <p className="emptyTable">There are currently no Revenue accounts. Add one above to start tracking revenue.</p>}
             {/* Totals Table */}
             <h3 className="text-center">Totals</h3>
             <TotalsTable revenueLedgers={this.ledgers.revenue} expenseLedgers={this.ledgers.expenses} term={this.state.term} />
