@@ -55,7 +55,7 @@ class App extends Component {
 
     /**
      * Return the ledger group (revenue or expenses) and index within said group at the given total index
-     * I always concat revenues first, expenses after
+     * I always concat revenues first, expenses after, so an index < this.ledgers.revenue.length is a revenue ledger, otherwise it is an expenses ledger
      * Returns:
      * {
      *     ledgerGroup: this.ledgers.revenues or this.ledgers.expenses
@@ -138,12 +138,11 @@ class App extends Component {
      * index: The index of the item to delete in the list
      */
     handleDeleteItem(ledger, index) {
-        // type will be 'expenses' or 'revenue' depending on item to delete
         ledger.deleteItem(index);
         this.forceUpdate(); //Since we don't set any state for this, the page doesn't otherwise refresh after deletion
     }
 
-    // add new expense or revenue
+    // add new expense or revenue item
     handleAddItem(e) {
         e.preventDefault();
         // handle form errors, allows one-time and revenue amounts to be 0
@@ -161,6 +160,7 @@ class App extends Component {
             let ledgerInfo = this.ledgerAt(this.state.selectedLedgerIndex);
             let ledger = ledgerInfo.ledgerGroup[ledgerInfo.index];
             ledger.addItem(this.state.newName, this.state.newOneTime, this.state.newMonthly);
+
             // set state with new totals and items array, clear errors displaying and form contents
             // I no longer clear the 'account' (formerly 'type') field so that multiple entries can be added quickly
             this.setState({
@@ -176,10 +176,9 @@ class App extends Component {
     // delete a ledger/account
     handleDeleteLedger(index) {
         let ledgerInfo = this.ledgerAt(index);
-        let ledger = ledgerInfo.ledgerGroup[ledgerInfo.index];
         ledgerInfo.ledgerGroup.splice(ledgerInfo.index, 1);
 
-        //Clear the ledger select field to ensure that this.selectedLedgerIndex is updated to reflect the change
+        //Clear the ledger select field to ensure that the user does not try to act on a nonexistant/incorrect ledger
         this.setState({
             selectedLedgerIndex: undefined
         });
@@ -210,7 +209,10 @@ class App extends Component {
     }
 
     render() {
+        // concatenate revenue and expenses ledger lists
         let ledgers = this.ledgers.revenue.concat(this.ledgers.expenses);
+
+        // get a list of all ledgers and print a header indicating the revenue/expenses groups
         let header = '';
         let ledgerOptions = ledgers.map((ledger, index) => {
             // Before the first (merged) list item, print the revenue ledger indicator
@@ -226,6 +228,8 @@ class App extends Component {
                 </>
             );
         });
+
+        // create components for all revenue and expense tables
         let revenueTables = this.ledgers.revenue.map((ledger, index) => {
             return (
                     <LedgerTable index={index} ledger={ledger} deleteItemCallback={this.handleDeleteItem} deleteLedgerCallback={this.handleDeleteLedger}/>
@@ -351,12 +355,10 @@ class App extends Component {
         }
         <div className="roi-tables">
             {/* Revenue Table */}
-            {/* <LedgerTable ledger={this.ledgers.revenue} deleteCallback={this.handleDeleteItem} /> */}
             <h3 className="text-center">Revenue Accounts</h3>
             {this.ledgers.revenue.length ? revenueTables :
              <p className="empty-table-message">There are currently no Revenue accounts. Add one above to start tracking revenue.</p>}
             {/* Expenses Table */}
-            {/* <LedgerTable ledger={this.ledgers.expenses} deleteCallback={this.handleDeleteItem} /> */}
             <h3 className="text-center">Expense Accounts</h3>
             {this.ledgers.expenses.length ? expenseTables :
              <p className="empty-table-message">There are currently no Expense accounts. Add one above to start tracking expenses.</p>}

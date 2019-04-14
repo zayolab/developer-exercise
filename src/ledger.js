@@ -6,6 +6,7 @@ import {capitalize} from "./helper.js";
  * Class representing an account ledger with one-time and monthly revenue/expenses
  * Constructor arguments:
  * name: The name of the table
+ * type: 'revenue' or 'expenses'
  */
 export class ledger {
     constructor(name, type) {
@@ -22,7 +23,7 @@ export class ledger {
 
     // Delete expense or revenue from list
     deleteItem(index) {
-        // recalculate and set totals
+        // recalculate totals
         this.oneTimeTotal -= this.entries[index]['oneTime'];
         this.monthlyTotal -= this.entries[index]['monthly'];
 
@@ -51,10 +52,10 @@ export class ledger {
 /**
  * Component for a table representing the values in a ledger
  * Properties:
- * name: The name of the ledger. Must be the same as one of the ledgers in the app.
+ * index: The index (in the concatenated list of ledgers) of the ledger in App.js
  * ledger: The ledger object which holds the investments/accounts
  * deleteItemCallback: The function to call when a row in the ledger is deleted
- * deleteLedgercallback: The function to call when the ledger itself is deleted
+ * deleteLedgerCallback: The function to call when the ledger itself is deleted
  */
 export class LedgerTable extends Component {
     render() {

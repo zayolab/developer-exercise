@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 /**
  * Component for the totals list
  * Properties:
- * revenueLedger: The ledger representing revenues
- * expensesLedger: The ledger representing expenses
+ * revenueLedgers: The list of ledgers representing revenues
+ * expensesLedgers: The list of ledgers representing expenses
  */
 export default class TotalsTable extends Component {
     render() {
