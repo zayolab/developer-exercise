@@ -24,6 +24,10 @@
   width: 100px
 }
 
+.empty-table-message {
+    color: grey;
+}
+
 .error {
   color: red;
 }
