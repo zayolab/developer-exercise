@@ -264,7 +264,7 @@ class App extends Component {
                 <option value="expenses">Expenses</option>
             </Form.Control>
                 </Col>
-                <Col sm={{ span: 2, offset: 1 }} className="input-field">
+                <Col sm={7} className="input-field">
                 <Form.Control
             type="text"
             placeholder="Ledger Name"
@@ -323,8 +323,8 @@ class App extends Component {
             />
             </Col>
             <Col sm={1} className="add-form-button">
-            <Button type="submit">
-                Add
+                <Button sm={1} type="submit">
+                Add Item
             </Button>
             </Col>
             </Row>
