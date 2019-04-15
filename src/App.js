@@ -6,6 +6,7 @@ import {
   Form
  } from 'react-bootstrap'
 import './App.css';
+import RevenueTransactionList from './components/RevenueTransactionList';
 
 class App extends Component {
   constructor() {
@@ -144,6 +145,7 @@ class App extends Component {
 
   render() {
     // create table rows from revenue state list
+    /* not needed FKB
     let revenueTableData = this.state.revenue.map((item, index) => {
       return (
         <tr key={"revenue" + index}>
@@ -154,6 +156,7 @@ class App extends Component {
         </tr>
       )
     })
+    not needed FKB */
     // create table rows from expenses state list
     let expensesTableData = this.state.expenses.map((expense, index) => {
       return (
@@ -246,9 +249,7 @@ class App extends Component {
                 <th></th>
               </tr>
             </thead>
-            <tbody>
-              {revenueTableData}
-            </tbody>
+            <RevenueTransactionList RevenueTransactionList={this.state.revenue} handleDelete={this.handleDelete}  />
           </table>
           {/* Expenses Table */}
           <table className="expenses-table">
