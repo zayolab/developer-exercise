@@ -5,6 +5,7 @@ import {
     Button,
     Form
    } from 'react-bootstrap';
+   import PropTypes from 'prop-types';
   
 
 export class AddTransaction extends Component {
@@ -64,3 +65,11 @@ export class AddTransaction extends Component {
 }
 
 export default AddTransaction
+
+AddTransaction.propTypes = {
+  transaction: PropTypes.object.isRequired,         // TBD: because transaction is an object, does this need to be improved?
+  handleTypeChange: PropTypes.func.isRequired,
+  handleNameChange: PropTypes.func.isRequired,
+  handleOneTimeChange: PropTypes.func.isRequired,
+  handleMonthlyChange: PropTypes.func.isRequired
+}
