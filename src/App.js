@@ -7,6 +7,7 @@ import {
  } from 'react-bootstrap'
 import './App.css';
 import RevenueTransactionList from './components/RevenueTransactionList';
+import uniqueID from './id';
 
 class App extends Component {
   constructor() {
@@ -15,26 +16,31 @@ class App extends Component {
     this.state = {
       revenue: [
       {
+        id: uniqueID(),
         name: 'Item 1',
         oneTime: 100,
         monthly: 50
       },
       {
+        id: uniqueID(),
         name: 'Item 2',
         oneTime: 50,
         monthly: 25
       },
       {
+        id: uniqueID(),
         name: 'Item 3',
         oneTime: 25,
         monthly: 85
       }],
       expenses:[{
+        id: uniqueID(),
         name: 'Expense 1',
         oneTime: 500,
         monthly: 20.00
       },
       {
+        id: uniqueID(),
         name: 'Expense 2',
         oneTime: 200,
         monthly: 40
@@ -50,7 +56,7 @@ class App extends Component {
       error: false
     }
 
-    this.handleDelete = this.handleDelete.bind(this)
+    this.handleDeleteDEPRECATED = this.handleDeleteDEPRECATED.bind(this)
     this.handleAdd = this.handleAdd.bind(this)
 
     // controlled form elements functions
@@ -60,8 +66,39 @@ class App extends Component {
     this.handleMonthlyChange = this.handleMonthlyChange.bind(this)
   }
 
+  // delete matching id.
+  handleDelete(type, id) {
+    // listType will be 'expenses' or 'revenue' depending on item to delete
+    //let listType = this.state[type]
+    let index = 0;
+
+    // recalculate and set totals in state
+    if (type === 'expenses') {
+      index = this.state.expenses.find( x => x.id === id );
+      console.log("handleDelete expenses index="+index);
+
+      this.setState({
+        oneTimeExpense: this.state.oneTimeExpense - this.state.expenses[index]['oneTime'],
+        monthlyExpense: this.state.monthlyExpense - this.state.expenses[index]['monthly'],
+      })
+    } else {
+      index = this.state.revenue.find( x => x.id === id );
+      console.log("handleDelete revenue index="+index);
+
+      // for revenue
+      this.setState({
+        oneTimeRevenue: this.state.oneTimeRevenue - this.state.revenue[index]['oneTime'],
+        monthlyRevenue: this.state.monthlyRevenue - this.state.revenue[index]['monthly'],
+      })
+    }
+    // remove list item from state array
+//    this.setState({
+//      [listType]: listType.splice(index, 1),
+//    })
+  }
+
   // Delete expense or revenue from list
-  handleDelete(type, index) {
+  handleDeleteDEPRECATED(type, index) {
     // listType will be 'expenses' or 'revenue' depending on item to delete
     let listType = this.state[type]
     // recalculate and set totals in state
@@ -152,7 +189,7 @@ class App extends Component {
           <td>{item.name}</td>
           <td>${item.oneTime.toFixed(2)}</td>
           <td>${item.monthly.toFixed(2)}</td>
-          <td><Button onClick={() => this.handleDelete('revenue', index)}>Delete</Button></td>
+          <td><Button onClick={() => this.handleDeleteDEPRECATED('revenue', index)}>Delete</Button></td>
         </tr>
       )
     })
@@ -164,7 +201,7 @@ class App extends Component {
           <td>{expense.name}</td>
           <td>${expense.oneTime.toFixed(2)}</td>
           <td>${expense.monthly.toFixed(2)}</td>
-          <td><Button onClick={() => this.handleDelete('expenses', index)}>Delete</Button></td>
+          <td><Button onClick={() => this.handleDeleteDEPRECATED('expenses', index)}>Delete</Button></td>
         </tr>
       )
     })
@@ -249,7 +286,9 @@ class App extends Component {
                 <th></th>
               </tr>
             </thead>
+            <tbody>
             <RevenueTransactionList RevenueTransactionList={this.state.revenue} handleDelete={this.handleDelete}  />
+            </tbody>
           </table>
           {/* Expenses Table */}
           <table className="expenses-table">
