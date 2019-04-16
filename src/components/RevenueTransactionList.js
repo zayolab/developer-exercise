@@ -1,23 +1,17 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Transaction from './Transaction';
 
 export class RevenueTransactionList extends Component {
   render() {
     return this.props.RevenueTransactionList.map((item) => (
-        <Transaction key={item.id} element={item} revenue={true} handleDelete={this.props.handleDelete}  />
+        <Transaction key={item.id} Transaction={item} revenue={true} handleDelete={this.props.handleDelete}  />
     ))
+  }
 }
-}
-/*
-    let revenueTableData = this.state.revenue.map((item, index) => {
-      return (
-        <tr key={"revenue" + index}>
-          <td>{item.name}</td>
-          <td>${item.oneTime.toFixed(2)}</td>
-          <td>${item.monthly.toFixed(2)}</td>
-          <td><Button onClick={() => this.handleDelete('revenue', index)}>Delete</Button></td>
-        </tr>
-      )
-    })
-*/
 export default RevenueTransactionList
+
+RevenueTransactionList.propTypes = {
+  RevenueTransactionList: PropTypes.array.isRequired,
+  handleDelete: PropTypes.func.isRequired
+}

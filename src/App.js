@@ -7,6 +7,7 @@ import {
  } from 'react-bootstrap'
 import './App.css';
 import RevenueTransactionList from './components/RevenueTransactionList';
+import ExpenseTransactionList from './components/ExpenseTransactionList';
 import uniqueID from './id';
 
 class App extends Component {
@@ -56,9 +57,7 @@ class App extends Component {
       error: false
     }
 
-    // TBD: change all these to use => functions to avoid bind... (personal taste)
     this.handleDelete = this.handleDelete.bind(this)
-    this.handleDeleteDEPRECATED = this.handleDeleteDEPRECATED.bind(this)
     this.handleAdd = this.handleAdd.bind(this)
 
     // controlled form elements functions
@@ -81,6 +80,7 @@ class App extends Component {
         monthlyExpense: this.state.monthlyExpense - match['monthly'],
       })
       this.setState({ expenses: [...this.state.expenses.filter(x => x.id !== id)] });
+
     } else {
       match = this.state.revenue.find( x => x.id === id );
 
@@ -90,30 +90,8 @@ class App extends Component {
         monthlyRevenue: this.state.monthlyRevenue - match['monthly'],
       })
       this.setState({ revenue: [...this.state.revenue.filter(x => x.id !== id)] });
+      
     }
-  }
-
-  // Delete expense or revenue from list
-  handleDeleteDEPRECATED(type, index) {
-    // listType will be 'expenses' or 'revenue' depending on item to delete
-    let listType = this.state[type]
-    // recalculate and set totals in state
-    if (type === 'expenses') {
-      this.setState({
-        oneTimeExpense: this.state.oneTimeExpense - this.state.expenses[index]['oneTime'],
-        monthlyExpense: this.state.monthlyExpense - this.state.expenses[index]['monthly'],
-      })
-    } else {
-      // for revenue
-      this.setState({
-        oneTimeRevenue: this.state.oneTimeRevenue - this.state.revenue[index]['oneTime'],
-        monthlyRevenue: this.state.monthlyRevenue - this.state.revenue[index]['monthly'],
-      })
-    }
-    // remove list item from state array
-    this.setState({
-      [listType]: listType.splice(index, 1),
-    })
   }
 
   // controlled form elements, watch for changes
@@ -179,7 +157,7 @@ class App extends Component {
 
   render() {
     // create table rows from revenue state list
-    /* not needed FKB
+    /* moved to RevenueTransactionList
     let revenueTableData = this.state.revenue.map((item, index) => {
       return (
         <tr key={"revenue" + index}>
@@ -190,8 +168,10 @@ class App extends Component {
         </tr>
       )
     })
-    not needed FKB */
+    */
+
     // create table rows from expenses state list
+    /* moved to ExpenseTransactionList
     let expensesTableData = this.state.expenses.map((expense, index) => {
       return (
         <tr key={"expense" + index}>
@@ -202,6 +182,7 @@ class App extends Component {
         </tr>
       )
     })
+    */
 
     // Calculations for totals
     let totalRevenue = this.state.oneTimeRevenue + (this.state.monthlyRevenue * 12)
@@ -301,7 +282,7 @@ class App extends Component {
               </tr>
             </thead>
             <tbody>
-              {expensesTableData}
+              <ExpenseTransactionList ExpenseTransactionList={this.state.expenses} handleDelete={this.handleDelete}  />
             </tbody>
           </table>
           {/* Totals Table */}
