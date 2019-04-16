@@ -56,6 +56,8 @@ class App extends Component {
       error: false
     }
 
+    // TBD: change all these to use => functions to avoid bind... (personal taste)
+    this.handleDelete = this.handleDelete.bind(this)
     this.handleDeleteDEPRECATED = this.handleDeleteDEPRECATED.bind(this)
     this.handleAdd = this.handleAdd.bind(this)
 
@@ -68,33 +70,27 @@ class App extends Component {
 
   // delete matching id.
   handleDelete(type, id) {
-    // listType will be 'expenses' or 'revenue' depending on item to delete
-    //let listType = this.state[type]
-    let index = 0;
+    let match;
 
     // recalculate and set totals in state
     if (type === 'expenses') {
-      index = this.state.expenses.find( x => x.id === id );
-      console.log("handleDelete expenses index="+index);
+      match = this.state.expenses.find( x => x.id === id );
 
       this.setState({
-        oneTimeExpense: this.state.oneTimeExpense - this.state.expenses[index]['oneTime'],
-        monthlyExpense: this.state.monthlyExpense - this.state.expenses[index]['monthly'],
+        oneTimeExpense: this.state.oneTimeExpense - match['oneTime'],
+        monthlyExpense: this.state.monthlyExpense - match['monthly'],
       })
+      this.setState({ expenses: [...this.state.expenses.filter(x => x.id !== id)] });
     } else {
-      index = this.state.revenue.find( x => x.id === id );
-      console.log("handleDelete revenue index="+index);
+      match = this.state.revenue.find( x => x.id === id );
 
       // for revenue
       this.setState({
-        oneTimeRevenue: this.state.oneTimeRevenue - this.state.revenue[index]['oneTime'],
-        monthlyRevenue: this.state.monthlyRevenue - this.state.revenue[index]['monthly'],
+        oneTimeRevenue: this.state.oneTimeRevenue - match['oneTime'],
+        monthlyRevenue: this.state.monthlyRevenue - match['monthly'],
       })
+      this.setState({ revenue: [...this.state.revenue.filter(x => x.id !== id)] });
     }
-    // remove list item from state array
-//    this.setState({
-//      [listType]: listType.splice(index, 1),
-//    })
   }
 
   // Delete expense or revenue from list
@@ -161,6 +157,7 @@ class App extends Component {
       // grab state array of revenues or expenses
       let items = this.state[typeOfAmount]
       items.push({
+        id: uniqueID(),
         name: this.state.newName,
         oneTime:this.state.newOneTime,
         monthly: this.state.newMonthly

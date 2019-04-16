@@ -4,7 +4,7 @@ import Transaction from './Transaction';
 export class RevenueTransactionList extends Component {
   render() {
     return this.props.RevenueTransactionList.map((item) => (
-        <Transaction key={item.id} element={item} revenue={true} />
+        <Transaction key={item.id} element={item} revenue={true} handleDelete={this.props.handleDelete}  />
     ))
 }
 }
