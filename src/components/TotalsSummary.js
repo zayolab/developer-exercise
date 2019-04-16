@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 export class TotalsSummary extends Component {
+
+    getStyle = (x) => {
+        return {
+            background: x===true ? '#ffffff' : '#ffBBBB'
+        }
+    }
   render() {
     return (
       <>
@@ -21,20 +27,20 @@ export class TotalsSummary extends Component {
               <tr>
                 <td>{this.props.R3}</td>
                 <td></td>
-                <td>${ this.props.monthlyContributionProfit.toFixed(2)}</td>
-                <td>${ this.props.totalContributionProfit.toFixed(2)}</td>
+                <td style={ this.getStyle(this.props.monthlyContributionProfit>=0) }  >${ this.props.monthlyContributionProfit.toFixed(2)}</td>
+                <td style={ this.getStyle(this.props.totalContributionProfit>=0) }  >${ this.props.totalContributionProfit.toFixed(2)}</td>
               </tr>
               <tr>
                 <td>{this.props.R4}</td>
                 <td></td>
                 <td></td>
-                <td>{this.props.contributionMargin}%</td>
+                <td style={ this.getStyle(this.props.contributionMargin>=0) }  >{this.props.contributionMargin}%</td>
               </tr>
               <tr>
                 <td>{this.props.R5}</td>
                 <td></td>
                 <td></td>
-                <td>{this.props.capitalROI}</td>
+                <td style={ this.getStyle(this.props.capitalROI>=0) }  >{this.props.capitalROI}</td>
               </tr>
             </tbody>
       </>
