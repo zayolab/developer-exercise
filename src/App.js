@@ -47,10 +47,10 @@ class App extends Component {
         oneTime: 200,
         monthly: 40
       }],
-      oneTimeRevenue: 175,
-      oneTimeExpense: 700,
-      monthlyRevenue: 160,
-      monthlyExpense: 60,
+      oneTimeRevenue: 0,
+      oneTimeExpense: 0,
+      monthlyRevenue: 0,
+      monthlyExpense: 0,
       transaction:{
         newType: '',
         newName: '',
@@ -59,19 +59,43 @@ class App extends Component {
       },
       error: false
     }
+  }
 
-    this.handleDelete = this.handleDelete.bind(this)
-    this.handleAdd = this.handleAdd.bind(this)
+  // update oneTimeRevenue, et. al.
+  //
+  // this is called upon componentMount().
+  // It is not a great idea to call this upon a transaction delete or add because it's slow.
+  updateSummaries = () => {
 
-    // controlled form elements functions
-    this.handleTypeChange = this.handleTypeChange.bind(this)
-    this.handleNameChange = this.handleNameChange.bind(this)
-    this.handleOneTimeChange = this.handleOneTimeChange.bind(this)
-    this.handleMonthlyChange = this.handleMonthlyChange.bind(this)
+    // set up
+    let oneTimeRevenue = 0;
+    let monthlyRevenue = 0;
+    let oneTimeExpense = 0;
+    let monthlyExpense = 0;
+    let revenues=this.state.revenue;
+    let expenses=this.state.expenses;
+
+    // iterate all elements
+    revenues.forEach(element => {
+      oneTimeRevenue += element.oneTime;
+      monthlyRevenue += element.monthly;
+    })
+    expenses.forEach(element => {
+      oneTimeExpense += element.oneTime;
+      monthlyExpense += element.monthly;
+    })
+
+    // write to state
+    this.setState({ 
+      oneTimeRevenue: oneTimeRevenue,
+      monthlyRevenue: monthlyRevenue,
+      oneTimeExpense: oneTimeExpense,
+      monthlyExpense: monthlyExpense
+    });
   }
 
   // delete matching id.
-  handleDelete(type, id) {
+  handleDelete = (type, id) => {
     let match;
 
     // recalculate and set totals in state
@@ -93,35 +117,34 @@ class App extends Component {
         monthlyRevenue: this.state.monthlyRevenue - match['monthly'],
       })
       this.setState({ revenue: [...this.state.revenue.filter(x => x.id !== id)] });
-      
     }
   }
 
   // controlled form elements, watch for changes
-  handleTypeChange(e) {
+  handleTypeChange = (e) => {
     let transaction = Object.assign({}, this.state.transaction);
     transaction.newType = e.target.value;
     this.setState({transaction});
   }
-  handleNameChange(e) {
+  handleNameChange = (e) => {
     let transaction = Object.assign({}, this.state.transaction);
     transaction.newName = e.target.value;
     this.setState({transaction});
   }
 
-  handleMonthlyChange(e) {
+  handleMonthlyChange = (e) => {
     let transaction = Object.assign({}, this.state.transaction);
     transaction.newMonthly = Number(e.target.value);
     this.setState({transaction});
   }
-  handleOneTimeChange(e) {
+  handleOneTimeChange = (e) => {
     let transaction = Object.assign({}, this.state.transaction);
     transaction.newOneTime = Number(e.target.value);
     this.setState({transaction});
   }
 
   // add new expense or revenue
-  handleAdd(e) {
+  handleAdd = (e) => {
     e.preventDefault()
     //console.log(this.state.transaction);
 
@@ -163,8 +186,11 @@ class App extends Component {
         newType: ''
       };
       this.setState({transaction});
-  
     }
+  }
+
+  componentDidMount() {
+    this.updateSummaries();
   }
 
   render() {
