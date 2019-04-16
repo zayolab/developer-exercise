@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import {
-  Row,
-  Col,
-  Button,
-  Form
- } from 'react-bootstrap'
+//import {
+//  Row,
+//  Col,
+//  Button,
+//  Form
+// } from 'react-bootstrap';
 import './App.css';
+import AddTransaction from './components/AddTransaction';
 import RevenueTransactionList from './components/RevenueTransactionList';
 import ExpenseTransactionList from './components/ExpenseTransactionList';
 import uniqueID from './id';
@@ -50,10 +51,12 @@ class App extends Component {
       oneTimeExpense: 700,
       monthlyRevenue: 160,
       monthlyExpense: 60,
-      newType: '',
-      newName: '',
-      newOneTime: '',
-      newMonthly: '',
+      transaction:{
+        newType: '',
+        newName: '',
+        newOneTime: '',
+        newMonthly: '',
+      },
       error: false
     }
 
@@ -96,93 +99,75 @@ class App extends Component {
 
   // controlled form elements, watch for changes
   handleTypeChange(e) {
-    this.setState({
-      newType: e.target.value
-    })
+    let transaction = Object.assign({}, this.state.transaction);
+    transaction.newType = e.target.value;
+    this.setState({transaction});
   }
   handleNameChange(e) {
-    this.setState({
-      newName: e.target.value
-    })
+    let transaction = Object.assign({}, this.state.transaction);
+    transaction.newName = e.target.value;
+    this.setState({transaction});
   }
 
   handleMonthlyChange(e) {
-    this.setState({
-      newMonthly: Number(e.target.value)
-    })
+    let transaction = Object.assign({}, this.state.transaction);
+    transaction.newMonthly = Number(e.target.value);
+    this.setState({transaction});
   }
   handleOneTimeChange(e) {
-    this.setState({
-      newOneTime: Number(e.target.value)
-    })
+    let transaction = Object.assign({}, this.state.transaction);
+    transaction.newOneTime = Number(e.target.value);
+    this.setState({transaction});
   }
 
   // add new expense or revenue
   handleAdd(e) {
     e.preventDefault()
+    //console.log(this.state.transaction);
+
     // handle form errors, allows one-time and revenue amounts to be 0
-    if (!this.state.newType || !this.state.newName || (!this.state.newOneTime && this.state.newOneTime !== 0) || (!this.state.newMonthly && this.state.newMonthly !== 0)) {
-      this.setState({
+    if (!this.state.transaction.newType 
+      || !this.state.transaction.newName 
+      || (!this.state.transaction.newOneTime && this.state.transaction.newOneTime !== 0) 
+      || (!this.state.transaction.newMonthly && this.state.transaction.newMonthly !== 0)) {
+        this.setState({
         error: true
       })
     }
     // if there are no form errors, add accordingly
     else {
       // typeOfAmount will be either 'expenses' or 'revenue'
-      let typeOfAmount = this.state.newType
+      let typeOfAmount = this.state.transaction.newType
       let monthly = typeOfAmount === 'expenses' ? 'monthlyExpense' : 'monthlyRevenue'
       let oneTime = typeOfAmount === 'expenses' ? 'oneTimeExpense' : 'oneTimeRevenue'
       // grab state array of revenues or expenses
       let items = this.state[typeOfAmount]
       items.push({
         id: uniqueID(),
-        name: this.state.newName,
-        oneTime:this.state.newOneTime,
-        monthly: this.state.newMonthly
+        name: this.state.transaction.newName,
+        oneTime:this.state.transaction.newOneTime,
+        monthly: this.state.transaction.newMonthly
       })
       // set state with new totals and items array, clear errors displaying and form contents
       this.setState({
         error: false,
         [typeOfAmount]: items,
-        [monthly]: this.state[monthly] + this.state.newMonthly,
-        [oneTime]: this.state[oneTime] + this.state.newOneTime,
-        //  Clear values in form
+        [monthly]: this.state[monthly] + this.state.transaction.newMonthly,
+        [oneTime]: this.state[oneTime] + this.state.transaction.newOneTime,
+      });
+      //  Clear values in form
+      let transaction = {
         newName: '',
         newMonthly: '',
         newOneTime: '',
         newType: ''
-      })
+      };
+      this.setState({transaction});
+  
     }
   }
 
   render() {
-    // create table rows from revenue state list
-    /* moved to RevenueTransactionList
-    let revenueTableData = this.state.revenue.map((item, index) => {
-      return (
-        <tr key={"revenue" + index}>
-          <td>{item.name}</td>
-          <td>${item.oneTime.toFixed(2)}</td>
-          <td>${item.monthly.toFixed(2)}</td>
-          <td><Button onClick={() => this.handleDeleteDEPRECATED('revenue', index)}>Delete</Button></td>
-        </tr>
-      )
-    })
-    */
-
-    // create table rows from expenses state list
-    /* moved to ExpenseTransactionList
-    let expensesTableData = this.state.expenses.map((expense, index) => {
-      return (
-        <tr key={"expense" + index}>
-          <td>{expense.name}</td>
-          <td>${expense.oneTime.toFixed(2)}</td>
-          <td>${expense.monthly.toFixed(2)}</td>
-          <td><Button onClick={() => this.handleDeleteDEPRECATED('expenses', index)}>Delete</Button></td>
-        </tr>
-      )
-    })
-    */
 
     // Calculations for totals
     let totalRevenue = this.state.oneTimeRevenue + (this.state.monthlyRevenue * 12)
@@ -198,54 +183,14 @@ class App extends Component {
       <div>
         <h1 className="text-center">ROI Calculator</h1>
         {/* Add new expense or revenue form */}
-        <Form className="addExpenseOrRevenueForm" onSubmit={this.handleAdd}>
-          <Row className="input-field">
-            <Col sm={{ span: 2, offset: 1}} className="input-field">
-              <Form.Control
-                as="select"
-                onChange = {this.handleTypeChange}
-                value={this.state.newType ? this.state.newType : 'choose'}
-                >
-                <option value="choose" disabled={true}>Select Type</option>
-                <option value="revenue">Revenue</option>
-                <option value="expenses">Expense</option>
-              </Form.Control>
-            </Col>
-            <Col sm={3} className="input-field">
-              <Form.Control
-                type="text"
-                placeholder="Name"
-                onChange = {this.handleNameChange}
-                value={this.state.newName ? this.state.newName : ''}
-              />
-            </Col>
-            <Col sm={2} className="input-field">
-              <Form.Control
-                type="number"
-                placeholder="One-Time Amount"
-                onChange = {this.handleOneTimeChange}
-                step="0.01"
-                min="0"
-                value={(this.state.newOneTime || this.state.newOneTime === 0) ? this.state.newOneTime : ''}
-              />
-            </Col>
-            <Col sm={2} className="input-field">
-              <Form.Control
-                type="number"
-                placeholder="Monthly Amount"
-                onChange = {this.handleMonthlyChange}
-                step="0.01"
-                min="0"
-                value={(this.state.newMonthly || this.state.newMonthly === 0) ? this.state.newMonthly : ''}
-              />
-            </Col>
-            <Col sm={1} className="add-form-button">
-              <Button type="submit">
-                Add
-              </Button>
-            </Col>
-          </Row>
-        </Form>
+        <AddTransaction 
+          handleAdd={this.handleAdd} 
+          handleTypeChange={this.handleTypeChange} 
+          handleNameChange={this.handleNameChange}
+          handleMonthlyChange={this.handleMonthlyChange}
+          handleOneTimeChange={this.handleOneTimeChange}
+          transaction={this.state.transaction}
+        />
         {/* form errors */}
         { this.state.error &&
           <h4 className="error text-center">Please fill out all fields</h4>
@@ -265,7 +210,10 @@ class App extends Component {
               </tr>
             </thead>
             <tbody>
-            <RevenueTransactionList RevenueTransactionList={this.state.revenue} handleDelete={this.handleDelete}  />
+            <RevenueTransactionList 
+              RevenueTransactionList={this.state.revenue} 
+              handleDelete={this.handleDelete}
+            />
             </tbody>
           </table>
           {/* Expenses Table */}
@@ -282,7 +230,10 @@ class App extends Component {
               </tr>
             </thead>
             <tbody>
-              <ExpenseTransactionList ExpenseTransactionList={this.state.expenses} handleDelete={this.handleDelete}  />
+              <ExpenseTransactionList 
+                ExpenseTransactionList={this.state.expenses}
+                handleDelete={this.handleDelete}
+              />
             </tbody>
           </table>
           {/* Totals Table */}
