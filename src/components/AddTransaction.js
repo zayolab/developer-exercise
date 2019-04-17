@@ -10,8 +10,13 @@ import {
 
 export class AddTransaction extends Component {
 
+  errMsg = (x,msg) => {
+    return x ? msg : "" 
+  }
+
   render() {
     return (
+        <>
         <Form className="addExpenseOrRevenueForm" onSubmit={this.props.handleAdd}>
           <Row className="input-field">
             <Col sm={{ span: 2, offset: 1}} className="input-field">
@@ -60,6 +65,10 @@ export class AddTransaction extends Component {
             </Col>
           </Row>
         </Form>
+
+        { /*form errors*/ }
+        <h4 className="error text-center">{ this.errMsg(this.props.error===true, this.props.errorMessage) } </h4>
+        </>
     )
   }
 }
@@ -71,5 +80,7 @@ AddTransaction.propTypes = {
   handleTypeChange: PropTypes.func.isRequired,
   handleNameChange: PropTypes.func.isRequired,
   handleOneTimeChange: PropTypes.func.isRequired,
-  handleMonthlyChange: PropTypes.func.isRequired
+  handleMonthlyChange: PropTypes.func.isRequired,
+  error: PropTypes.bool.isRequired,
+  errorMessage: PropTypes.string.isRequired
 }

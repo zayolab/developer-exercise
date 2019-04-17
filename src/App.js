@@ -139,7 +139,6 @@ class App extends Component {
   // add new expense or revenue
   handleAdd = (e) => {
     e.preventDefault()
-    //console.log(this.state.transaction);
 
     // handle form errors, allows one-time and revenue amounts to be 0
     if (!this.state.transaction.newType 
@@ -211,18 +210,15 @@ class App extends Component {
           handleMonthlyChange={this.handleMonthlyChange}
           handleOneTimeChange={this.handleOneTimeChange}
           transaction={this.state.transaction}
+          error={this.state.error}
+          errorMessage="Please fill out all fields"
         />
-
-        {/* form errors */}
-        { this.state.error &&
-          <h4 className="error text-center">Please fill out all fields</h4>
-        }
 
         <div className="roi-tables">
           {/* Revenue Table */}
           <table className="revenue-table">
             <LabelsH1C2C3C4 H1={"Revenue"} C2={"One-Time"} C3={"Monthly"} C4={""} />
-            
+
             <tbody>
               <RevenueTransactionList 
                 RevenueTransactionList={this.state.revenue} 
