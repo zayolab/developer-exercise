@@ -6,7 +6,7 @@ import {
   Form
  } from 'react-bootstrap'
 
-const RevenueTable = () => (
+const RevenueTable = props => (
   <table className="revenue-table">
     <thead>
       <tr>

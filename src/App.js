@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import {
   Row,
   Col,
@@ -10,6 +10,13 @@ import './App.css';
 
 
 const App = () => {
+  const revenueData = [
+    {id: 1, name: "Corporate Bandwith Revenue", oneTime:5000, monthly: 500 },
+    {id: 1, name: "Residential Bandwith Revenue", oneTime:2000, monthly: 100 },
+    {id: 1, name: "Advertising Revenue", oneTime:10000, monthly: 2500 }
+  ]
+
+  const [revenue, setRevenue] = useState(revenueData)
   return (
     <div className="container">
       <h1 className="text text-center">ROI Calculator</h1>
@@ -19,7 +26,7 @@ const App = () => {
         </div>
         <div className="flex-large">
           <h2>Revenue Table</h2>
-          <RevenueTable />
+          <RevenueTable revenue={revenue}/>
         </div>
         <div className="flex-large">
           <h2>Expenses Table</h2>
