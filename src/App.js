@@ -106,7 +106,10 @@ const App = () => {
           expense={expense}
           deleteExpense={deleteExpense}
           editExpenseRow={editExpenseRow}/>
-        <ResultsTable />
+        <ResultsTable
+          revenue={revenue}
+          expense={expense}
+        />
       </div>
     </div>
   )
