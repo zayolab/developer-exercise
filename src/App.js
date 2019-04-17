@@ -6,6 +6,7 @@ import {
   Form
  } from 'react-bootstrap'
 import RevenueTable from './components/RevenueTable'
+import ExpenseTable from './components/ExpenseTable'
 import AddDataForm from './components/AddDataForm'
 import './App.css';
 
@@ -13,16 +14,27 @@ import './App.css';
 const App = () => {
   const revenueData = [
     {id: 1, name: "Corporate Bandwith Revenue", oneTime:5000, monthly: 500 },
-    {id: 1, name: "Residential Bandwith Revenue", oneTime:2000, monthly: 100 },
-    {id: 1, name: "Advertising Revenue", oneTime:10000, monthly: 2500 }
+    {id: 2, name: "Residential Bandwith Revenue", oneTime:2000, monthly: 100 },
+    {id: 3, name: "Advertising Revenue", oneTime:10000, monthly: 2500 }
   ]
-  const [revenue, setRevenue] = useState(revenueData)
+  const expenseData = [
+    {id: 1, name: "Rent", oneTime:5000, monthly: 500 },
+    {id: 2, name: "Salaries", oneTime:2000, monthly: 100 },
+    {id: 3, name: "Marketing", oneTime:10000, monthly: 2500 }
+  ]
 
+  const [revenue, setRevenue] = useState(revenueData)
+  const [expense, setExpense] = useState(expenseData)
 
   const addRevenue = newRevenue => {
     newRevenue.id = revenue.length + 1
     setRevenue([...revenue, newRevenue])
   }
+  const addExpense = newExpense => {
+    newExpense.id = expense.length + 1
+    setExpense([...expense, newExpense])
+  }
+
 
   return (
     <div className="container">
@@ -30,7 +42,7 @@ const App = () => {
       <div className="flex-row">
         <div className="flex-large">
           <h2>Add Expense or Revenue</h2>
-          <AddDataForm addRevenue={addRevenue} />
+          <AddDataForm addRevenue={addRevenue} addExpense={addExpense}/>
         </div>
         <div className="flex-large">
           <h2>Revenue Table</h2>
@@ -38,6 +50,7 @@ const App = () => {
         </div>
         <div className="flex-large">
           <h2>Expenses Table</h2>
+          <ExpenseTable expense={expense} />
         </div>
         <div className="flex-large">
           <h2>Results Table</h2>

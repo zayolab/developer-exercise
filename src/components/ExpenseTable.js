@@ -1,13 +1,13 @@
 import React from 'react'
 import {
-  Button
+  Button,
  } from 'react-bootstrap'
 
-const RevenueTable = props => (
+const ExpenseTable = props => (
   <table className="revenue-table">
     <thead>
       <tr>
-        <th>Revenue</th>
+        <th>Expenses</th>
       </tr>
       <tr>
         <th></th>
@@ -18,12 +18,12 @@ const RevenueTable = props => (
     </thead>
     <tbody>
       {/*If there is revenue data, show that in the table*/}
-      {props.revenue.length > 0 ? (
-        props.revenue.map((revenue, index) => (
+      {props.expense.length > 0 ? (
+        props.expense.map((expense, index) => (
           <tr key={index}>
-            <td>{revenue.name}</td>
-            <td>${revenue.oneTime}</td>
-            <td>${revenue.monthly}</td>
+            <td>{expense.name}</td>
+            <td>${expense.oneTime}</td>
+            <td>${expense.monthly}</td>
             <td><Button variant="danger">Delete</Button></td>
           </tr>
         ))
@@ -40,4 +40,4 @@ const RevenueTable = props => (
   </table>
 )
 
-export default RevenueTable
+export default ExpenseTable

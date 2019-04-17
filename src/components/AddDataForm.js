@@ -7,30 +7,36 @@ import {
  } from 'react-bootstrap'
 
 const AddDataForm = props => {
-  const initialFormState = { id: null, name: '', oneTime: 0, monthly: 0, }
+  const initialFormState = { id: null, name: '', oneTime: 0, monthly: 0, type: 'none' }
 
   const [data, setData] = useState(initialFormState)
 
   const handleInputChange = event => {
+    console.log('EVENT TARGET Name>>>', event.target.name);
+    console.log('EVENT TARGET value>>>', event.target.value)
     const { name, value } = event.target
-
     setData({...data, [name]: value})
   }
 
   return (
       <Form onSubmit={event => {
         event.preventDefault()
-        if(!data.name || !data.oneTime && !data.monthly) return
-
+        console.log('Data is', data);
+        console.log('initialFormState is', initialFormState);
+        if(data.type === 'revenue'){
         props.addRevenue(data)
+        }
+        else if (data.type === 'expense'){
+          props.addExpense(data)
+        }
         setData(initialFormState)
       }}>
         <Row className="input-field">
           <Col sm={{ span: 2, offset: 1}} className="input-field">
-            <Form.Control as="select">
-              <option value="choose" disabled={false}>Select Type</option>
-              <option value="revenue">Revenue</option>
-              <option value="expense">Expense</option>
+            <Form.Control as="select" name="type" onChange={handleInputChange}>
+                <option value="choose" disabled={false}>Select Type</option>
+                <option value="revenue" name="revenue">Revenue</option>
+                <option value="expense" name="expense">Expense</option>
             </Form.Control>
           </Col>
           <Col sm={3} className="input-field">
