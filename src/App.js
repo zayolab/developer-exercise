@@ -35,7 +35,7 @@ const App = () => {
 
   const [currentExpense, setCurrentExpense] = useState(initialExpenseEditForm)
 
-// Look to refactor single "addData/deleteData functions"
+// Errors when attempting shared expense/revenue functions. Look to refactor to eliminate duplicate code
   const addRevenue = newRevenue => {
     newRevenue.id = revenue.length + 1
     newRevenue.type = 'revenue'
