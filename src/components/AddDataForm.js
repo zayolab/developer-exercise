@@ -6,21 +6,25 @@ import {
   Form
  } from 'react-bootstrap'
 
-export const AddDataForm = props => {
-  const initialFormState = { id: null, name: '', oneTime: '', monthly: '', }
+const AddDataForm = props => {
+  const initialFormState = { id: null, name: '', oneTime: 0, monthly: 0, }
 
   const [data, setData] = useState(initialFormState)
 
   const handleInputChange = event => {
-    console.log(event.target)
     const { name, value } = event.target
+
     setData({...data, [name]: value})
   }
 
-
-
   return (
-      <Form>
+      <Form onSubmit={event => {
+        event.preventDefault()
+        if(!data.name || !data.oneTime && !data.monthly) return
+
+        props.addRevenue(data)
+        setData(initialFormState)
+      }}>
         <Row className="input-field">
           <Col sm={{ span: 2, offset: 1}} className="input-field">
             <Form.Control as="select">
@@ -40,7 +44,6 @@ export const AddDataForm = props => {
           </Col>
           <Col sm={2} className="input-field">
             <Form.Control
-              type="number"
               name="oneTime"
               placeholder="One-Time Amount"
               step="0.01"
@@ -51,7 +54,6 @@ export const AddDataForm = props => {
           </Col>
           <Col sm={2} className="input-field">
             <Form.Control
-              type="number"
               name="monthly"
               placeholder="Monthly Amount"
               step="0.01"
