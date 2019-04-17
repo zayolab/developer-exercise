@@ -10,7 +10,7 @@ import './App.css';
 
 const App = () => {
   return (
-    <div>
+    <div className="container">
       <h1 className="text text-center">ROI Calculator</h1>
       <div className="flex-row">
         <div className="flex-large">
