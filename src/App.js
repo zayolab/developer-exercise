@@ -7,6 +7,7 @@ import ExpenseTable from './components/ExpenseTable'
 import AddDataForm from './components/AddDataForm'
 import EditRevenueForm from './components/EditRevenueForm'
 import EditExpenseForm from './components/EditExpenseForm'
+import ResultsTable from './components/ResultsTable'
 import './App.css';
 
 
@@ -97,23 +98,15 @@ const App = () => {
                 addExpense={addExpense}/>)
           }
         </div>
-        <div className="flex-large">
-          <h2>Revenue Table</h2>
-          <RevenueTable
-            revenue={revenue}
-            deleteRevenue={deleteRevenue}
-            editRevenueRow={editRevenueRow}/>
-        </div>
-        <div className="flex-large">
-          <h2>Expenses Table</h2>
-          <ExpenseTable
-            expense={expense}
-            deleteExpense={deleteExpense}
-            editExpenseRow={editExpenseRow}/>
-        </div>
-        <div className="flex-large">
-          <h2>Results Table</h2>
-        </div>
+        <RevenueTable
+          revenue={revenue}
+          deleteRevenue={deleteRevenue}
+          editRevenueRow={editRevenueRow}/>
+        <ExpenseTable
+          expense={expense}
+          deleteExpense={deleteExpense}
+          editExpenseRow={editExpenseRow}/>
+        <ResultsTable />
       </div>
     </div>
   )
