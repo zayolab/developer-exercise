@@ -20,13 +20,25 @@ const RevenueTable = props => (
       </tr>
     </thead>
     <tbody>
-      {/*Insert Revenue Data Here*/}
-      <tr key='1'>
-        <td>Item Name</td>
-        <td>$One Time, Two Decimal</td>
-        <td>$Monthly, Two Decimal</td>
-        <td><Button>Delete</Button></td>
-      </tr>
+      {/*If there is revenue data, show that in the table*/}
+      {props.revenue.length > 0 ? (
+        props.revenue.map(revenue => (
+          <tr key={revenue.id}>
+            <td>{revenue.name}</td>
+            <td>${revenue.oneTime}</td>
+            <td>${revenue.monthly}</td>
+            <td><Button>Delete</Button></td>
+          </tr>
+        ))
+      )
+      /*Else show "No Revenue Data"*/
+      : (
+          <tr>
+            <td colSpan={3}>No Revenue Data</td>
+          </tr>
+        )
+      }
+
     </tbody>
   </table>
 )
