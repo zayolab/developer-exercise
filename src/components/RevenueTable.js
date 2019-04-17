@@ -22,8 +22,8 @@ const RevenueTable = props => (
     <tbody>
       {/*If there is revenue data, show that in the table*/}
       {props.revenue.length > 0 ? (
-        props.revenue.map(revenue => (
-          <tr key={revenue.id}>
+        props.revenue.map((revenue, index) => (
+          <tr key={index}>
             <td>{revenue.name}</td>
             <td>${revenue.oneTime}</td>
             <td>${revenue.monthly}</td>
