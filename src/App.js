@@ -5,6 +5,7 @@ import {
   Button,
   Form
  } from 'react-bootstrap'
+import RevenueTable from './components/RevenueTable'
 import './App.css';
 
 
@@ -18,6 +19,7 @@ const App = () => {
         </div>
         <div className="flex-large">
           <h2>Revenue Table</h2>
+          <RevenueTable />
         </div>
         <div className="flex-large">
           <h2>Expenses Table</h2>

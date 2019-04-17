@@ -1,4 +1,10 @@
 import React from 'react'
+import {
+  Row,
+  Col,
+  Button,
+  Form
+ } from 'react-bootstrap'
 
 const RevenueTable = () => (
   <table className="revenue-table">
@@ -15,6 +21,12 @@ const RevenueTable = () => (
     </thead>
     <tbody>
       {/*Insert Revenue Data Here*/}
+      <tr key='1'>
+        <td>Item Name</td>
+        <td>$One Time, Two Decimal</td>
+        <td>$Monthly, Two Decimal</td>
+        <td><Button>Delete</Button></td>
+      </tr>
     </tbody>
   </table>
 )
