@@ -7,41 +7,57 @@ import {
  } from 'react-bootstrap'
 
 export const AddDataForm = props => {
-const initialFormState = { id: null, name: '', username: '' }
-const [user, setUser] = useState(initialFormState)
+  const initialFormState = { id: null, name: '', oneTime: '', monthly: '', }
+
+  const [data, setData] = useState(initialFormState)
+
+  const handleInputChange = event => {
+    console.log(event.target)
+    const { name, value } = event.target
+    setData({...data, [name]: value})
+  }
+
+
 
   return (
       <Form>
         <Row className="input-field">
           <Col sm={{ span: 2, offset: 1}} className="input-field">
             <Form.Control as="select">
-              <option>Revenue</option>
-              <option>Expense</option>
+              <option value="choose" disabled={false}>Select Type</option>
+              <option value="revenue">Revenue</option>
+              <option value="expense">Expense</option>
             </Form.Control>
           </Col>
           <Col sm={3} className="input-field">
             <Form.Control
               type="text"
+              name="name"
               placeholder="Name"
-              value=''
+              value={data.name}
+              onChange={handleInputChange}
             />
           </Col>
           <Col sm={2} className="input-field">
             <Form.Control
               type="number"
+              name="oneTime"
               placeholder="One-Time Amount"
               step="0.01"
               min="0"
-              value=''
+              value={data.oneTime}
+              onChange={handleInputChange}
             />
           </Col>
           <Col sm={2} className="input-field">
             <Form.Control
               type="number"
+              name="monthly"
               placeholder="Monthly Amount"
               step="0.01"
               min="0"
-              value=''
+              value={data.monthly}
+              onChange={handleInputChange}
             />
           </Col>
           <Col sm={1} className="add-form-button">
