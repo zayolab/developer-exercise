@@ -27,7 +27,7 @@ const RevenueTable = props => (
             <td>{revenue.name}</td>
             <td>${revenue.oneTime}</td>
             <td>${revenue.monthly}</td>
-            <td><Button>Delete</Button></td>
+            <td><Button variant="danger">Delete</Button></td>
           </tr>
         ))
       )

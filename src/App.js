@@ -6,6 +6,7 @@ import {
   Form
  } from 'react-bootstrap'
 import RevenueTable from './components/RevenueTable'
+import AddDataForm from './components/AddDataForm'
 import './App.css';
 
 
@@ -15,14 +16,21 @@ const App = () => {
     {id: 1, name: "Residential Bandwith Revenue", oneTime:2000, monthly: 100 },
     {id: 1, name: "Advertising Revenue", oneTime:10000, monthly: 2500 }
   ]
-
   const [revenue, setRevenue] = useState(revenueData)
+
+
+  const addRevenue = newRevenue => {
+    newRevenue.id = revenue.length + 1
+    setRevenue([...revenue, newRevenue])
+  }
+
   return (
     <div className="container">
       <h1 className="text text-center">ROI Calculator</h1>
       <div className="flex-row">
         <div className="flex-large">
           <h2>Add Expense or Revenue</h2>
+          <AddDataForm addRevenue={addRevenue} />
         </div>
         <div className="flex-large">
           <h2>Revenue Table</h2>
@@ -38,6 +46,10 @@ const App = () => {
     </div>
   )
 }
+
+//Original Project Code Below
+
+
 // class App extends Component {
 //   constructor() {
 //     super()
