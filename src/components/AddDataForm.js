@@ -7,7 +7,7 @@ import {
  } from 'react-bootstrap'
 
 const AddDataForm = props => {
-  const initialFormState = { id: null, name: '', oneTime: 0, monthly: 0, type: 'none' }
+  const initialFormState = { id: null, name: '', oneTime: 0, monthly: 0, type: '' }
 
   const [data, setData] = useState(initialFormState)
 

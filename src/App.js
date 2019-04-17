@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import {
-  Row,
-  Col,
-  Button,
-  Form
+  
  } from 'react-bootstrap'
 import RevenueTable from './components/RevenueTable'
 import ExpenseTable from './components/ExpenseTable'
@@ -26,6 +23,7 @@ const App = () => {
   const [revenue, setRevenue] = useState(revenueData)
   const [expense, setExpense] = useState(expenseData)
 
+// Look to refactor to single "addData function"
   const addRevenue = newRevenue => {
     newRevenue.id = revenue.length + 1
     setRevenue([...revenue, newRevenue])
@@ -42,7 +40,9 @@ const App = () => {
       <div className="flex-row">
         <div className="flex-large">
           <h2>Add Expense or Revenue</h2>
-          <AddDataForm addRevenue={addRevenue} addExpense={addExpense}/>
+          <AddDataForm
+            addRevenue={addRevenue}
+            addExpense={addExpense}/>
         </div>
         <div className="flex-large">
           <h2>Revenue Table</h2>
