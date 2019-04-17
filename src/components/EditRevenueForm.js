@@ -1,6 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 const EditRevenueForm = props => {
+
+  useEffect(() => {
+    setRevenue(props.currentRevenue)
+  }, [props])
+
   const [revenue, setRevenue] = useState(props.currentRevenue)
 
   const handleInputChange = event => {
@@ -13,7 +18,6 @@ const EditRevenueForm = props => {
     <form
       onSubmit={event => {
         event.preventDefault()
-
         props.updateRevenue(revenue.id, revenue)
       }}
     >
@@ -23,7 +27,7 @@ const EditRevenueForm = props => {
       <input type="text" name="oneTime" value={revenue.oneTime} onChange={handleInputChange} />
       <label>Monthly Amount</label>
       <input type="text" name="monthly" value={revenue.monthly} onChange={handleInputChange} />
-      <button>Update revenues</button>
+      <button>Update Revenue</button>
       <button onClick={() => props.setEditing(false)} className="button muted-button">
         Cancel
       </button>

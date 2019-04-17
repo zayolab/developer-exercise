@@ -24,7 +24,7 @@ const App = () => {
 
   const initialRevenueEditForm = {id: null, name: '', oneTime: 0, monthly: 0, type: "revenue"}
 
-//"Set State" functions
+//State functions
   const [revenue, setRevenue] = useState(revenueData)
   const [expense, setExpense] = useState(expenseData)
   const [editing, setEditing] = useState(false)
@@ -34,10 +34,12 @@ const App = () => {
 // Look to refactor single "addData/deleteData functions"
   const addRevenue = newRevenue => {
     newRevenue.id = revenue.length + 1
+    newRevenue.type = 'revenue'
     setRevenue([...revenue, newRevenue])
   }
   const addExpense = newExpense => {
     newExpense.id = expense.length + 1
+    newExpense.type = 'expense'
     setExpense([...expense, newExpense])
   }
 
@@ -65,7 +67,7 @@ const App = () => {
             <div>
               <h2>Edit Revenue</h2>
               <EditRevenueForm
-                editing={editing}
+                setEditing={setEditing}
                 setRevenue={setRevenue}
                 currentRevenue={currentRevenue}
                 updateRevenue={updateRevenue}
