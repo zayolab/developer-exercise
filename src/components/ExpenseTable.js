@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-  Button,
+  Button
  } from 'react-bootstrap'
 
 const ExpenseTable = props => (
@@ -25,6 +25,7 @@ const ExpenseTable = props => (
             <td>${expense.oneTime}</td>
             <td>${expense.monthly}</td>
             <td><Button variant="danger" onClick={() => props.deleteExpense(expense.id)}>Delete</Button></td>
+            <td><Button variant="success" onClick={() => props.editExpenseRow(expense)}>Edit</Button></td>
           </tr>
         ))
       )

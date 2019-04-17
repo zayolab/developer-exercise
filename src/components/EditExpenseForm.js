@@ -6,27 +6,27 @@ import {
   Form
  } from 'react-bootstrap'
 
-const EditRevenueForm = props => {
+const EditExpenseForm = props => {
 
   useEffect(() => {
-    setRevenue(props.currentRevenue)
+    setExpense(props.currentExpense)
   }, [props])
 
-  const [revenue, setRevenue] = useState(props.currentRevenue)
+  const [expense, setExpense] = useState(props.currentExpense)
 
   const handleInputChange = event => {
     const { name, value } = event.target
 
-    setRevenue({ ...revenue, [name]: value })
+    setExpense({ ...expense, [name]: value })
   }
 
   return (
     <div>
-      <h2>Edit Revenue</h2>
+      <h2>Edit Expense</h2>
       <Form
         onSubmit={event => {
           event.preventDefault()
-          props.updateRevenue(revenue.id, revenue)
+          props.updateExpense(expense.id, expense)
         }}
       >
         <Row className="input-field">
@@ -35,7 +35,7 @@ const EditRevenueForm = props => {
               type="text"
               name="name"
               placeholder="Name"
-              value={revenue.name}
+              value={expense.name}
               onChange={handleInputChange}
             />
           </Col>
@@ -45,7 +45,7 @@ const EditRevenueForm = props => {
               placeholder="One-Time Amount"
               step="0.01"
               min="0"
-              value={revenue.oneTime}
+              value={expense.oneTime}
               onChange={handleInputChange}
             />
           </Col>
@@ -55,15 +55,15 @@ const EditRevenueForm = props => {
               placeholder="Monthly Amount"
               step="0.01"
               min="0"
-              value={revenue.monthly}
+              value={expense.monthly}
               onChange={handleInputChange}
             />
           </Col>
           <Col sm={2} className="add-form-button">
-            <Button type="submit">Update Revenue</Button>
+            <Button type="submit">Update Expense</Button>
           </Col>
           <Col sm={2} className="add-form-button">
-            <Button variant="warning" onClick={() => props.setEditingRevenue(false)} className="button muted-button">
+            <Button variant="warning" onClick={() => props.setEditingExpense(false)} className="button muted-button">
               Cancel
             </Button>
           </Col>
@@ -73,4 +73,4 @@ const EditRevenueForm = props => {
   )
 }
 
-export default EditRevenueForm
+export default EditExpenseForm

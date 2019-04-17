@@ -6,6 +6,7 @@ import RevenueTable from './components/RevenueTable'
 import ExpenseTable from './components/ExpenseTable'
 import AddDataForm from './components/AddDataForm'
 import EditRevenueForm from './components/EditRevenueForm'
+import EditExpenseForm from './components/EditExpenseForm'
 import './App.css';
 
 
@@ -27,8 +28,11 @@ const App = () => {
 //State functions
   const [revenue, setRevenue] = useState(revenueData)
   const [expense, setExpense] = useState(expenseData)
-  const [editing, setEditing] = useState(false)
+  const [editingRevenue, setEditingRevenue] = useState(false)
+  const [editingExpense, setEditingExpense] = useState(false)
+
   const [currentRevenue, setCurrentRevenue] = useState(initialExpenseEditForm)
+
   const [currentExpense, setCurrentExpense] = useState(initialExpenseEditForm)
 
 // Look to refactor single "addData/deleteData functions"
@@ -50,12 +54,22 @@ const App = () => {
     setExpense(expense.filter(expense => expense.id !== id))
   }
   const editRevenueRow = revenue => {
-    setEditing(true)
+    setEditingRevenue(true)
+    setEditingExpense(false)
     setCurrentRevenue({id: revenue.id, name: revenue.name, oneTime: revenue.oneTime, monthly: revenue.monthly})
   }
+  const editExpenseRow = expense => {
+    setEditingExpense(true)
+    setEditingRevenue(false)
+    setCurrentExpense({id: expense.id, name: expense.name, oneTime: expense.oneTime, monthly: expense.monthly})
+  }
   const updateRevenue = (id, updatedRevenue) => {
-    setEditing(false)
+    setEditingRevenue(false)
     setRevenue(revenue.map(revenue => (revenue.id === id ? updatedRevenue : revenue)))
+  }
+  const updateExpense = (id, updatedExpense) => {
+    setEditingExpense(false)
+    setExpense(expense.map(expense => (expense.id === id ? updatedExpense : expense)))
   }
 
   return (
@@ -63,23 +77,24 @@ const App = () => {
       <h1 className="text text-center">ROI Calculator</h1>
       <div className="flex-row">
         <div className="flex-large">
-          {editing ? (
-            <div>
-              <h2>Edit Revenue</h2>
-              <EditRevenueForm
-                setEditing={setEditing}
-                setRevenue={setRevenue}
-                currentRevenue={currentRevenue}
-                updateRevenue={updateRevenue}
-                />
-              </div>)
-            : (
-            <div>
-              <h2>Add Expense or Revenue</h2>
+          {editingRevenue ? (
+            <EditRevenueForm
+              setEditingRevenue={setEditingRevenue}
+              setRevenue={setRevenue}
+              currentRevenue={currentRevenue}
+              updateRevenue={updateRevenue}
+              />)
+          : editingExpense ? (
+            <EditExpenseForm
+              setEditingExpense={setEditingExpense}
+              setExpense={setExpense}
+              currentExpense={currentExpense}
+              updateExpense={updateExpense}
+              />)
+          : (
               <AddDataForm
                 addRevenue={addRevenue}
-                addExpense={addExpense}/>
-            </div>)
+                addExpense={addExpense}/>)
           }
         </div>
         <div className="flex-large">
@@ -93,7 +108,8 @@ const App = () => {
           <h2>Expenses Table</h2>
           <ExpenseTable
             expense={expense}
-            deleteExpense={deleteExpense}/>
+            deleteExpense={deleteExpense}
+            editExpenseRow={editExpenseRow}/>
         </div>
         <div className="flex-large">
           <h2>Results Table</h2>
