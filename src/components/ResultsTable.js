@@ -1,14 +1,15 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Button
  } from 'react-bootstrap'
 
 const ResultsTable = props => {
+  useEffect(() => {
+    
+  })
   const sumOneTimeRevenue = props.revenue.reduce((sum, revenue) => {
-    console.log("Reven is", revenue.oneTime)
     return sum + revenue.oneTime
   }, 0)
-  console.log("One time revenue total", sumOneTimeRevenue);
   return (
     <div className="flex-large">
       <h2>Results Table</h2>
