@@ -25,6 +25,7 @@ const RevenueTable = props => (
             <td>${revenue.oneTime}</td>
             <td>${revenue.monthly}</td>
             <td><Button variant="danger" onClick={() => props.deleteRevenue(revenue.id)}>Delete</Button></td>
+            <td><Button variant="success" onClick={() => props.editRevenueRow(revenue)}>Edit</Button></td>
           </tr>
         ))
       )
