@@ -24,7 +24,7 @@ const ExpenseTable = props => (
             <td>{expense.name}</td>
             <td>${expense.oneTime}</td>
             <td>${expense.monthly}</td>
-            <td><Button variant="danger">Delete</Button></td>
+            <td><Button variant="danger" onClick={() => props.deleteExpense(expense.id)}>Delete</Button></td>
           </tr>
         ))
       )

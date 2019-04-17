@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  
+
  } from 'react-bootstrap'
 import RevenueTable from './components/RevenueTable'
 import ExpenseTable from './components/ExpenseTable'
@@ -20,10 +20,11 @@ const App = () => {
     {id: 3, name: "Marketing", oneTime:10000, monthly: 2500 }
   ]
 
+//"Set State" functions for revenue and expenses
   const [revenue, setRevenue] = useState(revenueData)
   const [expense, setExpense] = useState(expenseData)
 
-// Look to refactor to single "addData function"
+// Look to refactor single "addData/deleteData functions"
   const addRevenue = newRevenue => {
     newRevenue.id = revenue.length + 1
     setRevenue([...revenue, newRevenue])
@@ -33,6 +34,12 @@ const App = () => {
     setExpense([...expense, newExpense])
   }
 
+  const deleteRevenue = id => {
+    setRevenue(revenue.filter(revenue => revenue.id !== id))
+  }
+  const deleteExpense = id => {
+    setExpense(expense.filter(expense => expense.id !== id))
+  }
 
   return (
     <div className="container">
@@ -46,11 +53,15 @@ const App = () => {
         </div>
         <div className="flex-large">
           <h2>Revenue Table</h2>
-          <RevenueTable revenue={revenue}/>
+          <RevenueTable
+            revenue={revenue}
+            deleteRevenue={deleteRevenue}/>
         </div>
         <div className="flex-large">
           <h2>Expenses Table</h2>
-          <ExpenseTable expense={expense} />
+          <ExpenseTable
+            expense={expense}
+            deleteExpense={deleteExpense}/>
         </div>
         <div className="flex-large">
           <h2>Results Table</h2>
