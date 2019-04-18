@@ -16,7 +16,9 @@ const EditRevenueForm = props => {
 
   const handleInputChange = event => {
     const { name, value } = event.target
-
+    if(name === 'oneTime' || name === 'monthly'){
+      setRevenue({...revenue, [name]: parseInt(value)})
+    }
     setRevenue({ ...revenue, [name]: value })
   }
 

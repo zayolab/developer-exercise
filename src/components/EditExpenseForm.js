@@ -16,7 +16,9 @@ const EditExpenseForm = props => {
 
   const handleInputChange = event => {
     const { name, value } = event.target
-
+    if(name === 'oneTime' || name === 'monthly'){
+      setExpense({...expense, [name]: parseInt(value)})
+    }
     setExpense({ ...expense, [name]: value })
   }
 

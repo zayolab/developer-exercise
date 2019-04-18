@@ -42,15 +42,11 @@ const App = () => {
   const addRevenue = newRevenue => {
     newRevenue.id = revenue.length + 1
     newRevenue.type = 'revenue'
-    newRevenue.oneTime = parseInt(newRevenue.oneTime)
-    newRevenue.monthly = parseInt(newRevenue.monthly)
     setRevenue([...revenue, newRevenue])
   }
   const addExpense = newExpense => {
     newExpense.id = expense.length + 1
     newExpense.type = 'expense'
-    newExpense.oneTime = parseInt(newExpense.oneTime)
-    newExpense.monthly = parseInt(newExpense.monthly)
     setExpense([...expense, newExpense])
   }
 
@@ -63,23 +59,19 @@ const App = () => {
   const editRevenueRow = revenue => {
     setEditingRevenue(true)
     setEditingExpense(false)
-    setCurrentRevenue({id: revenue.id, name: revenue.name, oneTime: parseInt(revenue.oneTime), monthly: parseInt(revenue.monthly)})
+    setCurrentRevenue({id: revenue.id, name: revenue.name, oneTime: revenue.oneTime, monthly: revenue.monthly})
   }
   const editExpenseRow = expense => {
     setEditingExpense(true)
     setEditingRevenue(false)
-    setCurrentExpense({id: expense.id, name: expense.name, oneTime: parseInt(expense.oneTime), monthly: parseInt(expense.monthly)})
+    setCurrentExpense({id: expense.id, name: expense.name, oneTime: expense.oneTime, monthly: expense.monthly})
   }
   const updateRevenue = (id, updatedRevenue) => {
     setEditingRevenue(false)
-    updatedRevenue.oneTime = parseInt(updatedRevenue.oneTime)
-    updatedRevenue.monthly = parseInt(updatedRevenue.monthly)
     setRevenue(revenue.map(revenue => (revenue.id === id ? updatedRevenue : revenue)))
   }
   const updateExpense = (id, updatedExpense) => {
     setEditingExpense(false)
-    updatedExpense.oneTime = parseInt(updatedExpense.oneTime)
-    updatedExpense.monthly = parseInt(updatedExpense.monthly)
     setExpense(expense.map(expense => (expense.id === id ? updatedExpense : expense)))
   }
 
