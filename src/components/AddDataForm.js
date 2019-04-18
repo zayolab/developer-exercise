@@ -15,7 +15,12 @@ const AddDataForm = props => {
     console.log('EVENT TARGET Name>>>', event.target.name);
     console.log('EVENT TARGET value>>>', event.target.value)
     const { name, value } = event.target
+    if(name === 'oneTime' || name === 'monthly'){
+      setData({...data, [name]: parseInt(value)})
+    }
+    else{
     setData({...data, [name]: value})
+    }
   }
 
   return (

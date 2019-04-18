@@ -45,7 +45,7 @@ const ResultsTable = props => {
   //Handle case where total revenue would be 0 and cause NaN
   const contributionMargin = sumTotalRevenue !== 0 ? (totalContributionProfit / sumTotalRevenue * 100).toFixed(0) : 0
 
-  const capitalROI = (sumTotalExpense - sumTotalRevenue === 0) ? 0 : (sumOneTimeExpense - sumOneTimeRevenue) / monthlyContributionProfit.toFixed(1)
+  const capitalROI = (sumTotalExpense - sumTotalRevenue === 0) ? 0 : ((sumOneTimeExpense - sumOneTimeRevenue) / monthlyContributionProfit).toFixed(1)
 
 
  //
