@@ -6,6 +6,7 @@ import {
   Form,
   Alert
  } from 'react-bootstrap'
+ import AlertError from './AlertError'
 
 const AddDataForm = props => {
 
@@ -13,6 +14,8 @@ const AddDataForm = props => {
   const initialFormState = { id: null, name: '', oneTime: 0, monthly: 0, type: 'default' }
   const [data, setData] = useState(initialFormState)
   const [numberError, setNumberError] = useState(false)
+  const [typeError, setTypeError] = useState(false)
+  const [nameError, setNameError] = useState(false)
 
   const handleInputChange = event => {
     console.log('EVENT TARGET Name>>>', event.target.name);
@@ -30,15 +33,21 @@ const AddDataForm = props => {
   return (
       <div>
         <h2>Add Expense or Revenue</h2>
-
         <Form onSubmit={event => {
           event.preventDefault()
           console.log('Data is', data);
+    /************ Error Handling Before Submission *************/
           if(!data.oneTime && data.oneTime !== 0 || !data.monthly && data.monthly !== 0){
             setNumberError(true)
           }
+          else if (data.type === 'default'){
+            setTypeError(true)
+          }
+          else if (data.name === ""){
+            setNameError(true)
+          }
+    /******* Revenue or Expense Callback based on Type ******/
           else {
-
             if(data.type === 'revenue'){
             props.addRevenue(data)
             }
@@ -46,8 +55,11 @@ const AddDataForm = props => {
               props.addExpense(data)
             }
             console.log('Inital Form State before reset is>>', initialFormState);
+    /**** Set the form back to the inital state for next entry ****/
             setData(initialFormState)
             setNumberError(false)
+            setTypeError(false)
+            setNameError(false)
           }
         }}>
           <Row className="input-field">
@@ -95,9 +107,22 @@ const AddDataForm = props => {
               </Button>
             </Col>
           </Row>
+  {/******************Error Handling Alerts**********************/}
           {numberError &&
-            <h1>Error!!!!!</h1>
+            <AlertError
+              errorMessage="Make sure to enter a one-time or monthly amount! If you don't have one, enter $0"
+              setError={setNumberError}/>
+          }
 
+          {typeError &&
+            <AlertError
+              errorMessage="Make sure to select if your entry is a Revenue or an Expense!"
+              setError={setTypeError}/>
+          }
+          {nameError &&
+            <AlertError
+              errorMessage="Make sure to add a name to your entry!"
+              setError={setNameError}/>
           }
         </Form>
       </div>
