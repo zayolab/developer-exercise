@@ -27,7 +27,7 @@ const ResultsTable = props => {
   const sumMonthlyRevenue = revenue.reduce((sum, revenueItem) => {
     return sum + revenueItem.monthly
   }, 0)
-  const sumTotalRevenue = sumMonthlyRevenue + sumOneTimeRevenue
+  const sumTotalRevenue = sumOneTimeRevenue + (sumMonthlyRevenue * term)
 
 /*****************Expense Calculations******************/
   const sumOneTimeExpense = expense.reduce((sum, expenseItem) => {
@@ -36,7 +36,7 @@ const ResultsTable = props => {
   const sumMonthlyExpense = expense.reduce((sum, expenseItem) => {
     return sum + expenseItem.monthly
   }, 0)
-  const sumTotalExpense = sumMonthlyExpense + sumOneTimeExpense
+  const sumTotalExpense = sumOneTimeExpense + (sumMonthlyExpense * term)
 
 /*******Profit, Contribution, Margin, and ROI Calculations********/
   const monthlyContributionProfit = sumMonthlyRevenue - sumMonthlyExpense
