@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import {
-  Button
+  Button,
+  Form,
+  Col
  } from 'react-bootstrap'
 
 const ResultsTable = props => {
@@ -8,14 +10,19 @@ const ResultsTable = props => {
 //Functional component state
   const [revenue, setRevenue] = useState(props.revenue)
   const [expense, setExpense] = useState(props.expense)
-  const [term, setTerm] = useState(props.term)
+  const [term, setTerm] = useState(12)
+
+//Sets the term length based on user selection
+  const handleTermChange = event => {
+    const { value } = event.target
+    setTerm(value)
+  }
 
 //useEffect is watching for props changes and auto-updates the revenue or expense state on change. This is what makes the results automatically update on changes to expenses or revenues
   useEffect(() => {
     console.log('Recieved Term', props.term)
     setRevenue(props.revenue)
     setExpense(props.expense)
-    setTerm(props.term)
   }, [props])
 
 //Results table caluculations below. Look to refactor repeated code to a reusable function.
@@ -55,6 +62,19 @@ const ResultsTable = props => {
   return (
     <div className="flex-large">
       <h2>Results Table</h2>
+{/****************** Term Selection Dropdown****************/}
+      <p>Select the term length in months</p>
+      <Col sm={{ span: 2, offset: 0}} className="input-field">
+        <Form.Control as="select" name="term" value={term} onChange={handleTermChange}>
+            <option value="default" name="default" disabled={false}>Select Type</option>
+            <option value={12} name="12 months">12-months</option>
+            <option value={24} name="24 months">24-months</option>
+            <option value={36} name="36 moths">36-months</option>
+            <option value={48} name="48 months">48-months</option>
+            <option value={60} name="60 months">60-months</option>
+        </Form.Control>
+      </Col>
+{/********************** Results Table *********************/}
       <table className="totals-table">
         <thead>
           <tr>

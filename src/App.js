@@ -31,9 +31,7 @@ const App = () => {
   const [expense, setExpense] = useState(expenseData)
   const [editingRevenue, setEditingRevenue] = useState(false)
   const [editingExpense, setEditingExpense] = useState(false)
-  //Temp Term state. Make Dynamic.
-  const [term, setTerm] = useState(12)
-
+  
   const [currentRevenue, setCurrentRevenue] = useState(initialExpenseEditForm)
 
   const [currentExpense, setCurrentExpense] = useState(initialExpenseEditForm)
@@ -84,6 +82,7 @@ const App = () => {
             <EditRevenueForm
               setEditingRevenue={setEditingRevenue}
               setRevenue={setRevenue}
+              deleteRevenue={deleteRevenue}
               currentRevenue={currentRevenue}
               updateRevenue={updateRevenue}
               />)
@@ -103,15 +102,16 @@ const App = () => {
         <RevenueTable
           revenue={revenue}
           deleteRevenue={deleteRevenue}
-          editRevenueRow={editRevenueRow}/>
+          editRevenueRow={editRevenueRow}
+          />
         <ExpenseTable
           expense={expense}
           deleteExpense={deleteExpense}
-          editExpenseRow={editExpenseRow}/>
+          editExpenseRow={editExpenseRow}
+          />
         <ResultsTable
           revenue={revenue}
           expense={expense}
-          term={term}
         />
       </div>
     </div>

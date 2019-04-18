@@ -21,6 +21,10 @@ const EditRevenueForm = props => {
     }
     setRevenue({ ...revenue, [name]: value })
   }
+  const handleDelete = () => {
+    props.deleteRevenue(revenue.id)
+    props.setEditingRevenue(false)
+  }
 
   return (
     <div>
@@ -69,6 +73,11 @@ const EditRevenueForm = props => {
           <Col sm={2} className="add-form-button">
             <Button variant="warning" onClick={() => props.setEditingRevenue(false)} className="button muted-button">
               Cancel
+            </Button>
+          </Col>
+          <Col sm={2} className="add-form-button">
+            <Button variant="danger" onClick={() => handleDelete()} className="button muted-button">
+              Delete Revenue Entry
             </Button>
           </Col>
         </Row>

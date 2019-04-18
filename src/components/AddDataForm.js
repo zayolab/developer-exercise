@@ -6,7 +6,7 @@ import {
   Form,
   Alert
  } from 'react-bootstrap'
- import AlertError from './AlertError'
+ import AlertMessage from './AlertMessage'
 
 const AddDataForm = props => {
 
@@ -16,6 +16,7 @@ const AddDataForm = props => {
   const [numberError, setNumberError] = useState(false)
   const [typeError, setTypeError] = useState(false)
   const [nameError, setNameError] = useState(false)
+  const [success, setSuccess] = useState(false)
 
   const handleInputChange = event => {
     console.log('EVENT TARGET Name>>>', event.target.name);
@@ -30,6 +31,9 @@ const AddDataForm = props => {
     }
   }
 
+  const handleSuccess = () => setTimeout(function () {
+        setSuccess(false);
+    }, 3000)
   return (
       <div>
         <h2>Add Expense or Revenue</h2>
@@ -56,6 +60,8 @@ const AddDataForm = props => {
             }
             console.log('Inital Form State before reset is>>', initialFormState);
     /**** Set the form back to the inital state for next entry ****/
+            setSuccess(true)
+            handleSuccess()
             setData(initialFormState)
             setNumberError(false)
             setTypeError(false)
@@ -108,21 +114,35 @@ const AddDataForm = props => {
             </Col>
           </Row>
   {/******************Error Handling Alerts**********************/}
+          {success &&
+            <AlertMessage
+              variant="success"
+              title="Success!"
+              message="Your entry was successfully added!"
+              setState={setSuccess}
+              />
+          }
           {numberError &&
-            <AlertError
-              errorMessage="Make sure to enter a one-time or monthly amount! If you don't have one, enter $0"
-              setError={setNumberError}/>
+            <AlertMessage
+              variant="danger"
+              title="Woops! Something didn't go right!"
+              message="Make sure to enter a one-time or monthly amount! If you don't have one, enter $0"
+              setState={setNumberError}/>
           }
 
           {typeError &&
-            <AlertError
-              errorMessage="Make sure to select if your entry is a Revenue or an Expense!"
-              setError={setTypeError}/>
+            <AlertMessage
+              variant="danger"
+              title="Woops! Something didn't go right!"
+              message="Make sure to select if your entry is a Revenue or an Expense!"
+              setState={setTypeError}/>
           }
           {nameError &&
-            <AlertError
-              errorMessage="Make sure to add a name to your entry!"
-              setError={setNameError}/>
+            <AlertMessage
+              variant="danger"
+              title="Woops! Something didn't go right!"
+              message="Make sure to add a name to your entry!"
+              setState={setNameError}/>
           }
         </Form>
       </div>
