@@ -5,17 +5,18 @@ import {
 
 const ResultsTable = props => {
 
-  //state
+//Functional component state
   const [revenue, setRevenue] = useState(props.revenue)
   const [expense, setExpense] = useState(props.expense)
 
+//useEffect is watching for props changes and auto-updates the revenue or expense state on change. This is what makes the results automatically update on changes to expenses or revenues
   useEffect(() => {
     console.log('Recieved Revenue Props is', props.revenue)
     setRevenue(props.revenue)
     setExpense(props.expense)
   }, [props])
 
-  //Calculates the results table items. Updates with useEffect hook above if props change. Look to refactor to reusable function
+//Results table caluculations below. Look to refactor repeated code to a reusable function.
 
   //Revenue Calculations
   const sumOneTimeRevenue = revenue.reduce((sum, revenueItem) => {
@@ -34,6 +35,20 @@ const ResultsTable = props => {
     return sum + expenseItem.monthly
   }, 0)
   const sumTotalExpense = sumMonthlyExpense + sumOneTimeExpense
+
+  //Profit, Contribution, Margin, and ROI Calculations
+  const monthlyContributionProfit = sumMonthlyRevenue - sumMonthlyExpense
+
+  const totalContributionProfit = sumTotalRevenue - sumTotalExpense
+  //Handle case where total revenue would be 0 and cause NaN
+  const contributionMargin = sumTotalRevenue !== 0 ? (totalContributionProfit / sumTotalRevenue * 100).toFixed(0) : 0
+
+  const capitalROI = (sumOneTimeExpense - sumOneTimeRevenue) / monthlyContributionProfit
+
+ //  let contributionMargin = totalRevenue !== 0 ? (totalContributionProfit / totalRevenue * 100).toFixed(0) : 0
+ //
+ // handle case where totalExpense and totalRevenue are 0 (to avoid NaN)
+ //  let capitalROI = (totalExpense === 0 && totalRevenue === 0) ? 0 : ((this.state.oneTimeExpense - this.state.oneTimeRevenue) / monthlyContributionProfit).toFixed(1)
 
   return (
     <div className="flex-large">
@@ -63,20 +78,20 @@ const ResultsTable = props => {
           <tr>
             <td>Contribution Profit</td>
             <td></td>
-            <td>$monthlyContributionProfit</td>
-            <td>$totalContributionProfit</td>
+            <td>${monthlyContributionProfit}</td>
+            <td>${totalContributionProfit}</td>
           </tr>
           <tr>
             <td>Contribution Margin</td>
             <td></td>
             <td></td>
-            <td>contributionMargin</td>
+            <td>{contributionMargin}%</td>
           </tr>
           <tr>
             <td>Capital ROI (monthly)</td>
             <td></td>
             <td></td>
-            <td>capitalROI</td>
+            <td>{capitalROI}</td>
           </tr>
         </tbody>
       </table>
