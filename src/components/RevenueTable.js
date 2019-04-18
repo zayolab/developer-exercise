@@ -2,6 +2,7 @@ import React from 'react'
 import {
   Button
  } from 'react-bootstrap'
+import { commaSeparateNumber } from '../utils'
 
 const RevenueTable = props => {
 
@@ -26,8 +27,8 @@ const RevenueTable = props => {
             props.revenue.map((revenue, index) => (
               <tr key={index}>
                 <td>{revenue.name}</td>
-                <td>${revenue.oneTime}</td>
-                <td>${revenue.monthly}</td>
+                <td>${commaSeparateNumber(revenue.oneTime)}</td>
+                <td>${commaSeparateNumber(revenue.monthly)}</td>
                 <td><Button variant="danger" onClick={() => props.deleteRevenue(revenue.id)}>Delete</Button></td>
                 <td><Button variant="success" onClick={() => props.editRevenueRow(revenue)}>Edit</Button></td>
               </tr>

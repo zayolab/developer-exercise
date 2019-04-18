@@ -4,6 +4,7 @@ import {
   Form,
   Col
  } from 'react-bootstrap'
+ import { commaSeparateNumber } from '../utils'
 
 const ResultsTable = props => {
 
@@ -51,7 +52,7 @@ const ResultsTable = props => {
   //Handle case where total revenue would be 0 and cause NaN
   const contributionMargin = sumTotalRevenue !== 0 ? (totalContributionProfit / sumTotalRevenue * 100).toFixed(0) : 0
 
-  const capitalROI = (sumTotalExpense - sumTotalRevenue === 0) ? 0 : ((sumOneTimeExpense - sumOneTimeRevenue) / monthlyContributionProfit).toFixed(1)
+  const capitalROI = (sumTotalExpense - sumTotalRevenue === 0 || sumMonthlyRevenue - sumMonthlyExpense === 0) ? 0 : ((sumOneTimeExpense - sumOneTimeRevenue) / monthlyContributionProfit).toFixed(1)
 
 
  //
@@ -86,21 +87,21 @@ const ResultsTable = props => {
         <tbody>
           <tr>
             <td>Revenue</td>
-            <td>${sumOneTimeRevenue}</td>
-            <td>${sumMonthlyRevenue}</td>
+            <td>${commaSeparateNumber(sumOneTimeRevenue)}</td>
+            <td>${commaSeparateNumber(sumMonthlyRevenue)}</td>
             <td>${sumTotalRevenue}</td>
           </tr>
           <tr>
             <td>Expenses</td>
-            <td>${sumOneTimeExpense}</td>
-            <td>${sumMonthlyExpense}</td>
-            <td>${sumTotalExpense}</td>
+            <td>${commaSeparateNumber(sumOneTimeExpense)}</td>
+            <td>${commaSeparateNumber(sumMonthlyExpense)}</td>
+            <td>${commaSeparateNumber(sumTotalExpense)}</td>
           </tr>
           <tr>
             <td>Contribution Profit</td>
             <td></td>
-            <td>${monthlyContributionProfit}</td>
-            <td>${totalContributionProfit}</td>
+            <td>${commaSeparateNumber(monthlyContributionProfit)}</td>
+            <td>${commaSeparateNumber(totalContributionProfit)}</td>
           </tr>
           <tr>
             <td>Contribution Margin</td>

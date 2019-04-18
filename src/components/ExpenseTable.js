@@ -2,6 +2,7 @@ import React from 'react'
 import {
   Button
  } from 'react-bootstrap'
+ import { commaSeparateNumber } from '../utils'
 
 const ExpenseTable = props => (
   <div className="flex-large">
@@ -24,8 +25,8 @@ const ExpenseTable = props => (
           props.expense.map((expense, index) => (
             <tr key={index}>
               <td>{expense.name}</td>
-              <td>${expense.oneTime}</td>
-              <td>${expense.monthly}</td>
+              <td>${commaSeparateNumber(expense.oneTime)}</td>
+              <td>${commaSeparateNumber(expense.monthly)}</td>
               <td><Button variant="danger" onClick={() => props.deleteExpense(expense.id)}>Delete</Button></td>
               <td><Button variant="success" onClick={() => props.editExpenseRow(expense)}>Edit</Button></td>
             </tr>
