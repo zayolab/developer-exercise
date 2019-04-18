@@ -5,6 +5,7 @@ import {
   Button,
   Form
  } from 'react-bootstrap'
+ import AlertMessage from './AlertMessage'
 
 const EditRevenueForm = props => {
 
@@ -12,14 +13,21 @@ const EditRevenueForm = props => {
     setRevenue(props.currentRevenue)
   }, [props])
 
+//Functional Component State
   const [revenue, setRevenue] = useState(props.currentRevenue)
+  const [numberError, setNumberError] = useState(false)
+  const [nameError, setNameError] = useState(false)
 
   const handleInputChange = event => {
+    console.log('EVENT TARGET Name>>>', event.target.name);
+    console.log('EVENT TARGET value>>>', event.target.value)
     const { name, value } = event.target
     if(name === 'oneTime' || name === 'monthly'){
       setRevenue({...revenue, [name]: parseInt(value)})
     }
-    setRevenue({ ...revenue, [name]: value })
+    else {
+      setRevenue({ ...revenue, [name]: value })
+    }
   }
   const handleDelete = () => {
     props.deleteRevenue(revenue.id)
@@ -32,7 +40,17 @@ const EditRevenueForm = props => {
       <Form
         onSubmit={event => {
           event.preventDefault()
-          props.updateRevenue(revenue.id, revenue)
+          console.log('Updated Revenue Item>>>', revenue);
+/************ Error Handling Before Submission *************/
+          if(!revenue.oneTime && revenue.oneTime !== 0 || !revenue.monthly && revenue.monthly !== 0){
+            setNumberError(true)
+          }
+          else if (revenue.name === ""){
+            setNameError(true)
+          }
+          else {
+            props.updateRevenue(revenue.id, revenue)
+          }
         }}
       >
         <Row className="input-field">
@@ -81,6 +99,21 @@ const EditRevenueForm = props => {
             </Button>
           </Col>
         </Row>
+  {/******************Error Handling Alerts**********************/}
+        {numberError &&
+          <AlertMessage
+            variant="danger"
+            title="Woops! Something didn't go right!"
+            message="Make sure to enter a one-time or monthly amount! If you don't have one, enter $0"
+            setState={setNumberError}/>
+        }
+        {nameError &&
+          <AlertMessage
+            variant="danger"
+            title="Woops! Something didn't go right!"
+            message="Make sure to add a name to your entry!"
+            setState={setNameError}/>
+        }
       </Form>
     </div>
   )

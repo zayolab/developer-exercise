@@ -10,7 +10,7 @@ import {
 
 const AddDataForm = props => {
 
-  //Functional componenet state
+//Functional componenet state
   const initialFormState = { id: null, name: '', oneTime: 0, monthly: 0, type: 'default' }
   const [data, setData] = useState(initialFormState)
   const [numberError, setNumberError] = useState(false)
@@ -30,10 +30,11 @@ const AddDataForm = props => {
     setData({...data, [name]: value})
     }
   }
-
+//Function remove success alert after 3 seconds
   const handleSuccess = () => setTimeout(function () {
         setSuccess(false);
     }, 3000)
+
   return (
       <div>
         <h2>Add Expense or Revenue</h2>

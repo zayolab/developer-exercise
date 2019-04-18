@@ -5,21 +5,27 @@ import {
   Button,
   Form
  } from 'react-bootstrap'
+ import AlertMessage from './AlertMessage'
 
 const EditExpenseForm = props => {
 
+//Use Effect is watching the expense prop and updating on change
   useEffect(() => {
     setExpense(props.currentExpense)
   }, [props])
-
+//Functional Component State
   const [expense, setExpense] = useState(props.currentExpense)
+  const [numberError, setNumberError] = useState(false)
+  const [nameError, setNameError] = useState(false)
 
   const handleInputChange = event => {
     const { name, value } = event.target
     if(name === 'oneTime' || name === 'monthly'){
       setExpense({...expense, [name]: parseInt(value)})
     }
-    setExpense({ ...expense, [name]: value })
+    else {
+      setExpense({ ...expense, [name]: value })
+    }
   }
 
   return (
@@ -28,7 +34,17 @@ const EditExpenseForm = props => {
       <Form
         onSubmit={event => {
           event.preventDefault()
-          props.updateExpense(expense.id, expense)
+/************ Error Handling Before Submission *************/
+            if(!expense.oneTime && expense.oneTime !== 0 || !expense.monthly && expense.monthly !== 0){
+              setNumberError(true)
+            }
+            else if (expense.name === ""){
+              setNameError(true)
+            }
+            else {
+              props.updateExpense(expense.id, expense)
+
+            }
         }}
       >
         <Row className="input-field">
@@ -72,6 +88,21 @@ const EditExpenseForm = props => {
             </Button>
           </Col>
         </Row>
+  {/******************Error Handling Alerts**********************/}
+        {numberError &&
+          <AlertMessage
+            variant="danger"
+            title="Woops! Something didn't go right!"
+            message="Make sure to enter a one-time or monthly amount! If you don't have one, enter $0"
+            setState={setNumberError}/>
+        }
+        {nameError &&
+          <AlertMessage
+            variant="danger"
+            title="Woops! Something didn't go right!"
+            message="Make sure to add a name to your entry!"
+            setState={setNameError}/>
+        }
       </Form>
     </div>
   )

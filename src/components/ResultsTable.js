@@ -20,7 +20,6 @@ const ResultsTable = props => {
 
 //useEffect is watching for props changes and auto-updates the revenue or expense state on change. This is what makes the results automatically update on changes to expenses or revenues
   useEffect(() => {
-    console.log('Recieved Term', props.term)
     setRevenue(props.revenue)
     setExpense(props.expense)
   }, [props])
