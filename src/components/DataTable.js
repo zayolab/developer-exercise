@@ -8,11 +8,11 @@ const DataTable = props => {
 
   return (
     <div className="flex-large">
-      <h2>Revenue Table</h2>
+      <h2>{props.type} Table</h2>
       <table className="revenue-table">
         <thead>
           <tr>
-            <th>Revenue</th>
+            <th>{props.type}</th>
           </tr>
           <tr>
             <th></th>
@@ -22,7 +22,7 @@ const DataTable = props => {
           </tr>
         </thead>
         <tbody>
-          {/*If there is revenue data, show that in the table*/}
+        {/*If there is revenue data, show that in the table*/}
           {props.dataSource.length > 0 ? (
             props.dataSource.map((data, index) => (
               <tr key={index}>
@@ -34,10 +34,10 @@ const DataTable = props => {
               </tr>
             ))
           )
-          /*Else show "No Revenue Data"*/
+        /*Else show "No Revenue Data"*/
           : (
               <tr>
-                <td colSpan={3}>No Revenue Data</td>
+                <td colSpan={3}>No {props.type} Data</td>
               </tr>
             )
           }

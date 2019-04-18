@@ -100,11 +100,6 @@ const App = () => {
                 addExpense={addExpense}/>)
           }
         </div>
-        <DataTable
-          type="Revenue"
-          dataSource={revenue}
-          deleteRevenue={deleteRevenue}
-          editingRevenue={editingRevenue} />
         <RevenueTable
           revenue={revenue}
           deleteRevenue={deleteRevenue}
