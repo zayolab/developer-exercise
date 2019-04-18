@@ -7,7 +7,7 @@ import {
  } from 'react-bootstrap'
 
 const AddDataForm = props => {
-  const initialFormState = { id: null, name: '', oneTime: 0, monthly: 0, type: '' }
+  const initialFormState = { id: null, name: '', oneTime: 0, monthly: 0, type: 'default' }
 
   const [data, setData] = useState(initialFormState)
 
@@ -24,19 +24,19 @@ const AddDataForm = props => {
         <Form onSubmit={event => {
           event.preventDefault()
           console.log('Data is', data);
-          console.log('initialFormState is', initialFormState);
           if(data.type === 'revenue'){
           props.addRevenue(data)
           }
           else if (data.type === 'expense'){
             props.addExpense(data)
           }
+          console.log('Inital Form State before reset is>>', initialFormState);
           setData(initialFormState)
         }}>
           <Row className="input-field">
             <Col sm={{ span: 2, offset: 1}} className="input-field">
-              <Form.Control as="select" name="type" onChange={handleInputChange}>
-                  <option value="choose" disabled={false}>Select Type</option>
+              <Form.Control as="select" name="type" value={data.type} onChange={handleInputChange}>
+                  <option value="default" name="default" disabled={false}>Select Type</option>
                   <option value="revenue" name="revenue">Revenue</option>
                   <option value="expense" name="expense">Expense</option>
               </Form.Control>
