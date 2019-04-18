@@ -7,23 +7,33 @@ const ResultsTable = props => {
 
   //state
   const [revenue, setRevenue] = useState(props.revenue)
+  const [expense, setExpense] = useState(props.expense)
 
   useEffect(() => {
     console.log('Recieved Revenue Props is', props.revenue)
     setRevenue(props.revenue)
+    setExpense(props.expense)
   }, [props])
 
-  //Calculates the sum of one-time revenue. Updates with useEffect hook above if props change
+  //Calculates the results table items. Updates with useEffect hook above if props change. Look to refactor to reusable function
+
+  //Revenue Calculations
   const sumOneTimeRevenue = revenue.reduce((sum, revenueItem) => {
     return sum + revenueItem.oneTime
   }, 0)
-
   const sumMonthlyRevenue = revenue.reduce((sum, revenueItem) => {
     return sum + revenueItem.monthly
   }, 0)
-
   const sumTotalRevenue = sumMonthlyRevenue + sumOneTimeRevenue
 
+  //Expense Calculations
+  const sumOneTimeExpense = expense.reduce((sum, expenseItem) => {
+    return sum + expenseItem.oneTime
+  }, 0)
+  const sumMonthlyExpense = expense.reduce((sum, expenseItem) => {
+    return sum + expenseItem.monthly
+  }, 0)
+  const sumTotalExpense = sumMonthlyExpense + sumOneTimeExpense
 
   return (
     <div className="flex-large">
@@ -46,9 +56,9 @@ const ResultsTable = props => {
           </tr>
           <tr>
             <td>Expenses</td>
-            <td>$One-time Expense Total</td>
-            <td>$Monthly Expense Total</td>
-            <td>$Total Expense</td>
+            <td>${sumOneTimeExpense}</td>
+            <td>${sumMonthlyExpense}</td>
+            <td>${sumTotalExpense}</td>
           </tr>
           <tr>
             <td>Contribution Profit</td>
