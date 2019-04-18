@@ -8,6 +8,7 @@ import AddDataForm from './components/AddDataForm'
 import EditRevenueForm from './components/EditRevenueForm'
 import EditExpenseForm from './components/EditExpenseForm'
 import ResultsTable from './components/ResultsTable'
+import DataTable from './components/DataTable'
 import './App.css';
 
 
@@ -31,7 +32,7 @@ const App = () => {
   const [expense, setExpense] = useState(expenseData)
   const [editingRevenue, setEditingRevenue] = useState(false)
   const [editingExpense, setEditingExpense] = useState(false)
-  
+
   const [currentRevenue, setCurrentRevenue] = useState(initialExpenseEditForm)
 
   const [currentExpense, setCurrentExpense] = useState(initialExpenseEditForm)
@@ -99,6 +100,11 @@ const App = () => {
                 addExpense={addExpense}/>)
           }
         </div>
+        <DataTable
+          type="Revenue"
+          dataSource={revenue}
+          deleteRevenue={deleteRevenue}
+          editingRevenue={editingRevenue} />
         <RevenueTable
           revenue={revenue}
           deleteRevenue={deleteRevenue}

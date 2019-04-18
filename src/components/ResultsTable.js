@@ -89,7 +89,7 @@ const ResultsTable = props => {
             <td>Revenue</td>
             <td>${commaSeparateNumber(sumOneTimeRevenue)}</td>
             <td>${commaSeparateNumber(sumMonthlyRevenue)}</td>
-            <td>${sumTotalRevenue}</td>
+            <td>${commaSeparateNumber(sumTotalRevenue)}</td>
           </tr>
           <tr>
             <td>Expenses</td>
