@@ -8,17 +8,19 @@ const ResultsTable = props => {
 //Functional component state
   const [revenue, setRevenue] = useState(props.revenue)
   const [expense, setExpense] = useState(props.expense)
+  const [term, setTerm] = useState(props.term)
 
 //useEffect is watching for props changes and auto-updates the revenue or expense state on change. This is what makes the results automatically update on changes to expenses or revenues
   useEffect(() => {
-    console.log('Recieved Revenue Props is', props.revenue)
+    console.log('Recieved Term', props.term)
     setRevenue(props.revenue)
     setExpense(props.expense)
+    setTerm(props.term)
   }, [props])
 
 //Results table caluculations below. Look to refactor repeated code to a reusable function.
 
-  //Revenue Calculations
+/*****************Revenue Calculations******************/
   const sumOneTimeRevenue = revenue.reduce((sum, revenueItem) => {
     return sum + revenueItem.oneTime
   }, 0)
@@ -27,7 +29,7 @@ const ResultsTable = props => {
   }, 0)
   const sumTotalRevenue = sumMonthlyRevenue + sumOneTimeRevenue
 
-  //Expense Calculations
+/*****************Expense Calculations******************/
   const sumOneTimeExpense = expense.reduce((sum, expenseItem) => {
     return sum + expenseItem.oneTime
   }, 0)
@@ -36,16 +38,16 @@ const ResultsTable = props => {
   }, 0)
   const sumTotalExpense = sumMonthlyExpense + sumOneTimeExpense
 
-  //Profit, Contribution, Margin, and ROI Calculations
+/*******Profit, Contribution, Margin, and ROI Calculations********/
   const monthlyContributionProfit = sumMonthlyRevenue - sumMonthlyExpense
 
   const totalContributionProfit = sumTotalRevenue - sumTotalExpense
   //Handle case where total revenue would be 0 and cause NaN
   const contributionMargin = sumTotalRevenue !== 0 ? (totalContributionProfit / sumTotalRevenue * 100).toFixed(0) : 0
 
-  const capitalROI = (sumOneTimeExpense - sumOneTimeRevenue) / monthlyContributionProfit
+  const capitalROI = (sumTotalExpense - sumTotalRevenue === 0) ? 0 : (sumOneTimeExpense - sumOneTimeRevenue) / monthlyContributionProfit.toFixed(1)
 
- //  let contributionMargin = totalRevenue !== 0 ? (totalContributionProfit / totalRevenue * 100).toFixed(0) : 0
+
  //
  // handle case where totalExpense and totalRevenue are 0 (to avoid NaN)
  //  let capitalROI = (totalExpense === 0 && totalRevenue === 0) ? 0 : ((this.state.oneTimeExpense - this.state.oneTimeRevenue) / monthlyContributionProfit).toFixed(1)

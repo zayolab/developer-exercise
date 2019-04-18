@@ -26,11 +26,13 @@ const App = () => {
 
   const initialRevenueEditForm = {id: null, name: '', oneTime: 0, monthly: 0, type: "revenue"}
 
-//State functions
+//Functional component state
   const [revenue, setRevenue] = useState(revenueData)
   const [expense, setExpense] = useState(expenseData)
   const [editingRevenue, setEditingRevenue] = useState(false)
   const [editingExpense, setEditingExpense] = useState(false)
+  //Temp Term state. Make Dynamic.
+  const [term, setTerm] = useState(12)
 
   const [currentRevenue, setCurrentRevenue] = useState(initialExpenseEditForm)
 
@@ -117,6 +119,7 @@ const App = () => {
         <ResultsTable
           revenue={revenue}
           expense={expense}
+          term={term}
         />
       </div>
     </div>
