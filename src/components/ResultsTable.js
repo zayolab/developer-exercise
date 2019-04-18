@@ -22,6 +22,8 @@ const ResultsTable = props => {
     return sum + revenueItem.monthly
   }, 0)
 
+  const sumTotalRevenue = sumMonthlyRevenue + sumOneTimeRevenue
+
 
   return (
     <div className="flex-large">
@@ -40,7 +42,7 @@ const ResultsTable = props => {
             <td>Revenue</td>
             <td>${sumOneTimeRevenue}</td>
             <td>${sumMonthlyRevenue}</td>
-            <td>$Total Revenue</td>
+            <td>${sumTotalRevenue}</td>
           </tr>
           <tr>
             <td>Expenses</td>
