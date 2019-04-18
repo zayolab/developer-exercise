@@ -4,12 +4,27 @@ import {
  } from 'react-bootstrap'
 
 const ResultsTable = props => {
+  //state
+  const [revenue, setRevenue] = useState(props.revenue)
+  const [oneTimeTotal, setOneTimeTotal] = useState(sumOneTimeRevenue)
+
+  console.log('Recieved Revenue Props is', props.revenue)
+  //Update revenue props if changed. This causes an auto update to the sum of total one-time revenue
   useEffect(() => {
-    
-  })
-  const sumOneTimeRevenue = props.revenue.reduce((sum, revenue) => {
-    return sum + revenue.oneTime
+    console.log('Recieved Revenue Props is', props.revenue)
+    setRevenue(props.revenue)
+  }, [props])
+
+  //Calculates the sum of one-time revenue. Updates with useEffect hook above if props change
+  const sumOneTimeRevenue = revenue.reduce((sum, revenueItem) => {
+    return sum + revenueItem.oneTime
   }, 0)
+
+  const sumMonthlyRevenue = revenue.reduce((sum, revenueItem) => {
+    return sum + revenueItem.monthly
+  }, 0)
+
+
   return (
     <div className="flex-large">
       <h2>Results Table</h2>
@@ -26,7 +41,7 @@ const ResultsTable = props => {
           <tr>
             <td>Revenue</td>
             <td>${sumOneTimeRevenue}</td>
-            <td>$Monthly Revenue Total</td>
+            <td>${sumMonthlyRevenue}</td>
             <td>$Total Revenue</td>
           </tr>
           <tr>

@@ -52,6 +52,7 @@ const AddDataForm = props => {
             </Col>
             <Col sm={2} className="input-field">
               <Form.Control
+                type="number"
                 name="oneTime"
                 placeholder="One-Time Amount"
                 step="0.01"
@@ -62,6 +63,7 @@ const AddDataForm = props => {
             </Col>
             <Col sm={2} className="input-field">
               <Form.Control
+                type="number"
                 name="monthly"
                 placeholder="Monthly Amount"
                 step="0.01"
