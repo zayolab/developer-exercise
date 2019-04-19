@@ -44,7 +44,10 @@ const EditDataForm = props => {
           event.preventDefault()
           console.log('Updated Revenue Item>>>', data);
 /************ Error Handling Before Submission *************/
-          if(!data.oneTime && data.oneTime !== 0 || !data.monthly && data.monthly !== 0){
+          if(!data.oneTime && data.oneTime !== 0){
+            setNumberError(true)
+          }
+          else if (!data.monthly && data.monthly !== 0){
             setNumberError(true)
           }
           else if (data.name === ""){

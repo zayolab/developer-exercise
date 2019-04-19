@@ -4,7 +4,6 @@ import {
   Col,
   Button,
   Form,
-  Alert
  } from 'react-bootstrap'
  import AlertMessage from './AlertMessage'
 
@@ -42,7 +41,10 @@ const AddDataForm = props => {
           event.preventDefault()
           console.log('Data is', data);
     /************ Error Handling Before Submission *************/
-          if(!data.oneTime && data.oneTime !== 0 || !data.monthly && data.monthly !== 0){
+          if(!data.oneTime && data.oneTime !== 0){
+            setNumberError(true)
+          }
+          else if (!data.monthly && data.monthly !== 0){
             setNumberError(true)
           }
           else if (data.type === 'default'){
