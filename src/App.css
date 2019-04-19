@@ -46,6 +46,7 @@
 h2 {
   font-family: garamond;
   font-size: 25px;
+  font-weight: bold; 
 }
 
 .error {

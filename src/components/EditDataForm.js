@@ -50,6 +50,8 @@ const EditDataForm = props => {
         onSubmit={event => {
           event.preventDefault()
           console.log('Updated Revenue Item>>>', data);
+          setNumberError(false)
+          setNameError(false)
 
     /********* Error Handling Before Submission *********/
           if(!data.oneTime && data.oneTime !== 0){
@@ -62,6 +64,8 @@ const EditDataForm = props => {
             setNameError(true)
           }
           else {
+            setNumberError(false)
+            setNameError(false)
             props.updateData(data.id, data)
           }
         }}
