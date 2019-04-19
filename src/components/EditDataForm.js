@@ -7,7 +7,7 @@ import {
  } from 'react-bootstrap'
  import AlertMessage from './AlertMessage'
 
-const EditRevenueForm = props => {
+const EditDataForm = props => {
 
   useEffect(() => {
     setData(props.currentData)
@@ -88,10 +88,10 @@ const EditRevenueForm = props => {
             />
           </Col>
           <Col sm={2} className="add-form-button">
-            <Button type="submit">Update Revenue</Button>
+            <Button type="submit">Update {dataType}</Button>
           </Col>
           <Col sm={2} className="add-form-button">
-            <Button variant="warning" onClick={() => props.setEditingRevenue(false)} className="button muted-button">
+            <Button variant="warning" onClick={() => props.setEditingData(false)} className="button muted-button">
               Cancel
             </Button>
           </Col>
@@ -121,4 +121,4 @@ const EditRevenueForm = props => {
   )
 }
 
-export default EditRevenueForm
+export default EditDataForm

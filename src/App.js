@@ -5,7 +5,7 @@ import {
 import RevenueTable from './components/RevenueTable'
 import ExpenseTable from './components/ExpenseTable'
 import AddDataForm from './components/AddDataForm'
-import EditRevenueForm from './components/EditRevenueForm'
+import EditDataForm from './components/EditDataForm'
 import EditExpenseForm from './components/EditExpenseForm'
 import ResultsTable from './components/ResultsTable'
 import DataTable from './components/DataTable'
@@ -40,12 +40,12 @@ const App = () => {
 // Errors when attempting shared expense/revenue functions. Look to refactor to eliminate duplicate code
   const addRevenue = newRevenue => {
     newRevenue.id = revenue.length + 1
-    newRevenue.type = 'revenue'
+    newRevenue.type = 'Revenue'
     setRevenue([...revenue, newRevenue])
   }
   const addExpense = newExpense => {
     newExpense.id = expense.length + 1
-    newExpense.type = 'expense'
+    newExpense.type = 'Expense'
     setExpense([...expense, newExpense])
   }
 
@@ -60,31 +60,20 @@ const App = () => {
   }
 
   const editDataRow = (data, type) => {
+    setEditingData(true)
     if(type === 'Revenue') {
       console.log('EditDataRow triggered');
-      setEditingData(true)
-      setEditingExpense(false)
       setCurrentData({id: data.id, name: data.name, oneTime: data.oneTime, monthly: data.monthly, type: 'Revenue'})
     }
     else {
       console.log('Edit data row else triggered', type);
-      setEditingExpense(true)
-      setEditingData(false)
-      setCurrentExpense({id: expense.id, name: expense.name, oneTime: expense.oneTime, monthly: expense.monthly, type: 'Expense'})
+      setCurrentData({id: data.id, name: data.name, oneTime: data.oneTime, monthly: data.monthly, type: 'Expense'})
     }
   }
-  const editExpenseRow = expense => {
-    setEditingExpense(true)
-    setEditingData(false)
-    setCurrentExpense({id: expense.id, name: expense.name, oneTime: expense.oneTime, monthly: expense.monthly})
-  }
+
   const updateData = (id, updatedData) => {
     setEditingData(false)
     setRevenue(revenue.map(revenue => (revenue.id === id ? updatedData : revenue)))
-  }
-  const updateExpense = (id, updatedExpense) => {
-    setEditingExpense(false)
-    setExpense(expense.map(expense => (expense.id === id ? updatedExpense : expense)))
   }
 
   return (
@@ -93,24 +82,18 @@ const App = () => {
       <div className="flex-row">
         <div className="flex-large">
           {editingData ? (
-            <EditRevenueForm
+            <EditDataForm
               setEditingData={setEditingData}
               setRevenue={setRevenue}
               deleteData={deleteData}
               currentData={currentData}
               updateData={updateData}
-              />)
-          : editingExpense ? (
-            <EditExpenseForm
-              setEditingExpense={setEditingExpense}
-              setExpense={setExpense}
-              currentExpense={currentExpense}
-              updateExpense={updateExpense}
-              />)
+            />)
           : (
-              <AddDataForm
-                addRevenue={addRevenue}
-                addExpense={addExpense}/>)
+            <AddDataForm
+              addRevenue={addRevenue}
+              addExpense={addExpense}
+            />)
           }
         </div>
         <DataTable
@@ -118,22 +101,15 @@ const App = () => {
           dataSource={revenue}
           deleteData={deleteData}
           editingData={editingData}
-          editDataRow={editDataRow}/>
+          editDataRow={editDataRow}
+        />
         <DataTable
           type="Expense"
           dataSource={expense}
           deleteData={deleteData}
-          editingExpense={editingExpense} />
-        <RevenueTable
-          revenue={revenue}
-          deleteData={deleteData}
+          editingData={editingData}
           editDataRow={editDataRow}
-          />
-        <ExpenseTable
-          expense={expense}
-          deleteData={deleteData}
-          editExpenseRow={editExpenseRow}
-          />
+        />
         <ResultsTable
           revenue={revenue}
           expense={expense}
