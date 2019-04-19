@@ -15,14 +15,13 @@ const App = () => {
 /*********************** App Data ***********************/
 
   const revenueData = [
-    {id: 1, name: "Corporate Bandwith Revenue", oneTime:5000, monthly: 500, type: "Revenue"},
-    {id: 2, name: "Residential Bandwith Revenue", oneTime:2000, monthly: 100, type: "Revenue" },
-    {id: 3, name: "Advertising Revenue", oneTime:10000, monthly: 2500, type: "Revenue" }
+    {id: 1, name: "Item 1", oneTime:100, monthly: 50, type: "Revenue"},
+    {id: 2, name: "Item 2", oneTime:50, monthly: 25, type: "Revenue" },
+    {id: 3, name: "Item 3", oneTime:25, monthly: 85, type: "Revenue" }
   ]
   const expenseData = [
-    {id: 1, name: "Rent", oneTime:5000, monthly: 500, type: "Expense" },
-    {id: 2, name: "Salaries", oneTime:2000, monthly: 100, type: "Expense" },
-    {id: 3, name: "Marketing", oneTime:10000, monthly: 2500, type: "Expense" }
+    {id: 1, name: "Expense 1", oneTime:500, monthly: 20, type: "Expense" },
+    {id: 2, name: "Expense 2", oneTime:200, monthly: 40, type: "Expense" }
   ]
 
   const initialDataEditForm = {id: null, name: '', oneTime: 0, monthly: 0, type: ""}
@@ -100,7 +99,8 @@ const App = () => {
 
   return (
     <div className="container">
-      <Header />
+      <Header
+        deleteAllRevenueAndExpenses={deleteAllRevenueAndExpenses}/>
       <div className="flex-row">
         <div className="flex-large">
           {editingData ? (

@@ -27,23 +27,25 @@
 }
 
 .container {
-  background-color: white;
+  background-color: #eff2f2;
 }
 
 .navBar {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   border-bottom: 1px solid black;
   margin-bottom: 10px;
+  background-color: #c9cccc;
 }
 .title {
   font-family: garamond;
+  font-weight: bold;
 }
 
 h2 {
   font-family: garamond;
-  font-size: 30px;
+  font-size: 25px;
 }
 
 .error {

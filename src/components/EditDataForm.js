@@ -103,7 +103,7 @@ const EditDataForm = props => {
             <Button type="submit">Update {dataType}</Button>
           </Col>
           <Col sm={2} className="add-form-button">
-            <Button variant="warning" onClick={() => props.setEditingData(false)} className="button muted-button">
+            <Button variant="secondary" onClick={() => props.setEditingData(false)} className="button muted-button">
               Cancel
             </Button>
           </Col>

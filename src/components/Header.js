@@ -16,7 +16,7 @@ const Header = props => (
           className="d-inline-block align-center"
         />
         <h1 className="title">ROI Calculator</h1>
-        <Button>Clear All</Button>
+        <Button onClick={props.deleteAllRevenueAndExpenses}>Clear Data</Button>
   </div>
 )
 
