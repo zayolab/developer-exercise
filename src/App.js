@@ -2,11 +2,8 @@ import React, { useState } from 'react';
 import {
 
  } from 'react-bootstrap'
-import RevenueTable from './components/RevenueTable'
-import ExpenseTable from './components/ExpenseTable'
 import AddDataForm from './components/AddDataForm'
 import EditDataForm from './components/EditDataForm'
-import EditExpenseForm from './components/EditExpenseForm'
 import ResultsTable from './components/ResultsTable'
 import DataTable from './components/DataTable'
 import './App.css';
@@ -73,7 +70,6 @@ const App = () => {
 
   const updateData = (id, updatedData) => {
     setEditingData(false)
-    console.log('Update Data Type>>>', updatedData.type);
     if(updatedData.type === "Revenue") {
     setRevenue(revenue.map(revenue => (revenue.id === id ? updatedData : revenue)))
     }
