@@ -19,14 +19,13 @@
 }
  .data-table th, .totals-table th {
   width: 150px;
+  text-align: center;
 }
 .data-table td, .totals-table td {
   width: 100px;
+  text-align: center;
 }
 
-td {
-  align: center;
-}
 
 .error {
   color: red;

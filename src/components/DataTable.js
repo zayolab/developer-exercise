@@ -5,6 +5,7 @@ import {
   Table
  } from 'react-bootstrap'
 import { commaSeparateNumber } from '../utils'
+import styles from '../App.css';
 
 const DataTable = props => {
 
@@ -13,13 +14,17 @@ const DataTable = props => {
   return (
     <div className="flex-large">
       <h2>{props.type} Table</h2>
-      <Button variant="danger" style={{marginBottom: '5px'}} onClick={props.type === "Revenue" ? props.deleteAllRevenue : props.deleteAllExpenses}>Clear all {props.type}s</Button>
     <Table striped bordered hover  className="data-table">
         <thead>
           <tr>
             <th>{props.type}</th>
             <th>One-Time</th>
             <th>Monthly</th>
+          {/**** Give a button to clear data of present *****/}
+            {props.dataSource.length > 0 &&
+            <th align="center" colspan="2"><Button variant="warning" onClick={props.type === "Revenue" ? props.deleteAllRevenue : props.deleteAllExpenses}>Clear all {props.type}s</Button>
+            </th>
+            }
           </tr>
         </thead>
         <tbody>
@@ -38,7 +43,7 @@ const DataTable = props => {
         /*Else show "No Data"*/
           : (
               <tr>
-                <td colSpan={3}>No {props.type} Data</td>
+                <td colSpan={4}>No {props.type} Data</td>
               </tr>
             )
           }

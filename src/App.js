@@ -6,7 +6,7 @@ import AddDataForm from './components/AddDataForm'
 import EditDataForm from './components/EditDataForm'
 import ResultsTable from './components/ResultsTable'
 import DataTable from './components/DataTable'
-import './App.css';
+import styles from './App.css';
 
 
 const App = () => {
