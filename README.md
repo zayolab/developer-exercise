@@ -2,7 +2,7 @@
 
 ## About the app
 
-This app allows one to enter revenues and expenses and see an immediate calculation of a variety of ROI formulas.
+This app allows one to enter revenues and expenses to see an immediate calculation of a variety of ROI formulas.
 
 
 ## Home
@@ -16,30 +16,30 @@ The top of the screen has a form which allows a user to enter a new revenue or e
 
 ## Form Validation
 
-When submitting a form, the app checks to make sure there is an appropriate entry type, name, on-time amount, and monthly-amount. Failing to enter the correct information props an error dialogue box that provides the user with information on what they need to fix
+When submitting a form, the app checks to make sure there is an appropriate entry type, name, one-time amount, and monthly-amount. Failing to enter the correct information prompts an error dialogue box that provides the user with information on what they need to fix
 
 ![Example](screenshots/2errorval.png)
 
 
 ## Clear Data
 
-If a user wants to start with a blank slate, he/she can simply click “Clear Data” which will remove all entries from the Revenue and Expense table.
+If a user wants to start with a blank slate, he/she can simply click “Clear Data” in the header. This will remove all entries from the Revenue and Expense tables.
 
 ![Example](screenshots/3cleardata.png)
 
 
 ## Clear Revenue or Expense Table
 
-If a user wants to clear either the Revenue or the Expense table, they simply click “Clear All Revenues” or “Clear All Expenses” to delete the appropriate entries. Once cleared, the button to clear the data disappears until new data has been entered
+If a user wants to clear either the Revenue or the Expense table, they simply click “Clear All Revenues” or “Clear All Expenses” to delete the appropriate entries. Once cleared, the button to clear the data disappears until new data has been entered for the empty table.
 
 ![Example](screenshots/4clearrevenues.png)
 
 
 ## Edit Entries
 
-A user can edit an entry by clicking “Edit” in the table. This renders a form at the top with pre-filled information for that entry. A user can change any of that infor and then click “Update Revenue” or “Update Expense” to update the entry. The user also has the option to delete the entry or to cancel editing.
+A user can edit an entry by clicking “Edit” in the table. This renders a form at the top with pre-filled information for that entry. A user can change any of that info and then click “Update Revenue” or “Update Expense” to update the entry. The user also has the option to delete the entry or to cancel editing.
 
-Failing to provide the appropriate information props an error dialogue box info on what to change.
+Failing to provide the appropriate information prompts an error dialogue box info on what to change.
 
 ![Example](screenshots/5editrevenue.png)
 
