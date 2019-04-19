@@ -109,7 +109,6 @@ const App = () => {
               addData={addData}
             />)
           }
-
         <DataTable
           type="Revenue"
           dataSource={revenue}
