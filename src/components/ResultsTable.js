@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import {
   Form,
-  Col
+  Col,
+  Table
  } from 'react-bootstrap'
  import { commaSeparateNumber, formatNumber } from '../utils'
 
@@ -54,7 +55,7 @@ const ResultsTable = props => {
   //Handle case where total revenue would be 0 and cause NaN
   const contributionMargin = sumTotalRevenue !== 0 ? ((totalContributionProfit / sumTotalRevenue) * 100).toFixed(0) : 0
 
-  const capitalROI = (sumTotalExpense - sumTotalRevenue === 0 || sumMonthlyRevenue - sumMonthlyExpense === 0) ? 0 : ((sumOneTimeExpense - sumOneTimeRevenue) / monthlyContributionProfit).toFixed(1)
+  const capitalROI = (sumTotalExpense - sumTotalRevenue === 0) || (sumMonthlyRevenue - sumMonthlyExpense === 0) ? 0 : ((sumOneTimeExpense - sumOneTimeRevenue) / monthlyContributionProfit).toFixed(1)
 
  //
  // handle case where totalExpense and totalRevenue are 0 (to avoid NaN)
@@ -76,7 +77,7 @@ const ResultsTable = props => {
         </Form.Control>
       </Col>
 {/********************** Results Table *********************/}
-      <table className="totals-table">
+      <Table striped bordered hover className="totals-table">
         <thead>
           <tr>
             <th></th>
@@ -102,22 +103,22 @@ const ResultsTable = props => {
             <td>Contribution Profit</td>
             <td></td>
             <td bgcolor={monthlyContributionProfit < 0 && "red"}>${formatNumber(monthlyContributionProfit, 2)}</td>
-            <td>${formatNumber(totalContributionProfit, 2)}</td>
+            <td bgcolor={totalContributionProfit < 0 && "red"}>${formatNumber(totalContributionProfit, 2)}</td>
           </tr>
           <tr>
             <td>Contribution Margin</td>
             <td></td>
             <td></td>
-            <td>{contributionMargin}%</td>
+            <td bgcolor={contributionMargin < 0 && "red"}>{contributionMargin}%</td>
           </tr>
           <tr>
             <td>Capital ROI (monthly)</td>
             <td></td>
             <td></td>
-            <td>{capitalROI}</td>
+            <td bgcolor={capitalROI < 0 && "red"}>{capitalROI}</td>
           </tr>
         </tbody>
-      </table>
+      </Table>
     </div>
   )
 }
