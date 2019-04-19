@@ -10,46 +10,48 @@ import {
 const EditRevenueForm = props => {
 
   useEffect(() => {
-    setRevenue(props.currentRevenue)
+    setData(props.currentData)
   }, [props])
 
 //Functional Component State
-  const [revenue, setRevenue] = useState(props.currentRevenue)
+  const [data, setData] = useState(props.currentData)
   const [numberError, setNumberError] = useState(false)
   const [nameError, setNameError] = useState(false)
+  console.log('Edit form Data Type', data);
+  const dataType = data.type === "Revenue" ? "Revenue" : "Expense"
 
   const handleInputChange = event => {
     console.log('EVENT TARGET Name>>>', event.target.name);
     console.log('EVENT TARGET value>>>', event.target.value)
     const { name, value } = event.target
     if(name === 'oneTime' || name === 'monthly'){
-      setRevenue({...revenue, [name]: parseInt(value)})
+      setData({...data, [name]: parseInt(value)})
     }
     else {
-      setRevenue({ ...revenue, [name]: value })
+      setData({ ...data, [name]: value })
     }
   }
   const handleDelete = () => {
-    props.deleteRevenue(revenue.id)
-    props.setEditingRevenue(false)
+    props.deleteRevenue(data.id)
+    props.setEditingData(false)
   }
 
   return (
     <div>
-      <h2>Edit Revenue</h2>
+      <h2>Edit {dataType}</h2>
       <Form
         onSubmit={event => {
           event.preventDefault()
-          console.log('Updated Revenue Item>>>', revenue);
+          console.log('Updated Revenue Item>>>', data);
 /************ Error Handling Before Submission *************/
-          if(!revenue.oneTime && revenue.oneTime !== 0 || !revenue.monthly && revenue.monthly !== 0){
+          if(!data.oneTime && data.oneTime !== 0 || !data.monthly && data.monthly !== 0){
             setNumberError(true)
           }
-          else if (revenue.name === ""){
+          else if (data.name === ""){
             setNameError(true)
           }
           else {
-            props.updateRevenue(revenue.id, revenue)
+            props.updateData(data.id, data)
           }
         }}
       >
@@ -59,7 +61,7 @@ const EditRevenueForm = props => {
               type="text"
               name="name"
               placeholder="Name"
-              value={revenue.name}
+              value={data.name}
               onChange={handleInputChange}
             />
           </Col>
@@ -70,7 +72,7 @@ const EditRevenueForm = props => {
               placeholder="One-Time Amount"
               step="0.01"
               min="0"
-              value={revenue.oneTime}
+              value={data.oneTime}
               onChange={handleInputChange}
             />
           </Col>
@@ -81,7 +83,7 @@ const EditRevenueForm = props => {
               placeholder="Monthly Amount"
               step="0.01"
               min="0"
-              value={revenue.monthly}
+              value={data.monthly}
               onChange={handleInputChange}
             />
           </Col>
@@ -95,7 +97,7 @@ const EditRevenueForm = props => {
           </Col>
           <Col sm={2} className="add-form-button">
             <Button variant="danger" onClick={() => handleDelete()} className="button muted-button">
-              Delete Revenue Entry
+              Delete {dataType} Entry
             </Button>
           </Col>
         </Row>

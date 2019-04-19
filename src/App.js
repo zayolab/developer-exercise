@@ -14,26 +14,26 @@ import './App.css';
 
 const App = () => {
   const revenueData = [
-    {id: 1, name: "Corporate Bandwith Revenue", oneTime:5000, monthly: 500 },
-    {id: 2, name: "Residential Bandwith Revenue", oneTime:2000, monthly: 100 },
-    {id: 3, name: "Advertising Revenue", oneTime:10000, monthly: 2500 }
+    {id: 1, name: "Corporate Bandwith Revenue", oneTime:5000, monthly: 500, type: "Revenue"},
+    {id: 2, name: "Residential Bandwith Revenue", oneTime:2000, monthly: 100, type: "Revenue" },
+    {id: 3, name: "Advertising Revenue", oneTime:10000, monthly: 2500, type: "Revenue" }
   ]
   const expenseData = [
-    {id: 1, name: "Rent", oneTime:5000, monthly: 500 },
-    {id: 2, name: "Salaries", oneTime:2000, monthly: 100 },
-    {id: 3, name: "Marketing", oneTime:10000, monthly: 2500 }
+    {id: 1, name: "Rent", oneTime:5000, monthly: 500, type: "Expense" },
+    {id: 2, name: "Salaries", oneTime:2000, monthly: 100, type: "Expense" },
+    {id: 3, name: "Marketing", oneTime:10000, monthly: 2500, type: "Expense" }
   ]
-  const initialExpenseEditForm = {id: null, name: '', oneTime: 0, monthly: 0, type: "expense"}
+  const initialExpenseEditForm = {id: null, name: '', oneTime: 0, monthly: 0, type: "Expense"}
 
-  const initialRevenueEditForm = {id: null, name: '', oneTime: 0, monthly: 0, type: "revenue"}
+  const initialDataEditForm = {id: null, name: '', oneTime: 0, monthly: 0, type: ""}
 
 //Functional component state
   const [revenue, setRevenue] = useState(revenueData)
   const [expense, setExpense] = useState(expenseData)
-  const [editingRevenue, setEditingRevenue] = useState(false)
+  const [editingData, setEditingData] = useState(false)
   const [editingExpense, setEditingExpense] = useState(false)
 
-  const [currentRevenue, setCurrentRevenue] = useState(initialExpenseEditForm)
+  const [currentData, setCurrentData] = useState(initialDataEditForm)
 
   const [currentExpense, setCurrentExpense] = useState(initialExpenseEditForm)
 
@@ -58,22 +58,29 @@ const App = () => {
       setExpense(expense.filter(expense => expense.id !== id))
     }
   }
-  const deleteExpense = id => {
-    setExpense(expense.filter(expense => expense.id !== id))
-  }
-  const editRevenueRow = revenue => {
-    setEditingRevenue(true)
-    setEditingExpense(false)
-    setCurrentRevenue({id: revenue.id, name: revenue.name, oneTime: revenue.oneTime, monthly: revenue.monthly})
+
+  const editDataRow = (data, type) => {
+    if(type === 'Revenue') {
+      console.log('EditDataRow triggered');
+      setEditingData(true)
+      setEditingExpense(false)
+      setCurrentData({id: data.id, name: data.name, oneTime: data.oneTime, monthly: data.monthly, type: 'Revenue'})
+    }
+    else {
+      console.log('Edit data row else triggered', type);
+      setEditingExpense(true)
+      setEditingData(false)
+      setCurrentExpense({id: expense.id, name: expense.name, oneTime: expense.oneTime, monthly: expense.monthly, type: 'Expense'})
+    }
   }
   const editExpenseRow = expense => {
     setEditingExpense(true)
-    setEditingRevenue(false)
+    setEditingData(false)
     setCurrentExpense({id: expense.id, name: expense.name, oneTime: expense.oneTime, monthly: expense.monthly})
   }
-  const updateRevenue = (id, updatedRevenue) => {
-    setEditingRevenue(false)
-    setRevenue(revenue.map(revenue => (revenue.id === id ? updatedRevenue : revenue)))
+  const updateData = (id, updatedData) => {
+    setEditingData(false)
+    setRevenue(revenue.map(revenue => (revenue.id === id ? updatedData : revenue)))
   }
   const updateExpense = (id, updatedExpense) => {
     setEditingExpense(false)
@@ -85,13 +92,13 @@ const App = () => {
       <h1 className="text text-center">ROI Calculator</h1>
       <div className="flex-row">
         <div className="flex-large">
-          {editingRevenue ? (
+          {editingData ? (
             <EditRevenueForm
-              setEditingRevenue={setEditingRevenue}
+              setEditingData={setEditingData}
               setRevenue={setRevenue}
               deleteData={deleteData}
-              currentRevenue={currentRevenue}
-              updateRevenue={updateRevenue}
+              currentData={currentData}
+              updateData={updateData}
               />)
           : editingExpense ? (
             <EditExpenseForm
@@ -110,11 +117,17 @@ const App = () => {
           type="Revenue"
           dataSource={revenue}
           deleteData={deleteData}
-          editingRevenue={editingRevenue} />
+          editingData={editingData}
+          editDataRow={editDataRow}/>
+        <DataTable
+          type="Expense"
+          dataSource={expense}
+          deleteData={deleteData}
+          editingExpense={editingExpense} />
         <RevenueTable
           revenue={revenue}
           deleteData={deleteData}
-          editRevenueRow={editRevenueRow}
+          editDataRow={editDataRow}
           />
         <ExpenseTable
           expense={expense}
