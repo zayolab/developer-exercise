@@ -1,49 +1,59 @@
-# Developer Interview Exercise
-#### Zayo Labs
-###
+# ROI Calculator
 
-### ROI Calculator
+## About the app
 
-This application is a ROI Calculator built with React. A ROI (Return of Investment) calculator is an investment calculator that allows you to estimate profit and loss of investments and is particularly helpful when making financial decisions.
-
-#### Tasks - Do as many as you'd like. Show us what you've got!
-- Break App.js down into reusable components.
-- Move calculation tool/utils to its own file.
-- Create a Node/Express backend (or stack of your choice) with a rest route to handle the calculations built in the render function of App.js
-- Make the totals (revenue, expenses, contribution profit, contribution margin, etc.) reflect a 24 month term (rather than 12) or make the term dynamic, allowing the user to specify a 12, 24, 36, 48, or 60 month term.
-- Any other improvements of the application.
-
-**Once you have completed the exercise, submit a PR with the base fork as zayo-labs/developer-exercise master. In the body of the PR, write a PRO/CON list addressing the original state of the application. What was done well? What was done poorly?**
+This app allows one to enter revenues and expenses and see an immediate calculation of a variety of ROI formulas.
 
 
-The app was built to mimic the functionality of the spreadsheet below.
+## Home
 
-<img src="sample_roi_spreadsheet.png" alt="ROI Spreadsheet" width="450">
+The home page on app load shows several revenue and expense entries. These entries are here for demonstration purposes and to help one play around with the app easier. The top of the screen has a form which allows a user to enter a new revenue or expense item.
 
-All of the bold fields are calculated fields and should not be editable.  As additional revenue and expense items are added, the calculated fields should update automatically on the page.  As items are deleted, the calculated fields should also update automatically on the page.
+To clear the existing data, a user can click “Clear Data” in the header.
 
-All fields should be formatted correctly: currency format, percentage format (for the Contribution Margin), and decimal format (for the Capital ROI).
-
-The following formulas are used in the app to calculate financials:
-- One-Time Revenue = Sum of the one-time column of all revenue items
-- Monthly Revenue = Sum of the monthly column of all revenue items
-- One-Time Expense = Sum of the one-time column of all expense items
-- Monthly Expense = Sum of the monthly column of all expense items
-- Total Revenue = One-Time Revenue + Monthly Revenue * 12
-- Total Expenses = One-Time Expense + Monthly Expenses * 12
-- Monthly Contribution Profit = Monthly Revenue – Monthly Expenses
-- Total Contribution Profit = Total Revenue – Total Expenses
-- Contribution Margin = Total Contribution Profit / Total Revenue
-- Capital ROI (Months) = (One-Time Expenses – One-Time Revenue) / Monthly Contribution Profit
-
-To get started:
-```
-// Fork and clone the repo
-
-$ cd developer-exercise/
-$ yarn                       // to install dependencies
-$ yarn start                 // to start the server
-```
+![Example](screenshots/1.png)
 
 
-Feel free to reach out with any questions.
+## Form Validation
+
+When submitting a form, the app checks to make sure there is an appropriate entry type, name, on-time amount, and monthly-amount. Failing to enter the correct information props an error dialogue box that provides the user with information on what they need to fix
+
+![Example](screenshots/2 error.png)
+
+
+## Clear Data
+
+If a user wants to start with a blank slate, he/she can simply click “Clear Data” which will remove all entries from the Revenue and Expense table.
+
+![Example](screenshots/3 clear data.png)
+
+
+## Clear Revenue or Expense Table
+
+If a user wants to clear either the Revenue or the Expense table, they simply click “Clear All Revenues” or “Clear All Expenses” to delete the appropriate entries. Once cleared, the button to clear the data disappears until new data has been entered
+
+![Example](screenshots/4 clear revenues.png)
+
+
+## Edit Entries
+
+A user can edit an entry by clicking “Edit” in the table. This renders a form at the top with pre-filled information for that entry. A user can change any of that infor and then click “Update Revenue” or “Update Expense” to update the entry. The user also has the option to delete the entry or to cancel editing.
+
+Failing to provide the appropriate information props an error dialogue box info on what to change.
+
+![Example](screenshots/5 edit revenue.png)
+
+![Example](screenshots/6 edit error val.png)
+
+
+## Results
+
+The bottom table in the app displays the ROI results. This information is updated automatically whenever expenses or revenues change. The entries for the ROI values change to red if the calculation results in a negative number.
+
+The default term length for the ROI calculations is 12 months, but the user can select up to 60 months by choosing the value from the dropdown. This change also causes an automatic update to the ROI calculations.
+
+![Example](screenshots/7 results .png)
+
+![Example](screenshots/8 results term.png)
+
+![Example](screenshots/9 results red.png)
