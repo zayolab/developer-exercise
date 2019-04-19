@@ -11,7 +11,7 @@ const AddDataForm = props => {
 
 /************ Functional component state *************************/
 
-  const initialFormState = { id: null, name: '', oneTime: 0, monthly: 0, type: 'default' }
+  const initialFormState = { id: null, name: '', oneTime: "", monthly: "", type: 'default' }
   const [data, setData] = useState(initialFormState)
   const [numberError, setNumberError] = useState(false)
   const [typeError, setTypeError] = useState(false)
@@ -96,6 +96,7 @@ const AddDataForm = props => {
               />
             </Col>
             <Col sm={2} className="input-field">
+
               <Form.Control
                 type="number"
                 name="monthly"

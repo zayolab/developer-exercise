@@ -6,6 +6,7 @@ import {
   Form
  } from 'react-bootstrap'
  import AlertMessage from './AlertMessage'
+ import styles from '../App.css'
 
 const EditDataForm = props => {
 
@@ -73,6 +74,7 @@ const EditDataForm = props => {
       {/***************** Form Fields ******************/}
         <Row className="input-field">
           <Col sm={3} className="input-field">
+            <Form.Label>Entry Name</Form.Label>
             <Form.Control
               type="text"
               name="name"
@@ -82,6 +84,7 @@ const EditDataForm = props => {
             />
           </Col>
           <Col sm={2} className="input-field">
+            <Form.Label>One-Time Amount</Form.Label>
             <Form.Control
               type="number"
               name="oneTime"
@@ -93,6 +96,7 @@ const EditDataForm = props => {
             />
           </Col>
           <Col sm={2} className="input-field">
+            <Form.Label>Monthly Amount</Form.Label>
             <Form.Control
               type="number"
               name="monthly"
@@ -103,19 +107,15 @@ const EditDataForm = props => {
               onChange={handleInputChange}
             />
           </Col>
-          <Col sm={2} className="add-form-button">
-            <Button type="submit">Update {dataType}</Button>
-          </Col>
-          <Col sm={2} className="add-form-button">
-            <Button variant="secondary" onClick={() => props.setEditingData(false)} className="button muted-button">
+        </Row>
+        <Row className="input-field">
+            <Button className="edit-buttons" variant="primary" type="submit" >Update {dataType}</Button>
+            <Button className="edit-buttons" variant="secondary" onClick={() => props.setEditingData(false)}>
               Cancel
             </Button>
-          </Col>
-          <Col sm={2} className="add-form-button">
-            <Button variant="danger" onClick={() => handleDelete()} className="button muted-button">
+            <Button variant="danger" onClick={() => handleDelete()} className="edit-buttons">
               Delete {dataType} Entry
             </Button>
-          </Col>
         </Row>
 
     {/********** Error Handling Alerts *************/}
