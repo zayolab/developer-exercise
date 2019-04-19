@@ -15,7 +15,6 @@ const EditDataForm = props => {
   const [data, setData] = useState(props.currentData)
   const [numberError, setNumberError] = useState(false)
   const [nameError, setNameError] = useState(false)
-  console.log('Edit form Data Type', data);
   const dataType = data.type
 
 /********************* Listen for Prop Changes *************/
@@ -26,8 +25,6 @@ const EditDataForm = props => {
 /********************** Event Handling ************************/
 
   const handleInputChange = event => {
-    console.log('EVENT TARGET Name>>>', event.target.name);
-    console.log('EVENT TARGET value>>>', event.target.value)
     const { name, value } = event.target
     if(name === 'oneTime' || name === 'monthly'){
       setData({...data, [name]: parseInt(value)})
@@ -50,7 +47,6 @@ const EditDataForm = props => {
       <Form
         onSubmit={event => {
           event.preventDefault()
-          console.log('Updated Revenue Item>>>', data);
           setNumberError(false)
           setNameError(false)
 

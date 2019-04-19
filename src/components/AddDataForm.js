@@ -21,8 +21,6 @@ const AddDataForm = props => {
 /********************* Event Handling *****************************/
 
   const handleInputChange = event => {
-    console.log('EVENT TARGET Name>>>', event.target.name);
-    console.log('EVENT TARGET value>>>', event.target.value)
     const { name, value } = event.target
     setData({...data, [name]: value})
   }
@@ -38,7 +36,6 @@ const AddDataForm = props => {
         <h2>Add Expense or Revenue</h2>
         <Form onSubmit={event => {
           event.preventDefault()
-          console.log('Data is', data);
       /***** Clear existing errors before checking *****/
           setNumberError(false)
           setTypeError(false)
@@ -59,7 +56,6 @@ const AddDataForm = props => {
       /********** Add the data if no errors *********/
           else {
             props.addData(data)
-            console.log('Inital Form State before reset is>>', initialFormState);
       /********* Form back to the inital state *******/
             setSuccess(true)
             handleSuccess()
