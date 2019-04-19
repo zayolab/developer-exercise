@@ -4,6 +4,7 @@
 
 This app allows one to enter revenues and expenses to see an immediate calculation of a variety of ROI formulas.
 
+View the deployed site at: http://zayo-roi.surge.sh/
 
 ## Home
 
