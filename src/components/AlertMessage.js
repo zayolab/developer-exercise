@@ -7,13 +7,11 @@ import {
 const AlertMessage = props => {
   return (
     <Alert variant={props.variant}>
-      <Alert.Heading>{props.title}</Alert.Heading>
-      <hr />
       <p className="mb-0">
         {props.message}
       </p>
       <hr />
-      <Button onClick={(() => props.setState(false))}>Close Alert</Button>
+      <Button variant="secondary" onClick={(() => props.setState(false))}>Close Alert</Button>
     </Alert>
   )
 }

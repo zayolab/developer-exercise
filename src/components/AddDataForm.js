@@ -39,6 +39,10 @@ const AddDataForm = props => {
         <Form onSubmit={event => {
           event.preventDefault()
           console.log('Data is', data);
+      /***** Clear existing errors before checking *****/
+          setNumberError(false)
+          setTypeError(false)
+          setNameError(false)
       /******** Error Handling Before Submission *****/
           if(!data.oneTime && data.oneTime !== 0){
             setNumberError(true)
@@ -60,9 +64,6 @@ const AddDataForm = props => {
             setSuccess(true)
             handleSuccess()
             setData(initialFormState)
-            setNumberError(false)
-            setTypeError(false)
-            setNameError(false)
           }
         }}>
     {/************** Form Input Fields *****************/}
@@ -115,7 +116,6 @@ const AddDataForm = props => {
           {success &&
             <AlertMessage
               variant="success"
-              title="Success!"
               message="Your entry was successfully added!"
               setState={setSuccess}
               />
@@ -123,23 +123,20 @@ const AddDataForm = props => {
           {numberError &&
             <AlertMessage
               variant="danger"
-              title="Woops! Something didn't go right!"
-              message="Make sure to enter a one-time or monthly amount! If you don't have one, enter $0"
+              message="Make sure to enter a one-time or monthly amount. If you don't have one, enter 0"
               setState={setNumberError}/>
           }
 
           {typeError &&
             <AlertMessage
               variant="danger"
-              title="Woops! Something didn't go right!"
-              message="Make sure to select if your entry is a Revenue or an Expense!"
+              message="Make sure to select if your entry is a Revenue or an Expense."
               setState={setTypeError}/>
           }
           {nameError &&
             <AlertMessage
               variant="danger"
-              title="Woops! Something didn't go right!"
-              message="Make sure to add a name to your entry!"
+              message="Make sure to add a name to your entry."
               setState={setNameError}/>
           }
         </Form>
