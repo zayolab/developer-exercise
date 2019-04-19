@@ -102,6 +102,7 @@ const App = () => {
       <Header
         deleteAllRevenueAndExpenses={deleteAllRevenueAndExpenses}/>
       <div className="flex-row">
+        <div className="flex-large">
           {editingData ? (
             <EditDataForm
               setEditingData={setEditingData}
@@ -115,6 +116,7 @@ const App = () => {
               addData={addData}
             />)
           }
+        </div>
         <DataTable
           type="Revenue"
           dataSource={revenue}
