@@ -49,8 +49,14 @@ const App = () => {
     setExpense([...expense, newExpense])
   }
 
-  const deleteRevenue = id => {
-    setRevenue(revenue.filter(revenue => revenue.id !== id))
+  const deleteData = (id, type) => {
+    console.log('Delete Data Clicked', id, type);
+    if(type === 'Revenue'){
+      setRevenue(revenue.filter(revenue => revenue.id !== id))
+    }
+    else{
+      setExpense(expense.filter(expense => expense.id !== id))
+    }
   }
   const deleteExpense = id => {
     setExpense(expense.filter(expense => expense.id !== id))
@@ -83,7 +89,7 @@ const App = () => {
             <EditRevenueForm
               setEditingRevenue={setEditingRevenue}
               setRevenue={setRevenue}
-              deleteRevenue={deleteRevenue}
+              deleteData={deleteData}
               currentRevenue={currentRevenue}
               updateRevenue={updateRevenue}
               />)
@@ -103,16 +109,16 @@ const App = () => {
         <DataTable
           type="Revenue"
           dataSource={revenue}
-          deleteRevenue={deleteRevenue}
+          deleteData={deleteData}
           editingRevenue={editingRevenue} />
         <RevenueTable
           revenue={revenue}
-          deleteRevenue={deleteRevenue}
+          deleteData={deleteData}
           editRevenueRow={editRevenueRow}
           />
         <ExpenseTable
           expense={expense}
-          deleteExpense={deleteExpense}
+          deleteData={deleteData}
           editExpenseRow={editExpenseRow}
           />
         <ResultsTable

@@ -29,7 +29,7 @@ const DataTable = props => {
                 <td>{data.name}</td>
                 <td>${commaSeparateNumber(data.oneTime)}</td>
                 <td>${commaSeparateNumber(data.monthly)}</td>
-                <td><Button variant="danger" onClick={() => props.deleteRevenue(data.id)}>Delete</Button></td>
+                <td><Button variant="danger" onClick={() => props.deleteData(data.id, props.type)}>Delete</Button></td>
                 <td><Button variant="success" onClick={() => props.editRevenueRow(data)}>Edit</Button></td>
               </tr>
             ))
