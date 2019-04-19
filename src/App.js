@@ -116,7 +116,7 @@ const App = () => {
               addData={addData}
             />)
           }
-        </div>
+
         <DataTable
           type="Revenue"
           dataSource={revenue}
@@ -137,6 +137,7 @@ const App = () => {
           revenue={revenue}
           expense={expense}
         />
+        </div>
       </div>
     </div>
   )
