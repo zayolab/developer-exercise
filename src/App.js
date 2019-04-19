@@ -26,15 +26,16 @@ const App = () => {
 
   const initialDataEditForm = {id: null, name: '', oneTime: 0, monthly: 0, type: ""}
 
-/************* Functional component state *******************/
+/************* Functional component state *************************/
 
   const [revenue, setRevenue] = useState(revenueData)
   const [expense, setExpense] = useState(expenseData)
   const [editingData, setEditingData] = useState(false)
   const [currentData, setCurrentData] = useState(initialDataEditForm)
 
-/*********************** Methods **************************/
+/*********************** Methods *********************************/
 
+  /******* Add Data *******/
   const addData = newData => {
     newData.oneTime = parseFloat(newData.oneTime)
     newData.monthly = parseFloat(newData.monthly)
@@ -49,7 +50,18 @@ const App = () => {
       setExpense([...expense, newData])
     }
   }
-
+  /********* Delete Data ********/
+  const deleteAllExpenses = () => {
+    setExpense([])
+  }
+  const deleteAllRevenue = () => {
+    setRevenue([])
+  }
+  const deleteAllRevenueAndExpenses = () => {
+    deleteAllRevenue()
+    deleteAllExpenses()
+  }
+  //Delete a single Expense or Revenue Entry
   const deleteData = (id, type) => {
     console.log('Delete Data Clicked', id, type);
     if(type === 'Revenue'){
@@ -60,6 +72,7 @@ const App = () => {
     }
   }
 
+  /********** Edit Data **********/
   const editDataRow = (data, type) => {
     setEditingData(true)
     if(type === 'Revenue') {
@@ -107,6 +120,7 @@ const App = () => {
           type="Revenue"
           dataSource={revenue}
           deleteData={deleteData}
+          deleteAllRevenue={deleteAllRevenue}
           editingData={editingData}
           editDataRow={editDataRow}
         />
@@ -114,6 +128,7 @@ const App = () => {
           type="Expense"
           dataSource={expense}
           deleteData={deleteData}
+          deleteAllExpenses={deleteAllExpenses}
           editingData={editingData}
           editDataRow={editDataRow}
         />

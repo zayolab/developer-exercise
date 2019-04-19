@@ -13,6 +13,7 @@ const DataTable = props => {
   return (
     <div className="flex-large">
       <h2>{props.type} Table</h2>
+      <Button variant="danger" style={{marginBottom: '5px'}} onClick={props.type === "Revenue" ? props.deleteAllRevenue : props.deleteAllExpenses}>Clear all {props.type}s</Button>
     <Table striped bordered hover  className="data-table">
         <thead>
           <tr>

@@ -9,7 +9,7 @@ import {
 
 const AddDataForm = props => {
 
-/************ Functional componenet state *************************/
+/************ Functional component state *************************/
 
   const initialFormState = { id: null, name: '', oneTime: 0, monthly: 0, type: 'default' }
   const [data, setData] = useState(initialFormState)
@@ -65,7 +65,7 @@ const AddDataForm = props => {
             setNameError(false)
           }
         }}>
-    /************** Form Input Fields *****************/    
+    {/************** Form Input Fields *****************/}
           <Row className="input-field">
             <Col sm={{ span: 2, offset: 1}} className="input-field">
               <Form.Control as="select" name="type" value={data.type} onChange={handleInputChange}>
