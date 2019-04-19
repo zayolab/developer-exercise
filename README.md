@@ -18,7 +18,7 @@ The top of the screen has a form which allows a user to enter a new revenue or e
 
 When submitting a form, the app checks to make sure there is an appropriate entry type, name, on-time amount, and monthly-amount. Failing to enter the correct information props an error dialogue box that provides the user with information on what they need to fix
 
-![Example](screenshots/2error.png)
+![Example](screenshots/2errorval.png)
 
 
 ## Clear Data
