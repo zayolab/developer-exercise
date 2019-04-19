@@ -9,16 +9,20 @@ import {
 
 const EditDataForm = props => {
 
-  useEffect(() => {
-    setData(props.currentData)
-  }, [props])
+/*************** Functional Component State ****************/
 
-//Functional Component State
   const [data, setData] = useState(props.currentData)
   const [numberError, setNumberError] = useState(false)
   const [nameError, setNameError] = useState(false)
   console.log('Edit form Data Type', data);
   const dataType = data.type === "Revenue" ? "Revenue" : "Expense"
+
+/********************* Listen for Prop Changes *************/
+  useEffect(() => {
+    setData(props.currentData)
+  }, [props])
+
+/********************** Event Handling ************************/
 
   const handleInputChange = event => {
     console.log('EVENT TARGET Name>>>', event.target.name);
@@ -31,10 +35,13 @@ const EditDataForm = props => {
       setData({ ...data, [name]: value })
     }
   }
+
   const handleDelete = () => {
-    props.deleteRevenue(data.id)
+    props.deleteData(data.id, data.type)
     props.setEditingData(false)
   }
+
+/********************* Component Return *************************/
 
   return (
     <div>
@@ -43,7 +50,8 @@ const EditDataForm = props => {
         onSubmit={event => {
           event.preventDefault()
           console.log('Updated Revenue Item>>>', data);
-/************ Error Handling Before Submission *************/
+
+    /********* Error Handling Before Submission *********/
           if(!data.oneTime && data.oneTime !== 0){
             setNumberError(true)
           }
@@ -58,6 +66,7 @@ const EditDataForm = props => {
           }
         }}
       >
+      {/***************** Form Fields ******************/}
         <Row className="input-field">
           <Col sm={3} className="input-field">
             <Form.Control
@@ -104,7 +113,9 @@ const EditDataForm = props => {
             </Button>
           </Col>
         </Row>
-  {/******************Error Handling Alerts**********************/}
+
+    {/********** Error Handling Alerts *************/}
+
         {numberError &&
           <AlertMessage
             variant="danger"

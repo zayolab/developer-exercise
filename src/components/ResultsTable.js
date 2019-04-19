@@ -8,26 +8,27 @@ import {
 
 const ResultsTable = props => {
 
-//Functional component state
+/*************** Functional Component State ********************/
+
   const [revenue, setRevenue] = useState(props.revenue)
   const [expense, setExpense] = useState(props.expense)
   const [term, setTerm] = useState(12)
 
-//Sets the term length based on user selection
+/************************ Event Handling **********************/
+
   const handleTermChange = event => {
     const { value } = event.target
     setTerm(value)
   }
 
-//useEffect is watching for props changes and auto-updates the revenue or expense state on change. This is what makes the results automatically update on changes to expenses or revenues
+/*************** Listen for Props Changes **********************/
+
   useEffect(() => {
     setRevenue(props.revenue)
     setExpense(props.expense)
   }, [props])
 
-//Results table caluculations below. Look to refactor repeated code to a reusable function.
-
-/*****************Revenue Calculations******************/
+/***************** Revenue Calculations ******************/
 
   const sumOneTimeRevenue = (revenue.reduce((sum, revenueItem) => {
     return sum + revenueItem.oneTime
@@ -37,7 +38,7 @@ const ResultsTable = props => {
   }, 0)
   const sumTotalRevenue = sumOneTimeRevenue + (sumMonthlyRevenue * term)
 
-/*****************Expense Calculations******************/
+/***************** Expense Calculations ******************/
   const sumOneTimeExpense = expense.reduce((sum, expenseItem) => {
     return sum + expenseItem.oneTime
   }, 0)
@@ -46,7 +47,7 @@ const ResultsTable = props => {
   }, 0)
   const sumTotalExpense = sumOneTimeExpense + (sumMonthlyExpense * term)
 
-/*******Profit, Contribution, Margin, and ROI Calculations********/
+/****** Profit, Contribution, Margin, and ROI Calculations *******/
 
   const monthlyContributionProfit = sumMonthlyRevenue - sumMonthlyExpense
 
@@ -57,14 +58,11 @@ const ResultsTable = props => {
 
   const capitalROI = (sumTotalExpense - sumTotalRevenue === 0) || (sumMonthlyRevenue - sumMonthlyExpense === 0) ? 0 : ((sumOneTimeExpense - sumOneTimeRevenue) / monthlyContributionProfit).toFixed(1)
 
- //
- // handle case where totalExpense and totalRevenue are 0 (to avoid NaN)
- //  let capitalROI = (totalExpense === 0 && totalRevenue === 0) ? 0 : ((this.state.oneTimeExpense - this.state.oneTimeRevenue) / monthlyContributionProfit).toFixed(1)
-
+/******************* Component Return ***************************/
   return (
     <div className="flex-large">
       <h2>Results Table</h2>
-{/****************** Term Selection Dropdown****************/}
+  {/********* Term Selection Dropdown*******/}
       <p>Select the term length in months</p>
       <Col sm={{ span: 2, offset: 0}} className="input-field">
         <Form.Control as="select" name="term" value={term} onChange={handleTermChange}>
@@ -76,7 +74,7 @@ const ResultsTable = props => {
             <option value={60} name="60 months">60-months</option>
         </Form.Control>
       </Col>
-{/********************** Results Table *********************/}
+  {/************* Results Table ************/}
       <Table striped bordered hover className="totals-table">
         <thead>
           <tr>

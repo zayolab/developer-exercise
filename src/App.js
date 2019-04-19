@@ -11,7 +11,7 @@ import './App.css';
 
 const App = () => {
 
-  /*********************** App Data ***********************/
+/*********************** App Data ***********************/
 
   const revenueData = [
     {id: 1, name: "Corporate Bandwith Revenue", oneTime:5000, monthly: 500, type: "Revenue"},
@@ -81,6 +81,8 @@ const App = () => {
       setExpense(expense.map(expense => (expense.id === id ? updatedData : expense)))
     }
   }
+
+/************************ App Return *****************************/
 
   return (
     <div className="container">
