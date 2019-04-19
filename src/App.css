@@ -26,6 +26,25 @@
   text-align: center;
 }
 
+.container {
+  background-color: white;
+}
+
+.navBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid black;
+  margin-bottom: 10px;
+}
+.title {
+  font-family: garamond;
+}
+
+h2 {
+  font-family: garamond;
+  font-size: 30px;
+}
 
 .error {
   color: red;

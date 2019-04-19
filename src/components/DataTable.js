@@ -13,7 +13,7 @@ const DataTable = props => {
 
   return (
     <div className="flex-large">
-      <h2>{props.type} Table</h2>
+      <h2>{props.type}s</h2>
     <Table striped bordered hover  className="data-table">
         <thead>
           <tr>
@@ -22,7 +22,7 @@ const DataTable = props => {
             <th>Monthly</th>
           {/**** Give a button to clear data of present *****/}
             {props.dataSource.length > 0 &&
-            <th align="center" colspan="2"><Button variant="warning" onClick={props.type === "Revenue" ? props.deleteAllRevenue : props.deleteAllExpenses}>Clear all {props.type}s</Button>
+            <th align="center" colSpan={2}><Button variant="warning" onClick={props.type === "Revenue" ? props.deleteAllRevenue : props.deleteAllExpenses}>Clear All {props.type}s</Button>
             </th>
             }
           </tr>

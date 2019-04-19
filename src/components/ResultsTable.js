@@ -61,7 +61,7 @@ const ResultsTable = props => {
 /******************* Component Return ***************************/
   return (
     <div className="flex-large">
-      <h2>Results Table</h2>
+      <h2>Results</h2>
   {/********* Term Selection Dropdown*******/}
       <p>Select the term length in months</p>
       <Col sm={{ span: 2, offset: 0}} className="input-field">

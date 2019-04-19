@@ -45,7 +45,7 @@ const EditDataForm = props => {
 
   return (
     <div>
-      <h2>Edit {dataType}</h2>
+      <h2>Edit {dataType} Entry</h2>
       <Form
         onSubmit={event => {
           event.preventDefault()

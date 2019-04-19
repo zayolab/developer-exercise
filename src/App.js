@@ -6,6 +6,7 @@ import AddDataForm from './components/AddDataForm'
 import EditDataForm from './components/EditDataForm'
 import ResultsTable from './components/ResultsTable'
 import DataTable from './components/DataTable'
+import Header from './components/Header'
 import styles from './App.css';
 
 
@@ -99,7 +100,7 @@ const App = () => {
 
   return (
     <div className="container">
-      <h1 className="text text-center">ROI Calculator</h1>
+      <Header />
       <div className="flex-row">
         <div className="flex-large">
           {editingData ? (
