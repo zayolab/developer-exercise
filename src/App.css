@@ -14,14 +14,18 @@
   align-items: center;
 }
 
-.expenses-table, .revenue-table, .totals-table {
+.data-table, .totals-table,{
   margin-bottom: 3em;
 }
-.expenses-table th, .revenue-table th, .totals-table th {
+ .data-table th, .totals-table th {
   width: 150px;
 }
-.expenses-table td, .revenue-table td, .totals-table td {
-  width: 100px
+.data-table td, .totals-table td {
+  width: 100px;
+}
+
+td {
+  align: center;
 }
 
 .error {

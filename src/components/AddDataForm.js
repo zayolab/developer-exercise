@@ -52,9 +52,10 @@ const AddDataForm = props => {
           }
           else if (data.name === ""){
             setNameError(true)
-
+          }
     /******* Revenue or Expense Callback based on Type ******/
-          props.addData(data)
+          else {
+            props.addData(data)
             console.log('Inital Form State before reset is>>', initialFormState);
     /**** Set the form back to the inital state for next entry ****/
             setSuccess(true)

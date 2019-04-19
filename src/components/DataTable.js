@@ -1,6 +1,8 @@
 import React from 'react'
+import '../App.css';
 import {
-  Button
+  Button,
+  Table
  } from 'react-bootstrap'
 import { commaSeparateNumber } from '../utils'
 
@@ -9,16 +11,12 @@ const DataTable = props => {
   return (
     <div className="flex-large">
       <h2>{props.type} Table</h2>
-      <table className="revenue-table">
+      <Table striped bordered hover className="data-table">
         <thead>
           <tr>
             <th>{props.type}</th>
-          </tr>
-          <tr>
-            <th></th>
             <th>One-Time</th>
             <th>Monthly</th>
-            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -43,7 +41,7 @@ const DataTable = props => {
           }
 
         </tbody>
-      </table>
+      </Table>
     </div>
   )
 }
