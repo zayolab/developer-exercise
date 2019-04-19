@@ -15,7 +15,7 @@ const EditDataForm = props => {
   const [numberError, setNumberError] = useState(false)
   const [nameError, setNameError] = useState(false)
   console.log('Edit form Data Type', data);
-  const dataType = data.type === "Revenue" ? "Revenue" : "Expense"
+  const dataType = data.type
 
 /********************* Listen for Prop Changes *************/
   useEffect(() => {
@@ -37,7 +37,7 @@ const EditDataForm = props => {
   }
 
   const handleDelete = () => {
-    props.deleteData(data.id, data.type)
+    props.deleteData(data.id, dataType)
     props.setEditingData(false)
   }
 

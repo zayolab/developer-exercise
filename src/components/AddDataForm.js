@@ -9,7 +9,8 @@ import {
 
 const AddDataForm = props => {
 
-//Functional componenet state
+/************ Functional componenet state *************************/
+
   const initialFormState = { id: null, name: '', oneTime: 0, monthly: 0, type: 'default' }
   const [data, setData] = useState(initialFormState)
   const [numberError, setNumberError] = useState(false)
@@ -17,16 +18,20 @@ const AddDataForm = props => {
   const [nameError, setNameError] = useState(false)
   const [success, setSuccess] = useState(false)
 
+/********************* Event Handling *****************************/
+
   const handleInputChange = event => {
     console.log('EVENT TARGET Name>>>', event.target.name);
     console.log('EVENT TARGET value>>>', event.target.value)
     const { name, value } = event.target
     setData({...data, [name]: value})
   }
-//Function remove success alert after 3 seconds
+
+  //Function remove success alert after 3 seconds
   const handleSuccess = () => setTimeout(function () {
         setSuccess(false);
     }, 3000)
+/********************* Component Return ***************************/
 
   return (
       <div>
@@ -34,7 +39,7 @@ const AddDataForm = props => {
         <Form onSubmit={event => {
           event.preventDefault()
           console.log('Data is', data);
-    /************ Error Handling Before Submission *************/
+      /******** Error Handling Before Submission *****/
           if(!data.oneTime && data.oneTime !== 0){
             setNumberError(true)
           }
@@ -47,11 +52,11 @@ const AddDataForm = props => {
           else if (data.name === ""){
             setNameError(true)
           }
-    /******* Revenue or Expense Callback based on Type ******/
+      /********** Add the data if no errors *********/
           else {
             props.addData(data)
             console.log('Inital Form State before reset is>>', initialFormState);
-    /**** Set the form back to the inital state for next entry ****/
+      /********* Form back to the inital state *******/
             setSuccess(true)
             handleSuccess()
             setData(initialFormState)
@@ -60,6 +65,7 @@ const AddDataForm = props => {
             setNameError(false)
           }
         }}>
+    /************** Form Input Fields *****************/    
           <Row className="input-field">
             <Col sm={{ span: 2, offset: 1}} className="input-field">
               <Form.Control as="select" name="type" value={data.type} onChange={handleInputChange}>

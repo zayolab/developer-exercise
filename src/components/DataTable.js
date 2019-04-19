@@ -8,6 +8,8 @@ import { commaSeparateNumber } from '../utils'
 
 const DataTable = props => {
 
+/************************* Component Return ***********************/
+
   return (
     <div className="flex-large">
       <h2>{props.type} Table</h2>
