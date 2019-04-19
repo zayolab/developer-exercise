@@ -21,13 +21,7 @@ const AddDataForm = props => {
     console.log('EVENT TARGET Name>>>', event.target.name);
     console.log('EVENT TARGET value>>>', event.target.value)
     const { name, value } = event.target
-    //oneTime and monthly amounts from string to number
-    if(name === 'oneTime' || name === 'monthly'){
-      setData({...data, [name]: parseInt(value)})
-    }
-    else{
     setData({...data, [name]: value})
-    }
   }
 //Function remove success alert after 3 seconds
   const handleSuccess = () => setTimeout(function () {

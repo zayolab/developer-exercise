@@ -10,6 +10,9 @@ import './App.css';
 
 
 const App = () => {
+
+  /*********************** App Data ***********************/
+
   const revenueData = [
     {id: 1, name: "Corporate Bandwith Revenue", oneTime:5000, monthly: 500, type: "Revenue"},
     {id: 2, name: "Residential Bandwith Revenue", oneTime:2000, monthly: 100, type: "Revenue" },
@@ -23,23 +26,26 @@ const App = () => {
 
   const initialDataEditForm = {id: null, name: '', oneTime: 0, monthly: 0, type: ""}
 
-//Functional component state
+/************* Functional component state *******************/
+
   const [revenue, setRevenue] = useState(revenueData)
   const [expense, setExpense] = useState(expenseData)
   const [editingData, setEditingData] = useState(false)
   const [currentData, setCurrentData] = useState(initialDataEditForm)
 
-// Errors when attempting shared expense/revenue functions. Look to refactor to eliminate duplicate code
+/*********************** Methods **************************/
+
   const addData = newData => {
-    console.log('NEWREVENUE is >>', newData.type);
+    newData.oneTime = parseFloat(newData.oneTime)
+    newData.monthly = parseFloat(newData.monthly)
+    console.log('NEWREVENUE is >>', newData);
     if(newData.type === "Revenue"){
       newData.id = revenue.length + 1
-      newData.type = 'Revenue'
+      console.log('New Data in revenue is', newData);
       setRevenue([...revenue, newData])
     }
     else {
       newData.id = expense.length + 1
-      newData.type = 'Expense'
       setExpense([...expense, newData])
     }
   }
