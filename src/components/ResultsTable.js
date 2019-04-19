@@ -27,6 +27,7 @@ const ResultsTable = props => {
 //Results table caluculations below. Look to refactor repeated code to a reusable function.
 
 /*****************Revenue Calculations******************/
+
   const sumOneTimeRevenue = (revenue.reduce((sum, revenueItem) => {
     return sum + revenueItem.oneTime
   }, 0))
@@ -45,11 +46,13 @@ const ResultsTable = props => {
   const sumTotalExpense = sumOneTimeExpense + (sumMonthlyExpense * term)
 
 /*******Profit, Contribution, Margin, and ROI Calculations********/
+
   const monthlyContributionProfit = sumMonthlyRevenue - sumMonthlyExpense
 
   const totalContributionProfit = sumTotalRevenue - sumTotalExpense
+
   //Handle case where total revenue would be 0 and cause NaN
-  const contributionMargin = sumTotalRevenue !== 0 ? (totalContributionProfit / sumTotalRevenue * 100).toFixed(0) : 0
+  const contributionMargin = sumTotalRevenue !== 0 ? ((totalContributionProfit / sumTotalRevenue) * 100).toFixed(0) : 0
 
   const capitalROI = (sumTotalExpense - sumTotalRevenue === 0 || sumMonthlyRevenue - sumMonthlyExpense === 0) ? 0 : ((sumOneTimeExpense - sumOneTimeRevenue) / monthlyContributionProfit).toFixed(1)
 
@@ -98,7 +101,7 @@ const ResultsTable = props => {
           <tr>
             <td>Contribution Profit</td>
             <td></td>
-            <td>${formatNumber(monthlyContributionProfit, 2)}</td>
+            <td bgcolor={monthlyContributionProfit < 0 && "red"}>${formatNumber(monthlyContributionProfit, 2)}</td>
             <td>${formatNumber(totalContributionProfit, 2)}</td>
           </tr>
           <tr>
