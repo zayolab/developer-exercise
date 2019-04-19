@@ -14,7 +14,7 @@ const DataTable = props => {
   return (
     <div className="flex-large">
       <h2>{props.type}s</h2>
-    <Table striped bordered hover  className="data-table">
+    <Table striped bordered hover responsive className="data-table">
         <thead>
           <tr>
             <th>{props.type}</th>
