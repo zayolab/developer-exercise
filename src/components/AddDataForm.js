@@ -50,15 +50,9 @@ const AddDataForm = props => {
           }
           else if (data.name === ""){
             setNameError(true)
-          }
+
     /******* Revenue or Expense Callback based on Type ******/
-          else {
-            if(data.type === 'revenue'){
-            props.addRevenue(data)
-            }
-            else if (data.type === 'expense'){
-              props.addExpense(data)
-            }
+          props.addData(data)
             console.log('Inital Form State before reset is>>', initialFormState);
     /**** Set the form back to the inital state for next entry ****/
             setSuccess(true)
@@ -73,8 +67,8 @@ const AddDataForm = props => {
             <Col sm={{ span: 2, offset: 1}} className="input-field">
               <Form.Control as="select" name="type" value={data.type} onChange={handleInputChange}>
                   <option value="default" name="default" disabled={false}>Select Type</option>
-                  <option value="revenue" name="revenue">Revenue</option>
-                  <option value="expense" name="expense">Expense</option>
+                  <option value="Revenue" name="revenue">Revenue</option>
+                  <option value="Expense" name="expense">Expense</option>
               </Form.Control>
             </Col>
             <Col sm={3} className="input-field">

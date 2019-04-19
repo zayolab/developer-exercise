@@ -35,10 +35,18 @@ const App = () => {
   const [currentExpense, setCurrentExpense] = useState(initialExpenseEditForm)
 
 // Errors when attempting shared expense/revenue functions. Look to refactor to eliminate duplicate code
-  const addRevenue = newRevenue => {
-    newRevenue.id = revenue.length + 1
-    newRevenue.type = 'Revenue'
-    setRevenue([...revenue, newRevenue])
+  const addData = newData => {
+    console.log('NEWREVENUE is >>', newData.type);
+    if(newData.type === "Revenue"){
+      newData.id = revenue.length + 1
+      newData.type = 'Revenue'
+      setRevenue([...revenue, newData])
+    }
+    else {
+      newData.id = expense.length + 1
+      newData.type = 'Expense'
+      setExpense([...expense, newData])
+    }
   }
   const addExpense = newExpense => {
     newExpense.id = expense.length + 1
@@ -93,7 +101,7 @@ const App = () => {
             />)
           : (
             <AddDataForm
-              addRevenue={addRevenue}
+              addData={addData}
               addExpense={addExpense}
             />)
           }
