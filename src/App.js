@@ -20,7 +20,6 @@ const App = () => {
     {id: 2, name: "Salaries", oneTime:2000, monthly: 100, type: "Expense" },
     {id: 3, name: "Marketing", oneTime:10000, monthly: 2500, type: "Expense" }
   ]
-  const initialExpenseEditForm = {id: null, name: '', oneTime: 0, monthly: 0, type: "Expense"}
 
   const initialDataEditForm = {id: null, name: '', oneTime: 0, monthly: 0, type: ""}
 
@@ -28,11 +27,7 @@ const App = () => {
   const [revenue, setRevenue] = useState(revenueData)
   const [expense, setExpense] = useState(expenseData)
   const [editingData, setEditingData] = useState(false)
-  const [editingExpense, setEditingExpense] = useState(false)
-
   const [currentData, setCurrentData] = useState(initialDataEditForm)
-
-  const [currentExpense, setCurrentExpense] = useState(initialExpenseEditForm)
 
 // Errors when attempting shared expense/revenue functions. Look to refactor to eliminate duplicate code
   const addData = newData => {
@@ -47,11 +42,6 @@ const App = () => {
       newData.type = 'Expense'
       setExpense([...expense, newData])
     }
-  }
-  const addExpense = newExpense => {
-    newExpense.id = expense.length + 1
-    newExpense.type = 'Expense'
-    setExpense([...expense, newExpense])
   }
 
   const deleteData = (id, type) => {
@@ -102,7 +92,6 @@ const App = () => {
           : (
             <AddDataForm
               addData={addData}
-              addExpense={addExpense}
             />)
           }
         </div>
