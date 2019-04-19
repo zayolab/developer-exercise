@@ -73,7 +73,13 @@ const App = () => {
 
   const updateData = (id, updatedData) => {
     setEditingData(false)
+    console.log('Update Data Type>>>', updatedData.type);
+    if(updatedData.type === "Revenue") {
     setRevenue(revenue.map(revenue => (revenue.id === id ? updatedData : revenue)))
+    }
+    else {
+      setExpense(expense.map(expense => (expense.id === id ? updatedData : expense)))
+    }
   }
 
   return (
