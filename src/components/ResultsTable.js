@@ -3,7 +3,7 @@ import {
   Form,
   Col
  } from 'react-bootstrap'
- import { commaSeparateNumber } from '../utils'
+ import { commaSeparateNumber, formatNumber } from '../utils'
 
 const ResultsTable = props => {
 
@@ -27,9 +27,9 @@ const ResultsTable = props => {
 //Results table caluculations below. Look to refactor repeated code to a reusable function.
 
 /*****************Revenue Calculations******************/
-  const sumOneTimeRevenue = revenue.reduce((sum, revenueItem) => {
+  const sumOneTimeRevenue = (revenue.reduce((sum, revenueItem) => {
     return sum + revenueItem.oneTime
-  }, 0)
+  }, 0))
   const sumMonthlyRevenue = revenue.reduce((sum, revenueItem) => {
     return sum + revenueItem.monthly
   }, 0)
@@ -52,7 +52,6 @@ const ResultsTable = props => {
   const contributionMargin = sumTotalRevenue !== 0 ? (totalContributionProfit / sumTotalRevenue * 100).toFixed(0) : 0
 
   const capitalROI = (sumTotalExpense - sumTotalRevenue === 0 || sumMonthlyRevenue - sumMonthlyExpense === 0) ? 0 : ((sumOneTimeExpense - sumOneTimeRevenue) / monthlyContributionProfit).toFixed(1)
-
 
  //
  // handle case where totalExpense and totalRevenue are 0 (to avoid NaN)
@@ -86,21 +85,21 @@ const ResultsTable = props => {
         <tbody>
           <tr>
             <td>Revenue</td>
-            <td>${commaSeparateNumber(sumOneTimeRevenue)}</td>
-            <td>${commaSeparateNumber(sumMonthlyRevenue)}</td>
-            <td>${commaSeparateNumber(sumTotalRevenue)}</td>
+            <td>${formatNumber(sumOneTimeRevenue, 2)}</td>
+            <td>${formatNumber(sumMonthlyRevenue, 2)}</td>
+            <td>${formatNumber(sumTotalRevenue, 2)}</td>
           </tr>
           <tr>
             <td>Expenses</td>
-            <td>${commaSeparateNumber(sumOneTimeExpense)}</td>
-            <td>${commaSeparateNumber(sumMonthlyExpense)}</td>
-            <td>${commaSeparateNumber(sumTotalExpense)}</td>
+            <td>${formatNumber(sumOneTimeExpense, 2)}</td>
+            <td>${formatNumber(sumMonthlyExpense, 2)}</td>
+            <td>${formatNumber(sumTotalExpense, 2)}</td>
           </tr>
           <tr>
             <td>Contribution Profit</td>
             <td></td>
-            <td>${commaSeparateNumber(monthlyContributionProfit)}</td>
-            <td>${commaSeparateNumber(totalContributionProfit)}</td>
+            <td>${formatNumber(monthlyContributionProfit, 2)}</td>
+            <td>${formatNumber(totalContributionProfit, 2)}</td>
           </tr>
           <tr>
             <td>Contribution Margin</td>
