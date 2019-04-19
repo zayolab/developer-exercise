@@ -5,7 +5,6 @@ import {
   Table
  } from 'react-bootstrap'
 import { commaSeparateNumber } from '../utils'
-import styles from '../App.css';
 
 const DataTable = props => {
 

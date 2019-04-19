@@ -7,8 +7,6 @@ import EditDataForm from './components/EditDataForm'
 import ResultsTable from './components/ResultsTable'
 import DataTable from './components/DataTable'
 import Header from './components/Header'
-import styles from './App.css';
-
 
 const App = () => {
 

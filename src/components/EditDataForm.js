@@ -6,7 +6,6 @@ import {
   Form
  } from 'react-bootstrap'
  import AlertMessage from './AlertMessage'
- import styles from '../App.css'
 
 const EditDataForm = props => {
 

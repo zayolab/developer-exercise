@@ -1,10 +1,7 @@
 import React from 'react'
 import {
-  Navbar,
   Button
  } from 'react-bootstrap'
- import styles from '../App.css'
-
 
 const Header = props => (
   <div className="navBar" >

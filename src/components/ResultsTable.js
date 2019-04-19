@@ -4,7 +4,7 @@ import {
   Col,
   Table
  } from 'react-bootstrap'
- import { commaSeparateNumber, formatNumber } from '../utils'
+ import { formatNumber } from '../utils'
 
 const ResultsTable = props => {
 
@@ -100,20 +100,20 @@ const ResultsTable = props => {
           <tr>
             <td>Contribution Profit</td>
             <td></td>
-            <td bgcolor={monthlyContributionProfit < 0 && "red"}>${formatNumber(monthlyContributionProfit, 2)}</td>
-            <td bgcolor={totalContributionProfit < 0 && "red"}>${formatNumber(totalContributionProfit, 2)}</td>
+            <td bgcolor={monthlyContributionProfit < 0 ? "red" : undefined}>${formatNumber(monthlyContributionProfit, 2)}</td>
+            <td bgcolor={totalContributionProfit < 0 ? "red" : undefined}>${formatNumber(totalContributionProfit, 2)}</td>
           </tr>
           <tr>
             <td>Contribution Margin</td>
             <td></td>
             <td></td>
-            <td bgcolor={contributionMargin < 0 && "red"}>{contributionMargin}%</td>
+            <td bgcolor={contributionMargin < 0 ? "red" : undefined}>{contributionMargin}%</td>
           </tr>
           <tr>
             <td>Capital ROI (monthly)</td>
             <td></td>
             <td></td>
-            <td bgcolor={capitalROI < 0 && "red"}>{capitalROI}</td>
+            <td bgcolor={capitalROI < 0 ? "red": undefined}>{capitalROI}</td>
           </tr>
         </tbody>
       </Table>
