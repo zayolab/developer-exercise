@@ -1,4 +1,9 @@
 import React, { Component } from 'react';
+import Revenue from './components/baseComponents/revenue'
+import Expense from './components/baseComponents/expense'
+import RevenueTable from './components/parentComponents/revenueTable'
+import ExpenseTable from './components/parentComponents/expenseTable'
+import TotalROI from './components/baseComponents/totalROI'
 import {
   Row,
   Col,
@@ -7,7 +12,7 @@ import {
  } from 'react-bootstrap'
 import './App.css';
 
-class App extends Component {
+export default class App extends Component {
   constructor() {
     super()
     // "seed" data initially
@@ -49,18 +54,11 @@ class App extends Component {
       error: false
     }
 
-    this.handleDelete = this.handleDelete.bind(this)
-    this.handleAdd = this.handleAdd.bind(this)
-
-    // controlled form elements functions
-    this.handleTypeChange = this.handleTypeChange.bind(this)
-    this.handleNameChange = this.handleNameChange.bind(this)
-    this.handleOneTimeChange = this.handleOneTimeChange.bind(this)
-    this.handleMonthlyChange = this.handleMonthlyChange.bind(this)
-  }
+}
+  //I deleted the use of ".bind( this )" from the application using thicc arrow functions for ES6 syntax and less repetitive code.
 
   // Delete expense or revenue from list
-  handleDelete(type, index) {
+  handleDelete = (type, index) => {
     // listType will be 'expenses' or 'revenue' depending on item to delete
     let listType = this.state[type]
     // recalculate and set totals in state
@@ -83,30 +81,32 @@ class App extends Component {
   }
 
   // controlled form elements, watch for changes
-  handleTypeChange(e) {
+  handleTypeChange = (e) => {
     this.setState({
       newType: e.target.value
     })
   }
-  handleNameChange(e) {
+
+  handleNameChange = (e) => {
     this.setState({
       newName: e.target.value
     })
   }
 
-  handleMonthlyChange(e) {
+  handleMonthlyChange = (e) => {
     this.setState({
       newMonthly: Number(e.target.value)
     })
   }
-  handleOneTimeChange(e) {
+
+  handleOneTimeChange = (e) => {
     this.setState({
       newOneTime: Number(e.target.value)
     })
   }
 
   // add new expense or revenue
-  handleAdd(e) {
+  handleAdd = (e) => {
     e.preventDefault()
     // handle form errors, allows one-time and revenue amounts to be 0
     if (!this.state.newType || !this.state.newName || (!this.state.newOneTime && this.state.newOneTime !== 0) || (!this.state.newMonthly && this.state.newMonthly !== 0)) {
@@ -142,29 +142,21 @@ class App extends Component {
     }
   }
 
+
   render() {
     // create table rows from revenue state list
-    let revenueTableData = this.state.revenue.map((item, index) => {
-      return (
-        <tr key={"revenue" + index}>
-          <td>{item.name}</td>
-          <td>${item.oneTime.toFixed(2)}</td>
-          <td>${item.monthly.toFixed(2)}</td>
-          <td><Button onClick={() => this.handleDelete('revenue', index)}>Delete</Button></td>
-        </tr>
-      )
-    })
+
     // create table rows from expenses state list
-    let expensesTableData = this.state.expenses.map((expense, index) => {
-      return (
-        <tr key={"expense" + index}>
-          <td>{expense.name}</td>
-          <td>${expense.oneTime.toFixed(2)}</td>
-          <td>${expense.monthly.toFixed(2)}</td>
-          <td><Button onClick={() => this.handleDelete('expenses', index)}>Delete</Button></td>
-        </tr>
-      )
-    })
+    // let expensesTableData = this.state.expenses.map((expense, index) => {
+    //   return (
+    //     <tr key={"expense" + index}>
+    //       <td>{expense.name}</td>
+    //       <td>${expense.oneTime.toFixed(2)}</td>
+    //       <td>${expense.monthly.toFixed(2)}</td>
+    //       <td><Button onClick={ this.handleDelete('expenses', index) }>Delete</Button></td>
+    //     </tr>
+    //   )
+    // })
 
     // Calculations for totals
     let totalRevenue = this.state.oneTimeRevenue + (this.state.monthlyRevenue * 12)
@@ -185,9 +177,9 @@ class App extends Component {
             <Col sm={{ span: 2, offset: 1}} className="input-field">
               <Form.Control
                 as="select"
-                onChange = {this.handleTypeChange}
+                onChange = {e=> this.handleTypeChange(e)}
                 value={this.state.newType ? this.state.newType : 'choose'}
-                >
+              >
                 <option value="choose" disabled={true}>Select Type</option>
                 <option value="revenue">Revenue</option>
                 <option value="expenses">Expense</option>
@@ -197,7 +189,7 @@ class App extends Component {
               <Form.Control
                 type="text"
                 placeholder="Name"
-                onChange = {this.handleNameChange}
+                onChange = {e => this.handleNameChange(e)}
                 value={this.state.newName ? this.state.newName : ''}
               />
             </Col>
@@ -205,7 +197,7 @@ class App extends Component {
               <Form.Control
                 type="number"
                 placeholder="One-Time Amount"
-                onChange = {this.handleOneTimeChange}
+                onChange = {(e) =>this.handleOneTimeChange(e)}
                 step="0.01"
                 min="0"
                 value={(this.state.newOneTime || this.state.newOneTime === 0) ? this.state.newOneTime : ''}
@@ -247,8 +239,11 @@ class App extends Component {
               </tr>
             </thead>
             <tbody>
-              {revenueTableData}
-            </tbody>
+              <RevenueTable
+                revenueList = { this.state.revenue }
+                handleDelete = {this.handleDelete }
+              />
+              </tbody>
           </table>
           {/* Expenses Table */}
           <table className="expenses-table">
@@ -264,7 +259,10 @@ class App extends Component {
               </tr>
             </thead>
             <tbody>
-              {expensesTableData}
+              <ExpenseTable
+                expenseList = {this.state.expenses}
+                handleDelete = {this.handleDelete}
+              />
             </tbody>
           </table>
           {/* Totals Table */}
@@ -278,42 +276,29 @@ class App extends Component {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Revenue</td>
-                <td>${(this.state.oneTimeRevenue).toFixed(2)}</td>
-                <td>${(this.state.monthlyRevenue).toFixed(2)}</td>
-                <td>${totalRevenue.toFixed(2)}</td>
-              </tr>
-              <tr>
-                <td>Expenses</td>
-                <td>${(this.state.oneTimeExpense).toFixed(2)}</td>
-                <td>${(this.state.monthlyExpense).toFixed(2)}</td>
-                <td>${totalExpense.toFixed(2)}</td>
-              </tr>
-              <tr>
-                <td>Contribution Profit</td>
-                <td></td>
-                <td>${ monthlyContributionProfit.toFixed(2)}</td>
-                <td>${ totalContributionProfit.toFixed(2)}</td>
-              </tr>
-              <tr>
-                <td>Contribution Margin</td>
-                <td></td>
-                <td></td>
-                <td>{contributionMargin}%</td>
-              </tr>
-              <tr>
-                <td>Capital ROI (monthly)</td>
-                <td></td>
-                <td></td>
-                <td>{capitalROI}</td>
-              </tr>
+              <Revenue
+                oneTimeRevenueState = { this.state.oneTimeRevenue }
+                monthlyRevenueState = { this.state.monthlyRevenue }
+                handleDelete = { () => this.handleDelete }
+                totalRevenueState = { totalRevenue }
+              />
+              <Expense
+                oneTimeExpenseState ={ this.state.oneTimeExpense }
+                monthlyExpenseState = { this.state.monthlyExpense }
+                handleDelete = { () => this.handleDelete }
+                totalExpenseState = { totalExpense }
+              />
+              <TotalROI
+                monthlyContributionProfit = { monthlyContributionProfit }
+                totalContributionProfit = { totalContributionProfit }
+                contributionMargin = { contributionMargin }
+                capitalROI = { capitalROI }
+              />
             </tbody>
           </table>
         </div>
       </div>
     );
   }
-}
 
-export default App;
+}
