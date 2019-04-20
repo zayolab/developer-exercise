@@ -92,8 +92,6 @@ const App = () => {
     <div className="container">
       <Header
         deleteAllRevenueAndExpenses={deleteAllRevenueAndExpenses}/>
-      <div className="flex-row">
-        <div className="flex-large">
           {editingData ? (
             <EditDataForm
               setEditingData={setEditingData}
@@ -127,8 +125,6 @@ const App = () => {
           revenue={revenue}
           expense={expense}
         />
-        </div>
-      </div>
     </div>
   )
 }
