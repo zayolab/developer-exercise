@@ -7,6 +7,32 @@ import {
  } from 'react-bootstrap'
 import './App.css';
 
+const ChooseTermLength = ({currentState, onTermChange}) => {
+  return (
+    <Form className="chooseTermLengthForm">
+      <Row>
+        <Col sm={{span: 2, offset:1}} className="input-field" />
+        <Col sm={{span: 2}} className="input-field">
+          <b>Term Length:</b>
+        </Col>
+        <Col sm={{span: 2, offset:1}} className="input-field">
+          <Form.Control
+            as="select"
+            onChange = {onTermChange}
+            value={{currentState}.newTerm ? {currentState}.newTerm : '12'}
+            >
+            <option value="12">12 months</option>
+            <option value="24">24 months</option>
+            <option value="36">36 months</option>
+            <option value="48">48 months</option>
+            <option value="60">60 months</option>
+          </Form.Control>  
+        </Col>    
+      </Row>
+    </Form>
+  );      
+}
+
 class App extends Component {
   constructor() {
     super()
@@ -123,6 +149,7 @@ class App extends Component {
         error: true
       })
     }
+
     // if there are no form errors, add accordingly
     else {
       // typeOfAmount will be either 'expenses' or 'revenue'
@@ -190,27 +217,10 @@ class App extends Component {
       <div>
         <h1 className="text-center">ROI Calculator</h1>
         {/* Select term length form*/}
-        <Form className="chooseTermLengthForm">
-          <Row>
-            <Col sm={{span: 2, offset:1}} className="input-field" />
-            <Col sm={{span: 2}} className="input-field">
-              <b>Term Length:</b>
-            </Col>
-            <Col sm={{span: 2, offset:1}} className="input-field">
-              <Form.Control
-                as="select"
-                onChange = {this.handleTermChange}
-                value={this.state.newTerm ? this.state.newTerm : '12month'}
-                >
-                <option value="12">12 months</option>
-                <option value="24">24 months</option>
-                <option value="36">36 months</option>
-                <option value="48">48 months</option>
-                <option value="60">60 months</option>
-              </Form.Control>  
-            </Col>    
-          </Row>
-        </Form>
+        <ChooseTermLength 
+          currentState={this.currentState} 
+          onTermChange={this.handleTermChange}
+          />
         {/* Add new expense or revenue form */}
         <Form className="addExpenseOrRevenueForm" onSubmit={this.handleAdd}>
           <Row className="input-field">
