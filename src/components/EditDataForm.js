@@ -53,13 +53,14 @@ const EditDataForm = props => {
           <Modal.Title >Edit {dataType}</Modal.Title>
         </Modal.Header>
       </Row>
+    {/*** Beginning of the form in the modal ***/}
       <Form
         onSubmit={event => {
           event.preventDefault()
           setNumberError(false)
           setNameError(false)
 
-    /********* Error Handling Before Submission *********/
+        /*** Error Handling Before Submission ***/
           if(!data.oneTime && data.oneTime !== 0){
             setNumberError(true)
           }
@@ -113,6 +114,7 @@ const EditDataForm = props => {
             />
           </Col>
         </Row>
+      {/*** Form Buttons ***/}
         <Row className="input-field justify-content-md-center">
             <Button className="edit-buttons" variant="primary" type="submit" >Update {dataType}</Button>
             <Button className="edit-buttons" variant="secondary" onClick={() => props.setEditingData(false)}>
