@@ -4,6 +4,7 @@ import {
   Col,
   Form
  } from 'react-bootstrap';
+ import './App.css'
 
 export class ChooseTermLength extends Component {
 

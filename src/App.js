@@ -6,6 +6,7 @@ import {
   Form
  } from 'react-bootstrap';
 import {ChooseTermLength} from './ChooseTermLength';
+import {DisplayRoiTable} from './DisplayRoiTable';
 import './App.css';
 
 class App extends Component {
@@ -249,85 +250,28 @@ class App extends Component {
         { this.state.error &&
           <h4 className="error text-center">Please fill out all fields</h4>
         }
-        <div className="roi-tables">
-          {/* Revenue Table */}
-          <table className="revenue-table">
-            <thead>
-              <tr>
-                <th>Revenue</th>
-              </tr>
-              <tr>
-                <th></th>
-                <th>One-Time</th>
-                <th>Monthly</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {revenueTableData}
-            </tbody>
-          </table>
-          {/* Expenses Table */}
-          <table className="expenses-table">
-            <thead>
-              <tr>
-                <th>Expenses</th>
-              </tr>
-              <tr>
-                <th></th>
-                <th>One-Time</th>
-                <th>Monthly</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {expensesTableData}
-            </tbody>
-          </table>
-          {/* Totals Table */}
-          <table className="totals-table">
-            <thead>
-              <tr>
-                <th></th>
-                <th>One-Time</th>
-                <th>Monthly</th>
-                <th>Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Revenue</td>
-                <td>${(this.state.oneTimeRevenue).toFixed(2)}</td>
-                <td>${(this.state.monthlyRevenue).toFixed(2)}</td>
-                <td>${totalRevenue.toFixed(2)}</td>
-              </tr>
-              <tr>
-                <td>Expenses</td>
-                <td>${(this.state.oneTimeExpense).toFixed(2)}</td>
-                <td>${(this.state.monthlyExpense).toFixed(2)}</td>
-                <td>${totalExpense.toFixed(2)}</td>
-              </tr>
-              <tr>
-                <td>Contribution Profit</td>
-                <td></td>
-                <td>${ monthlyContributionProfit.toFixed(2)}</td>
-                <td>${ totalContributionProfit.toFixed(2)}</td>
-              </tr>
-              <tr>
-                <td>Contribution Margin</td>
-                <td></td>
-                <td></td>
-                <td>{contributionMargin}%</td>
-              </tr>
-              <tr>
-                <td>Capital ROI (monthly)</td>
-                <td></td>
-                <td></td>
-                <td>{capitalROI}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <DisplayRoiTable 
+          /* Revenue Table Data */
+          revenueData={revenueTableData}
+          /* Expenses Table Data */
+          expensesData={expensesTableData}
+          /* Final Totals Display Table Data */
+          // Revenue
+          oneTimeRevenue={this.state.oneTimeRevenue}
+          monthlyRevenue={this.state.monthlyRevenue}
+          totalRevenue={totalRevenue}
+          // Expenses
+          oneTimeExpense={this.state.oneTimeExpense}
+          monthlyExpense={this.state.monthlyExpense}
+          totalExpense={totalExpense}
+          // Profits
+          monthlyProfit={monthlyContributionProfit}
+          totalProfit={totalContributionProfit}
+          // Profit Margin
+          margin={contributionMargin}
+          // Return of Investment
+          roi={capitalROI} 
+        />
       </div>
     );
   }
