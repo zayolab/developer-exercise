@@ -193,7 +193,7 @@ class App extends Component {
         <h1 className="text-center">ROI Calculator</h1>
         {/* Select term length form*/}
         <ChooseTermLength 
-          currentState={this.currentState} 
+          newTerm={termLength}
           onTermChange={this.handleTermChange}
           />
         {/* Add new expense or revenue form */}
