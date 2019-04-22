@@ -28,7 +28,7 @@ export class ChooseTermLength extends Component {
 
   render () {
     return (
-      <Form className="chooseTermLengthForm">
+      <Form className="choose-term-length-form">
         <Row>
           <Col sm={{span: 2, offset:1}} className="input-field" />
           <Col sm={{span: 2}} className="input-field">

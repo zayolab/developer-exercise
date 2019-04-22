@@ -72,7 +72,7 @@ export class AddNewItemForm extends Component {
 
   render () {
     return (
-      <Form className="addExpenseOrRevenueForm" onSubmit={this.handleAdd}>
+      <Form className="add-expense-or-revenue-form" onSubmit={this.handleAdd}>
         <Row className="input-field">
           <Col sm={{ span: 2, offset: 1}} className="input-field">
             <Form.Control
