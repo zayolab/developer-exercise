@@ -3,7 +3,8 @@ import {
   Row,
   Col,
   Button,
-  Form
+  Form,
+  Modal
  } from 'react-bootstrap'
  import AlertMessage from './AlertMessage'
 
@@ -41,8 +42,17 @@ const EditDataForm = props => {
 /********************* Component Return *************************/
 
   return (
-    <div>
-      <h2>Edit {dataType} Entry</h2>
+  /*** React Bootstrap Modal for the edit form ***/
+    <Modal
+      show="true"
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered>
+      <Row className="justify-content-md-center">
+        <Modal.Header>
+          <Modal.Title >Edit {dataType}</Modal.Title>
+        </Modal.Header>
+      </Row>
       <Form
         onSubmit={event => {
           event.preventDefault()
@@ -67,7 +77,7 @@ const EditDataForm = props => {
         }}
       >
       {/***************** Form Fields ******************/}
-        <Row className="input-field">
+        <Row className="input-field justify-content-md-center">
           <Col sm={3} className="input-field">
             <Form.Label>Entry Name</Form.Label>
             <Form.Control
@@ -78,7 +88,7 @@ const EditDataForm = props => {
               onChange={handleInputChange}
             />
           </Col>
-          <Col sm={2} className="input-field">
+          <Col sm={3} className="input-field">
             <Form.Label>One-Time Amount</Form.Label>
             <Form.Control
               type="number"
@@ -90,7 +100,7 @@ const EditDataForm = props => {
               onChange={handleInputChange}
             />
           </Col>
-          <Col sm={2} className="input-field">
+          <Col sm={3} className="input-field">
             <Form.Label>Monthly Amount</Form.Label>
             <Form.Control
               type="number"
@@ -103,7 +113,7 @@ const EditDataForm = props => {
             />
           </Col>
         </Row>
-        <Row className="input-field">
+        <Row className="input-field justify-content-md-center">
             <Button className="edit-buttons" variant="primary" type="submit" >Update {dataType}</Button>
             <Button className="edit-buttons" variant="secondary" onClick={() => props.setEditingData(false)}>
               Cancel
@@ -114,7 +124,7 @@ const EditDataForm = props => {
         </Row>
 
     {/********** Error Handling Alerts *************/}
-
+        <Row className="justify-content-md-center">
         {numberError &&
           <AlertMessage
             variant="danger"
@@ -129,8 +139,9 @@ const EditDataForm = props => {
             message="Make sure to add a name to your entry!"
             setState={setNameError}/>
         }
+        </Row>
       </Form>
-    </div>
+    </Modal>
   )
 }
 
