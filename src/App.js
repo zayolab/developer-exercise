@@ -152,8 +152,8 @@ class App extends Component {
   }
 
   render() {
-    let revenueTableData = getRevenueTableData(this.state.revenue);
-    let expensesTableData = getExpensesTableData(this.state.expenses);
+    let revenueTableData = getRevenueTableData(this.state.revenue, this.handleDelete);
+    let expensesTableData = getExpensesTableData(this.state.expenses, this.handleDelete);
     let termLength = this.state.newTerm
     let totalRevenue = this.state.oneTimeRevenue + (this.state.monthlyRevenue * termLength)
     let totalExpense = this.state.oneTimeExpense + (this.state.monthlyExpense * termLength)
