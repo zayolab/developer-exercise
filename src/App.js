@@ -4,50 +4,15 @@ import {DisplayRoiTable} from './DisplayRoiTable';
 import {AddNewItemForm} from './AddNewItemForm';
 import {getRevenueTableData} from './getRevenueTableData';
 import {getExpensesTableData} from './getExpensesTableData';
+import {stateSeedInfo} from './stateSeedInfo';
 import './App.css';
+
 
 class App extends Component {
   constructor() {
     super()
     // "seed" data initially
-    this.state = {
-      revenue: [
-      {
-        name: 'Item 1',
-        oneTime: 100,
-        monthly: 50
-      },
-      {
-        name: 'Item 2',
-        oneTime: 50,
-        monthly: 25
-      },
-      {
-        name: 'Item 3',
-        oneTime: 25,
-        monthly: 85
-      }],
-      expenses:[{
-        name: 'Expense 1',
-        oneTime: 500,
-        monthly: 20.00
-      },
-      {
-        name: 'Expense 2',
-        oneTime: 200,
-        monthly: 40
-      }],
-      oneTimeRevenue: 175,
-      oneTimeExpense: 700,
-      monthlyRevenue: 160,
-      monthlyExpense: 60,
-      newType: '',
-      newName: '',
-      newOneTime: '',
-      newMonthly: '',
-      newTerm: '12',
-      error: false
-    }
+    this.state = stateSeedInfo;
 
     this.handleDelete = this.handleDelete.bind(this)
     this.handleAdd = this.handleAdd.bind(this)
