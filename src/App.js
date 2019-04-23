@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import {
-  Button,
- } from 'react-bootstrap';
 import {ChooseTermLength} from './ChooseTermLength';
 import {DisplayRoiTable} from './DisplayRoiTable';
 import {AddNewItemForm} from './AddNewItemForm';
+import {getRevenueTableData} from './getRevenueTableData';
+import {getExpensesTableData} from './getExpensesTableData';
 import './App.css';
 
 class App extends Component {
@@ -153,30 +152,8 @@ class App extends Component {
   }
 
   render() {
-    // create table rows from revenue state list
-    let revenueTableData = this.state.revenue.map((item, index) => {
-      return (
-        <tr key={"revenue" + index}>
-          <td>{item.name}</td>
-          <td>${item.oneTime.toFixed(2)}</td>
-          <td>${item.monthly.toFixed(2)}</td>
-          <td><Button onClick={() => this.handleDelete('revenue', index)}>Delete</Button></td>
-        </tr>
-      )
-    })
-    // create table rows from expenses state list
-    let expensesTableData = this.state.expenses.map((expense, index) => {
-      return (
-        <tr key={"expense" + index}>
-          <td>{expense.name}</td>
-          <td>${expense.oneTime.toFixed(2)}</td>
-          <td>${expense.monthly.toFixed(2)}</td>
-          <td><Button onClick={() => this.handleDelete('expenses', index)}>Delete</Button></td>
-        </tr>
-      )
-    })
-
-    // Calculations for totals
+    let revenueTableData = getRevenueTableData(this.state.revenue);
+    let expensesTableData = getExpensesTableData(this.state.expenses);
     let termLength = this.state.newTerm
     let totalRevenue = this.state.oneTimeRevenue + (this.state.monthlyRevenue * termLength)
     let totalExpense = this.state.oneTimeExpense + (this.state.monthlyExpense * termLength)
