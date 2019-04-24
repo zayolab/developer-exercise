@@ -5,6 +5,7 @@ import {
   Button,
   Form
  } from 'react-bootstrap'
+ import Table from './components/Table';
 import './App.css';
 
 class App extends Component {
@@ -144,27 +145,27 @@ class App extends Component {
 
   render() {
     // create table rows from revenue state list
-    let revenueTableData = this.state.revenue.map((item, index) => {
-      return (
-        <tr key={"revenue" + index}>
-          <td>{item.name}</td>
-          <td>${item.oneTime.toFixed(2)}</td>
-          <td>${item.monthly.toFixed(2)}</td>
-          <td><Button onClick={() => this.handleDelete('revenue', index)}>Delete</Button></td>
-        </tr>
-      )
-    })
-    // create table rows from expenses state list
-    let expensesTableData = this.state.expenses.map((expense, index) => {
-      return (
-        <tr key={"expense" + index}>
-          <td>{expense.name}</td>
-          <td>${expense.oneTime.toFixed(2)}</td>
-          <td>${expense.monthly.toFixed(2)}</td>
-          <td><Button onClick={() => this.handleDelete('expenses', index)}>Delete</Button></td>
-        </tr>
-      )
-    })
+    // let revenueTableData = this.state.revenue.map((item, index) => {
+    //   return (
+    //     <tr key={"revenue" + index}>
+    //       <td>{item.name}</td>
+    //       <td>${item.oneTime.toFixed(2)}</td>
+    //       <td>${item.monthly.toFixed(2)}</td>
+    //       <td><Button onClick={() => this.handleDelete('revenue', index)}>Delete</Button></td>
+    //     </tr>
+    //   )
+    // })
+    // // create table rows from expenses state list
+    // let expensesTableData = this.state.expenses.map((expense, index) => {
+    //   return (
+    //     <tr key={"expense" + index}>
+    //       <td>{expense.name}</td>
+    //       <td>${expense.oneTime.toFixed(2)}</td>
+    //       <td>${expense.monthly.toFixed(2)}</td>
+    //       <td><Button onClick={() => this.handleDelete('expenses', index)}>Delete</Button></td>
+    //     </tr>
+    //   )
+    // })
 
     // Calculations for totals
     let totalRevenue = this.state.oneTimeRevenue + (this.state.monthlyRevenue * 12)
@@ -233,8 +234,8 @@ class App extends Component {
           <h4 className="error text-center">Please fill out all fields</h4>
         }
         <div className="roi-tables">
-          {/* Revenue Table */}
-          <table className="revenue-table">
+          
+          {/* <table className="revenue-table">
             <thead>
               <tr>
                 <th>Revenue</th>
@@ -249,9 +250,20 @@ class App extends Component {
             <tbody>
               {revenueTableData}
             </tbody>
-          </table>
+          </table> */}
+          {/* Revenue Table */}
+          <Table 
+            data={this.state.revenue}
+            handleDelete ={this.handleDelete}
+            type={"revenue"}
+          />
           {/* Expenses Table */}
-          <table className="expenses-table">
+          <Table 
+            data={this.state.expenses}
+            handleDelete ={this.handleDelete}
+            type={"expenses"}
+          />
+          {/* <table className="expenses-table">
             <thead>
               <tr>
                 <th>Expenses</th>
@@ -266,7 +278,7 @@ class App extends Component {
             <tbody>
               {expensesTableData}
             </tbody>
-          </table>
+          </table> */}
           {/* Totals Table */}
           <table className="totals-table">
             <thead>
