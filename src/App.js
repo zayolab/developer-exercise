@@ -5,7 +5,8 @@ import {
   Button,
   Form
  } from 'react-bootstrap'
- import Table from './components/Table';
+import ROITable from './components/ROITable';
+import TotalsTable from './components/TotalsTable'; 
 import './App.css';
 
 class App extends Component {
@@ -144,29 +145,6 @@ class App extends Component {
   }
 
   render() {
-    // create table rows from revenue state list
-    // let revenueTableData = this.state.revenue.map((item, index) => {
-    //   return (
-    //     <tr key={"revenue" + index}>
-    //       <td>{item.name}</td>
-    //       <td>${item.oneTime.toFixed(2)}</td>
-    //       <td>${item.monthly.toFixed(2)}</td>
-    //       <td><Button onClick={() => this.handleDelete('revenue', index)}>Delete</Button></td>
-    //     </tr>
-    //   )
-    // })
-    // // create table rows from expenses state list
-    // let expensesTableData = this.state.expenses.map((expense, index) => {
-    //   return (
-    //     <tr key={"expense" + index}>
-    //       <td>{expense.name}</td>
-    //       <td>${expense.oneTime.toFixed(2)}</td>
-    //       <td>${expense.monthly.toFixed(2)}</td>
-    //       <td><Button onClick={() => this.handleDelete('expenses', index)}>Delete</Button></td>
-    //     </tr>
-    //   )
-    // })
-
     // Calculations for totals
     let totalRevenue = this.state.oneTimeRevenue + (this.state.monthlyRevenue * 12)
     let totalExpense = this.state.oneTimeExpense + (this.state.monthlyExpense * 12)
@@ -234,94 +212,31 @@ class App extends Component {
           <h4 className="error text-center">Please fill out all fields</h4>
         }
         <div className="roi-tables">
-          
-          {/* <table className="revenue-table">
-            <thead>
-              <tr>
-                <th>Revenue</th>
-              </tr>
-              <tr>
-                <th></th>
-                <th>One-Time</th>
-                <th>Monthly</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {revenueTableData}
-            </tbody>
-          </table> */}
-          {/* Revenue Table */}
-          <Table 
+        {/* Revenue Table */}
+          <ROITable 
             data={this.state.revenue}
             handleDelete ={this.handleDelete}
             type={"revenue"}
           />
           {/* Expenses Table */}
-          <Table 
+          <ROITable 
             data={this.state.expenses}
             handleDelete ={this.handleDelete}
             type={"expenses"}
           />
-          {/* <table className="expenses-table">
-            <thead>
-              <tr>
-                <th>Expenses</th>
-              </tr>
-              <tr>
-                <th></th>
-                <th>One-Time</th>
-                <th>Monthly</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {expensesTableData}
-            </tbody>
-          </table> */}
           {/* Totals Table */}
-          <table className="totals-table">
-            <thead>
-              <tr>
-                <th></th>
-                <th>One-Time</th>
-                <th>Monthly</th>
-                <th>Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Revenue</td>
-                <td>${(this.state.oneTimeRevenue).toFixed(2)}</td>
-                <td>${(this.state.monthlyRevenue).toFixed(2)}</td>
-                <td>${totalRevenue.toFixed(2)}</td>
-              </tr>
-              <tr>
-                <td>Expenses</td>
-                <td>${(this.state.oneTimeExpense).toFixed(2)}</td>
-                <td>${(this.state.monthlyExpense).toFixed(2)}</td>
-                <td>${totalExpense.toFixed(2)}</td>
-              </tr>
-              <tr>
-                <td>Contribution Profit</td>
-                <td></td>
-                <td>${ monthlyContributionProfit.toFixed(2)}</td>
-                <td>${ totalContributionProfit.toFixed(2)}</td>
-              </tr>
-              <tr>
-                <td>Contribution Margin</td>
-                <td></td>
-                <td></td>
-                <td>{contributionMargin}%</td>
-              </tr>
-              <tr>
-                <td>Capital ROI (monthly)</td>
-                <td></td>
-                <td></td>
-                <td>{capitalROI}</td>
-              </tr>
-            </tbody>
-          </table>
+          <TotalsTable 
+            oneTimeRevenue={this.state.oneTimeRevenue}
+            monthlyRevenue={this.state.monthlyRevenue}
+            totalRevenue={totalRevenue}
+            oneTimeExpense={this.state.oneTimeExpense}
+            monthlyExpense={this.state.monthlyExpense}
+            totalExpense={totalExpense}
+            monthlyContributionProfit={monthlyContributionProfit}
+            totalContributionProfit={totalContributionProfit}
+            contributionMargin={contributionMargin}
+            capitalROI={capitalROI}
+          />
         </div>
       </div>
     );

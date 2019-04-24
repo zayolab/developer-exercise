@@ -3,7 +3,8 @@ import { Button } from 'react-bootstrap';
 
 // Component for revenue and expenses tables
 
-const Table = (props) => {
+const ROITable = (props) => {
+  // create table rows from revenue/expenses state list
   let tableData = props.data.map((item, index) => {
     return (
       <tr key={props.type + index}>
@@ -41,4 +42,4 @@ const Table = (props) => {
   )
 }
 
-export default Table
+export default ROITable
