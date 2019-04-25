@@ -1,4 +1,4 @@
-export const handleAdd = (currentState) => {
+export const handleAdd = (currentState, onSetState) => {
   // handle form errors, allows one-time and revenue amounts to be 0
   if (!currentState.newType || !currentState.newName || (!currentState.newOneTime && currentState.newOneTime !== 0) || (!currentState.newMonthly && this.state.newMonthly !== 0)) {
     return({
@@ -19,7 +19,7 @@ export const handleAdd = (currentState) => {
       monthly:currentState.newMonthly
     })
     // set state with new totals and items array, clear errors displaying and form contents
-    return ( {
+    onSetState ( {
       error: false,
       [typeOfAmount]: items,
       [monthly]: currentState[monthly] + currentState.newMonthly,

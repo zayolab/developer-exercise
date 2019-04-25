@@ -6,6 +6,7 @@ import {getRevenueTableData} from './getRevenueTableData';
 import {getExpensesTableData} from './getExpensesTableData';
 import {stateSeedInfo} from './stateSeedInfo';
 import {handleAdd} from './handleAdd';
+import {handleDelete} from './handleDelete';
 import './App.css';
 
 
@@ -15,7 +16,7 @@ class App extends Component {
     // "seed" data initially
     this.state = stateSeedInfo;
 
-    this.handleDelete = this.handleDelete.bind(this)
+    this.handleDeleteItem = this.handleDeleteItem.bind(this)
     this.handleAddItem = this.handleAddItem.bind(this)
 
     // controlled form elements functions
@@ -25,29 +26,23 @@ class App extends Component {
     this.handleMonthlyChange = this.handleMonthlyChange.bind(this)
 
     this.handleTermChange = this.handleTermChange.bind(this)
+
+    this.setNewState = this.setNewState.bind(this)
   }
 
+  setNewState(newState){
+    this.setState({newState});
+  }
+
+  // add new expense or revenue
+  handleAddItem(e) {
+    e.preventDefault()
+    
+    handleAdd(this.state, this.setNewState);  
+  }
   // Delete expense or revenue from list
-  handleDelete(type, index) {
-    // listType will be 'expenses' or 'revenue' depending on item to delete
-    let listType = this.state[type]
-    // recalculate and set totals in state
-    if (type === 'expenses') {
-      this.setState({
-        oneTimeExpense: this.state.oneTimeExpense - this.state.expenses[index]['oneTime'],
-        monthlyExpense: this.state.monthlyExpense - this.state.expenses[index]['monthly'],
-      })
-    } else {
-      // for revenue
-      this.setState({
-        oneTimeRevenue: this.state.oneTimeRevenue - this.state.revenue[index]['oneTime'],
-        monthlyRevenue: this.state.monthlyRevenue - this.state.revenue[index]['monthly'],
-      })
-    }
-    // remove list item from state array
-    this.setState({
-      [listType]: listType.splice(index, 1),
-    })
+  handleDeleteItem(type, index) {
+    handleDelete(this.state, this.setNewState, type, index);
   }
 
   // controlled form elements, watch for changes
@@ -61,7 +56,6 @@ class App extends Component {
       newName: e.target.value
     })
   }
-
   handleMonthlyChange(e) {
     this.setState({
       newMonthly: Number(e.target.value)
@@ -79,16 +73,9 @@ class App extends Component {
      })
   }
 
-  // add new expense or revenue
-  handleAddItem(e) {
-    e.preventDefault()
-    
-    this.setState(handleAdd(this.state));  
-  }
-
   render() {
-    let revenueTableData = getRevenueTableData(this.state.revenue, this.handleDelete);
-    let expensesTableData = getExpensesTableData(this.state.expenses, this.handleDelete);
+    let revenueTableData = getRevenueTableData(this.state.revenue, this.handleDeleteItem);
+    let expensesTableData = getExpensesTableData(this.state.expenses, this.handleDeleteItem);
     let termLength = this.state.newTerm
     let totalRevenue = this.state.oneTimeRevenue + (this.state.monthlyRevenue * termLength)
     let totalExpense = this.state.oneTimeExpense + (this.state.monthlyExpense * termLength)
