@@ -57,6 +57,20 @@ class App extends Component {
     this.handleMonthlyChange = this.handleMonthlyChange.bind(this)
   }
 
+  // componentDidMount() {
+    
+  //   const data = this.fetchData();
+      
+    
+  // }
+
+  // fetchData() {
+  //   return fetch('http://localhost:8080/express_backend')
+  //     .then(res => res.json())
+  //     .catch(error => console.log(error));
+  // }
+
+  
   // Delete expense or revenue from list
   handleDelete(type, index) {
     // listType will be 'expenses' or 'revenue' depending on item to delete
