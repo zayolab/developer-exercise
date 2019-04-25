@@ -38,7 +38,7 @@ class App extends Component {
   handleAddItem(e) {
     e.preventDefault()
     
-    handleAdd(this.state, this.setNewState);  
+    this.setState(handleAdd(this.state, this.setNewState));  
   }
   // Delete expense or revenue from list
   handleDeleteItem(type, index) {

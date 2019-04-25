@@ -19,7 +19,7 @@ export const handleAdd = (currentState, onSetState) => {
       monthly:currentState.newMonthly
     })
     // set state with new totals and items array, clear errors displaying and form contents
-    onSetState ( {
+    return ( {
       error: false,
       [typeOfAmount]: items,
       [monthly]: currentState[monthly] + currentState.newMonthly,
