@@ -5,6 +5,7 @@ import {AddNewItemForm} from './AddNewItemForm';
 import {getRevenueTableData} from './getRevenueTableData';
 import {getExpensesTableData} from './getExpensesTableData';
 import {stateSeedInfo} from './stateSeedInfo';
+import {handleAdd} from './handleAdd';
 import './App.css';
 
 
@@ -15,7 +16,7 @@ class App extends Component {
     this.state = stateSeedInfo;
 
     this.handleDelete = this.handleDelete.bind(this)
-    this.handleAdd = this.handleAdd.bind(this)
+    this.handleAddItem = this.handleAddItem.bind(this)
 
     // controlled form elements functions
     this.handleTypeChange = this.handleTypeChange.bind(this)
@@ -79,41 +80,10 @@ class App extends Component {
   }
 
   // add new expense or revenue
-  handleAdd(e) {
+  handleAddItem(e) {
     e.preventDefault()
-    // handle form errors, allows one-time and revenue amounts to be 0
-    if (!this.state.newType || !this.state.newName || (!this.state.newOneTime && this.state.newOneTime !== 0) || (!this.state.newMonthly && this.state.newMonthly !== 0)) {
-      this.setState({
-        error: true
-      })
-    }
-
-    // if there are no form errors, add accordingly
-    else {
-      // typeOfAmount will be either 'expenses' or 'revenue'
-      let typeOfAmount = this.state.newType
-      let monthly = typeOfAmount === 'expenses' ? 'monthlyExpense' : 'monthlyRevenue'
-      let oneTime = typeOfAmount === 'expenses' ? 'oneTimeExpense' : 'oneTimeRevenue'
-      // grab state array of revenues or expenses
-      let items = this.state[typeOfAmount]
-      items.push({
-        name: this.state.newName,
-        oneTime:this.state.newOneTime,
-        monthly: this.state.newMonthly
-      })
-      // set state with new totals and items array, clear errors displaying and form contents
-      this.setState({
-        error: false,
-        [typeOfAmount]: items,
-        [monthly]: this.state[monthly] + this.state.newMonthly,
-        [oneTime]: this.state[oneTime] + this.state.newOneTime,
-        //  Clear values in form
-        newName: '',
-        newMonthly: '',
-        newOneTime: '',
-        newType: ''
-      })
-    }
+    
+    this.setState(handleAdd(this.state));  
   }
 
   render() {
@@ -143,7 +113,7 @@ class App extends Component {
           onNameChange={this.handleNameChange}
           onOneTimeChange={this.handleOneTimeChange}
           onMonthlyChange={this.handleMonthlyChange}
-          onHandleAdd={this.handleAdd}
+          onHandleAdd={this.handleAddItem}
         />  
         {/* form errors */}
         { this.state.error &&
