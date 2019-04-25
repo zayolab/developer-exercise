@@ -5,7 +5,8 @@ const cors = require('cors');
 const morgan = require('morgan');
 
 const { PORT, CLIENT_ORIGIN } = require('./config');
-const { dbConnect } = require('./knex');
+// const { dbConnect } = require('./knex');
+const dbConnect = require('./sequelize');
 
 const app = express();
 
@@ -24,6 +25,13 @@ app.use(
 app.use(express.json());
 
 app.get('/api', (req, res) => res.send('Hello from Express'));
+
+// Custom 404 Not Found route handler
+app.use((req, res, next) => {
+  const err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
 
 // Custom Error Handler
 app.use((err, req, res, next) => {
