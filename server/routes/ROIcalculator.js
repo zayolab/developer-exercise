@@ -59,6 +59,7 @@ router.get('/', (req, res, next) => {
       expenses = JSON.parse(expenses);
     })
     .then(() => {
+      // ROI calculations
       const oneTimeRevenue = calculateOneTime(revenues);
       const oneTimeExpense = calculateOneTime(expenses);
       const monthlyRevenue = calculateMonthly(revenues);
@@ -70,6 +71,7 @@ router.get('/', (req, res, next) => {
       const contributionMargin = calculateContributionMargin(totalRevenue, totalContributionProfit);
       const capitalROI = calculateCapitalROI(totalExpense, totalRevenue, oneTimeExpense, oneTimeRevenue, monthlyContributionProfit);
 
+      // Send data obj with revenues, expenses, and ROI calculations
       const data = {
         revenues,
         expenses,
@@ -89,6 +91,51 @@ router.get('/', (req, res, next) => {
     .catch(err => {
       next(err);
     });
+});
+
+// POST new expense or revenue
+router.post('/', (req, res, next) => {
+  const {type, name, oneTime, monthly} = req.body;
+
+  // Validate request body
+  if (!name || typeof name !== String) {
+    const err = new Error('There is an ussue with `name` in request body');
+    err.status = 400;
+    return next(err);
+  }
+
+  if (!oneTime && oneTime !== 0 || typeof oneTime !== Number) {
+    const err = new Error('There is an ussue with `oneTime` in request body');
+    err.status = 400;
+    return next(err);
+  }
+
+  if (!monthly && monthly !== 0 || typeof monthly !== Number) {
+    const err = new Error('There is an ussue with `monthly` in request body');
+    err.status = 400;
+    return next(err);
+  }
+
+  const newItem = {name, oneTime, monthly};
+
+  // Check for expense or revenue, create new record
+  if (type === 'expense') {
+    Models.Expense.create(newItem)
+      .then(result => {
+        res.location(`${req.originalUrl}/${result.id}`).status(201).json(result);
+      })
+      .catch(err => {
+        next(err);
+      });
+  } else {
+    Models.Revenue.create(newItem)
+      .then(result => {
+        res.location(`${req.originalUrl}/${result.id}`).status(201).json(result);
+      })
+      .catch(err => {
+        next(err);
+      });
+  }
 });
 
 module.exports = router;

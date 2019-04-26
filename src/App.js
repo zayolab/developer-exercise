@@ -46,6 +46,7 @@ class App extends Component {
     
   }
 
+  // makes GET request to api/roicalculator and set state with revenues, expenses, and ROI calculations
   fetchData() {
     return fetch('http://localhost:8080/api/roicalculator')
       .then(res => res.json())
@@ -67,6 +68,31 @@ class App extends Component {
         })
       })
       .catch(error => console.log(error));
+  }
+
+  // Still need to add this to handleAdd and test
+  postData(data) {
+    return fetch('http://localhost:8080/api/roicalculator', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: { 'Content-Type': 'application/json' }
+    })
+    .then(res => {
+      if (!res.ok) {
+        return Promise.reject({
+          code: res.status,
+          message: res.statusText
+        });
+      }
+      console.log(res.json())
+      return res.json();
+    })
+    .then(() => {
+      this.fetchData();
+    })
+    .catch(err => {
+      console.log(err);
+    })
   }
 
   
