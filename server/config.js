@@ -7,5 +7,5 @@ module.exports = {
       process.env.DATABASE_URL || 'postgres://localhost/ROI-backend',
   TEST_DATABASE_URL:
       process.env.TEST_DATABASE_URL ||
-      'postgres://localhost/ROI-backend-test'
+      'postgres://localhost/ROI-backend-test' 
 };

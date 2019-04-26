@@ -10,36 +10,20 @@ class App extends Component {
     super()
     // "seed" data initially
     this.state = {
-      revenue: [
-      {
-        name: 'Item 1',
-        oneTime: 100,
-        monthly: 50
-      },
-      {
-        name: 'Item 2',
-        oneTime: 50,
-        monthly: 25
-      },
-      {
-        name: 'Item 3',
-        oneTime: 25,
-        monthly: 85
-      }],
-      expenses:[{
-        name: 'Expense 1',
-        oneTime: 500,
-        monthly: 20.00
-      },
-      {
-        name: 'Expense 2',
-        oneTime: 200,
-        monthly: 40
-      }],
-      oneTimeRevenue: 175,
-      oneTimeExpense: 700,
-      monthlyRevenue: 160,
-      monthlyExpense: 60,
+      revenue: null,
+      expenses: null,
+      oneTimeRevenue: null,
+      oneTimeExpense: null,
+      monthlyRevenue: null,
+      monthlyExpense: null,
+      // calculated in backnd GET
+      totalRevenue: null,
+      totalExpense: null,
+      monthlyContributionProfit: null,
+      totalContributionProfit: null,
+      contributionMargin: null,
+      capitalROI: null,
+
       newType: '',
       newName: '',
       newOneTime: '',
@@ -56,19 +40,34 @@ class App extends Component {
     this.handleOneTimeChange = this.handleOneTimeChange.bind(this)
     this.handleMonthlyChange = this.handleMonthlyChange.bind(this)
   }
-
-  // componentDidMount() {
+  
+  componentDidMount() {
+    this.fetchData();
     
-  //   const data = this.fetchData();
-      
-    
-  // }
+  }
 
-  // fetchData() {
-  //   return fetch('http://localhost:8080/express_backend')
-  //     .then(res => res.json())
-  //     .catch(error => console.log(error));
-  // }
+  fetchData() {
+    return fetch('http://localhost:8080/api/roicalculator')
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        this.setState({
+          revenue: data.revenues,
+          expenses: data.expenses,
+          oneTimeRevenue: data.oneTimeRevenue,
+          oneTimeExpense: data.oneTimeExpense,
+          monthlyRevenue: data.monthlyRevenue,
+          monthlyExpense: data.monthlyExpense,
+          totalRevenue: data.totalRevenue,
+          totalExpense: data.totalExpense,
+          monthlyContributionProfit: data.monthlyContributionProfit,
+          totalContributionProfit: data.totalContributionProfit,
+          contributionMargin: data.contributionMargin,
+          capitalROI: data.capitalROI,
+        })
+      })
+      .catch(error => console.log(error));
+  }
 
   
   // Delete expense or revenue from list
@@ -165,10 +164,13 @@ class App extends Component {
     // handle case where totalExpense and totalRevenue are 0 (to avoid NaN)
     let capitalROI = (totalExpense === 0 && totalRevenue === 0) ? 0 : ((this.state.oneTimeExpense - this.state.oneTimeRevenue) / monthlyContributionProfit).toFixed(1)
 
+    if (!this.state.revenue) {
+      return (<p>Loading...</p>);
+    }
     return (
       <div>
         <h1 className="text-center">ROI Calculator</h1>
-        {/* Add new expense or revenue form */}
+        Add new expense or revenue form
         <AddExpenseOrRevenueForm 
           handleAdd={this.handleAdd}
           handleTypeChange={this.handleTypeChange}

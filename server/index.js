@@ -5,26 +5,30 @@ const cors = require('cors');
 const morgan = require('morgan');
 
 const { PORT, CLIENT_ORIGIN } = require('./config');
-// const { dbConnect } = require('./knex');
-const dbConnect = require('./sequelize');
+const { sequelize } = require('./models/index');
+
+const ROICalculatorRouter = require('./routes/ROIcalculator');
 
 const app = express();
 
+// Morgan logging middleware
 app.use(
   morgan(process.env.NODE_ENV === 'production' ? 'common' : 'dev', {
     skip: (req, res) => process.env.NODE_ENV === 'test'
   })
 );
 
+// Allows access to front end React app
 app.use(
   cors({
     origin: CLIENT_ORIGIN
   })
 );
 
+// Parses request to allow access to req.body
 app.use(express.json());
 
-app.get('/api', (req, res) => res.send('Hello from Express'));
+app.use('/api/roicalculator', ROICalculatorRouter);
 
 // Custom 404 Not Found route handler
 app.use((req, res, next) => {
@@ -44,20 +48,11 @@ app.use((err, req, res, next) => {
   }
 });
 
-function runServer(port = PORT) {
-  const server = app
-    .listen(port, () => {
-      console.info(`App listening on port ${server.address().port}`);
-    })
-    .on('error', err => {
-      console.error('Express failed to start');
-      console.error(err);
-    });
-}
-
-if (require.main === module) {
-  dbConnect();
-  runServer();
-}
+// Run Migrations, Seeds, and open server connection
+sequelize.sync().then(() => {
+  app.listen(PORT, () => {
+    console.log(`App listening on port ${PORT}!`);
+  });
+});
 
 module.exports = app;
