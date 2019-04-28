@@ -11,7 +11,7 @@ const ROITable = (props) => {
         <td>{item.name}</td>
         <td>${item.oneTime.toFixed(2)}</td>
         <td>${item.monthly.toFixed(2)}</td>
-        <td><Button onClick={() => props.handleDelete(props.type, index)}>Delete</Button></td>
+        <td><Button onClick={() => props.handleDelete(props.type, item.id)}>Delete</Button></td>
       </tr>
     )
   })

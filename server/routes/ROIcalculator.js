@@ -127,7 +127,7 @@ router.post('/', (req, res, next) => {
       .catch(err => {
         next(err);
       });
-  } else {
+  } else if (type === 'revenue') {
     Models.Revenue.create(newItem)
       .then(result => {
         res.location(`${req.originalUrl}/${result.id}`).status(201).json(result);
@@ -138,4 +138,40 @@ router.post('/', (req, res, next) => {
   }
 });
 
+// DELETE 
+router.delete('/:type/:id', (req, res, next) => {
+  const { type, id } = req.params;
+
+  // Validate params
+  if (!id) {
+    const err = new Error('The `id` is missing');
+    err.status = 400;
+    return next(err);
+  }
+
+  if (!type) {
+    const err = new Error('The `type` is missing');
+    err.status = 400;
+    return next(err);
+  }
+
+  // Check type and delete by id
+  if (type === 'expenses') {
+    Models.Expense.destroy({ where: { id } })
+      .then(() => {
+        res.sendStatus(204);
+      })
+      .catch(err => {
+        next(err);
+      });
+  } else if (type === 'revenue') {
+    Models.Revenue.destroy({ where: { id } })
+      .then(() => {
+        res.sendStatus(204);
+      })
+      .catch(err => {
+        next(err);
+      });
+  } 
+});
 module.exports = router;

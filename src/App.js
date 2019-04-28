@@ -8,7 +8,6 @@ import './App.css';
 class App extends Component {
   constructor() {
     super()
-    // "seed" data initially
     this.state = {
       revenue: null,
       expenses: null,
@@ -16,7 +15,7 @@ class App extends Component {
       oneTimeExpense: null,
       monthlyRevenue: null,
       monthlyExpense: null,
-      // calculated in backnd GET
+      // calculated in backend GET
       totalRevenue: null,
       totalExpense: null,
       monthlyContributionProfit: null,
@@ -91,31 +90,34 @@ class App extends Component {
     })
     .catch(err => {
       console.log(err);
-    })
+    });
   }
 
+  deleteData(type, id) {
+    return fetch(`http://localhost:8080/api/roicalculator/${type}/${id}`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' }
+    })
+    .then(res => {
+      if (!res.ok) {
+        return Promise.reject({
+          code: res.status,
+          message: res.statusText
+        });
+      }
+    })
+    // call fetchData to update tables
+    .then(() => {
+      this.fetchData();
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  }
   
   // Delete expense or revenue from list
-  handleDelete(type, index) {
-    // listType will be 'expenses' or 'revenue' depending on item to delete
-    let listType = this.state[type]
-    // recalculate and set totals in state
-    if (type === 'expenses') {
-      this.setState({
-        oneTimeExpense: this.state.oneTimeExpense - this.state.expenses[index]['oneTime'],
-        monthlyExpense: this.state.monthlyExpense - this.state.expenses[index]['monthly'],
-      })
-    } else {
-      // for revenue
-      this.setState({
-        oneTimeRevenue: this.state.oneTimeRevenue - this.state.revenue[index]['oneTime'],
-        monthlyRevenue: this.state.monthlyRevenue - this.state.revenue[index]['monthly'],
-      })
-    }
-    // remove list item from state array
-    this.setState({
-      [listType]: listType.splice(index, 1),
-    })
+  handleDelete(type, id) {
+    this.deleteData(type, id);
   }
 
   // controlled form elements, watch for changes
@@ -154,29 +156,18 @@ class App extends Component {
     else {
       // typeOfAmount will be either 'expenses' or 'revenue'
       let typeOfAmount = this.state.newType
-      let monthly = typeOfAmount === 'expenses' ? 'monthlyExpense' : 'monthlyRevenue'
-      let oneTime = typeOfAmount === 'expenses' ? 'oneTimeExpense' : 'oneTimeRevenue'
-      // grab state array of revenues or expenses
-      // let items = this.state[typeOfAmount]
-      // items.push({
-      //   name: this.state.newName,
-      //   oneTime:this.state.newOneTime,
-      //   monthly: this.state.newMonthly
-      // })
+      // Create newItem obj to match expected req.body
       let newItem = {
         type: typeOfAmount,
         name: this.state.newName,
         oneTime: this.state.newOneTime,
         monthly: this.state.newMonthly
       }
+      // Sends newItem to POST endpoint
       this.postData(newItem);
-      // set state with new totals and items array, clear errors displaying and form contents
+      // clear errors displaying and form contents
       this.setState({
         error: false,
-        // [typeOfAmount]: items,
-        // [monthly]: this.state[monthly] + this.state.newMonthly,
-        // [oneTime]: this.state[oneTime] + this.state.newOneTime,
-        //  Clear values in form
         newName: '',
         newMonthly: '',
         newOneTime: '',
@@ -186,19 +177,10 @@ class App extends Component {
   }
 
   render() {
-    // Calculations for totals
-    let totalRevenue = this.state.oneTimeRevenue + (this.state.monthlyRevenue * 12)
-    let totalExpense = this.state.oneTimeExpense + (this.state.monthlyExpense * 12)
-    let monthlyContributionProfit = this.state.monthlyRevenue - this.state.monthlyExpense
-    let totalContributionProfit = totalRevenue - totalExpense
-    // handle case where totalRevenue is 0 (to avoid -Infinity and NaN)
-    let contributionMargin = totalRevenue !== 0 ? (totalContributionProfit / totalRevenue * 100).toFixed(0) : 0
-    // handle case where totalExpense and totalRevenue are 0 (to avoid NaN)
-    let capitalROI = (totalExpense === 0 && totalRevenue === 0) ? 0 : ((this.state.oneTimeExpense - this.state.oneTimeRevenue) / monthlyContributionProfit).toFixed(1)
-
     if (!this.state.revenue) {
       return (<p>Loading...</p>);
     }
+
     return (
       <div>
         <h1 className="text-center">ROI Calculator</h1>
@@ -236,14 +218,14 @@ class App extends Component {
           <TotalsTable 
             oneTimeRevenue={this.state.oneTimeRevenue}
             monthlyRevenue={this.state.monthlyRevenue}
-            totalRevenue={totalRevenue}
+            totalRevenue={this.state.totalRevenue}
             oneTimeExpense={this.state.oneTimeExpense}
             monthlyExpense={this.state.monthlyExpense}
-            totalExpense={totalExpense}
-            monthlyContributionProfit={monthlyContributionProfit}
-            totalContributionProfit={totalContributionProfit}
-            contributionMargin={contributionMargin}
-            capitalROI={capitalROI}
+            totalExpense={this.state.totalExpense}
+            monthlyContributionProfit={this.state.monthlyContributionProfit}
+            totalContributionProfit={this.state.totalContributionProfit}
+            contributionMargin={this.state.contributionMargin}
+            capitalROI={this.state.capitalROI}
           />
         </div>
       </div>
