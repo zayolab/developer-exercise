@@ -98,19 +98,19 @@ router.post('/', (req, res, next) => {
   const {type, name, oneTime, monthly} = req.body;
 
   // Validate request body
-  if (!name || typeof name !== String) {
+  if (!name) {
     const err = new Error('There is an ussue with `name` in request body');
     err.status = 400;
     return next(err);
   }
 
-  if (!oneTime && oneTime !== 0 || typeof oneTime !== Number) {
+  if (!oneTime && oneTime !== 0) {
     const err = new Error('There is an ussue with `oneTime` in request body');
     err.status = 400;
     return next(err);
   }
 
-  if (!monthly && monthly !== 0 || typeof monthly !== Number) {
+  if (!monthly && monthly !== 0) {
     const err = new Error('There is an ussue with `monthly` in request body');
     err.status = 400;
     return next(err);
@@ -119,7 +119,7 @@ router.post('/', (req, res, next) => {
   const newItem = {name, oneTime, monthly};
 
   // Check for expense or revenue, create new record
-  if (type === 'expense') {
+  if (type === 'expenses') {
     Models.Expense.create(newItem)
       .then(result => {
         res.location(`${req.originalUrl}/${result.id}`).status(201).json(result);

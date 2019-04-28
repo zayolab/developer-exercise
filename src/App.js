@@ -51,7 +51,6 @@ class App extends Component {
     return fetch('http://localhost:8080/api/roicalculator')
       .then(res => res.json())
       .then(data => {
-        console.log(data);
         this.setState({
           revenue: data.revenues,
           expenses: data.expenses,
@@ -70,7 +69,7 @@ class App extends Component {
       .catch(error => console.log(error));
   }
 
-  // Still need to add this to handleAdd and test
+  // POST new expense/revenue
   postData(data) {
     return fetch('http://localhost:8080/api/roicalculator', {
       method: 'POST',
@@ -84,9 +83,9 @@ class App extends Component {
           message: res.statusText
         });
       }
-      console.log(res.json())
       return res.json();
     })
+    // Call fetchData() to update tables with newly posted item
     .then(() => {
       this.fetchData();
     })
@@ -158,18 +157,25 @@ class App extends Component {
       let monthly = typeOfAmount === 'expenses' ? 'monthlyExpense' : 'monthlyRevenue'
       let oneTime = typeOfAmount === 'expenses' ? 'oneTimeExpense' : 'oneTimeRevenue'
       // grab state array of revenues or expenses
-      let items = this.state[typeOfAmount]
-      items.push({
+      // let items = this.state[typeOfAmount]
+      // items.push({
+      //   name: this.state.newName,
+      //   oneTime:this.state.newOneTime,
+      //   monthly: this.state.newMonthly
+      // })
+      let newItem = {
+        type: typeOfAmount,
         name: this.state.newName,
-        oneTime:this.state.newOneTime,
+        oneTime: this.state.newOneTime,
         monthly: this.state.newMonthly
-      })
+      }
+      this.postData(newItem);
       // set state with new totals and items array, clear errors displaying and form contents
       this.setState({
         error: false,
-        [typeOfAmount]: items,
-        [monthly]: this.state[monthly] + this.state.newMonthly,
-        [oneTime]: this.state[oneTime] + this.state.newOneTime,
+        // [typeOfAmount]: items,
+        // [monthly]: this.state[monthly] + this.state.newMonthly,
+        // [oneTime]: this.state[oneTime] + this.state.newOneTime,
         //  Clear values in form
         newName: '',
         newMonthly: '',
@@ -196,7 +202,7 @@ class App extends Component {
     return (
       <div>
         <h1 className="text-center">ROI Calculator</h1>
-        Add new expense or revenue form
+        {/* Add new expense or revenue form */}
         <AddExpenseOrRevenueForm 
           handleAdd={this.handleAdd}
           handleTypeChange={this.handleTypeChange}
