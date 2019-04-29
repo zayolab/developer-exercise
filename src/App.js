@@ -4,6 +4,7 @@ import TotalsTable from './components/TotalsTable';
 import AddExpenseOrRevenueForm from './components/AddExpenseOrRevenueForm'; 
 import ErrorMessage from './components/ErrorMessage';
 import './App.css';
+import { fetchData, postData, deleteData } from './api';
 
 class App extends Component {
   constructor() {
@@ -42,15 +43,13 @@ class App extends Component {
   }
   
   componentDidMount() {
-    this.fetchData();
-    
+    this.getROIData();
   }
 
-  // makes GET request to api/roicalculator and set state with revenues, expenses, and ROI calculations
-  fetchData() {
-    return fetch('http://localhost:8080/api/roicalculator')
-      .then(res => res.json())
-      .then(data => {
+  // calls fetchData api function and then sets state
+  getROIData = () => {
+    fetchData().then(data => {
+      if (data) {
         this.setState({
           revenue: data.revenues,
           expenses: data.expenses,
@@ -65,60 +64,17 @@ class App extends Component {
           contributionMargin: data.contributionMargin,
           capitalROI: data.capitalROI,
         })
-      })
-      .catch(error => console.log(error));
-  }
-
-  // POST new expense/revenue
-  postData(data) {
-    return fetch('http://localhost:8080/api/roicalculator', {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: { 'Content-Type': 'application/json' }
-    })
-    .then(res => {
-      if (!res.ok) {
-        return Promise.reject({
-          code: res.status,
-          message: res.statusText
-        });
-      }
-      return res.json();
-    })
-    // Call fetchData() to update tables with newly posted item
-    .then(() => {
-      this.fetchData();
-    })
-    .catch(err => {
-      console.log(err);
-    });
-  }
-
-  deleteData(type, id) {
-    return fetch(`http://localhost:8080/api/roicalculator/${type}/${id}`, {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' }
-    })
-    .then(res => {
-      if (!res.ok) {
-        return Promise.reject({
-          code: res.status,
-          message: res.statusText
-        });
       }
     })
-    // call fetchData to update tables
-    .then(() => {
-      this.fetchData();
-    })
-    .catch(err => {
-      console.log(err);
-    });
   }
   
   // Delete expense or revenue from list
   handleDelete(type, id) {
-    this.deleteData(type, id);
+    // Calls api delete method
+    deleteData(type, id).then(() => {
+      // update state
+      this.getROIData();
+    })
   }
 
   // controlled form elements, watch for changes
@@ -165,7 +121,10 @@ class App extends Component {
         monthly: this.state.newMonthly
       }
       // Sends newItem to POST endpoint
-      this.postData(newItem);
+      postData(newItem).then(() => {
+        // update state
+        this.getROIData();
+      })
       // clear errors displaying and form contents
       this.setState({
         error: false,
