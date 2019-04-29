@@ -15,6 +15,7 @@ class App extends Component {
       oneTimeExpense: null,
       monthlyRevenue: null,
       monthlyExpense: null,
+
       // calculated in backend GET
       totalRevenue: null,
       totalExpense: null,
