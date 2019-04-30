@@ -4,7 +4,7 @@ import './App.css';
 
 class Revenue extends React.Component{
 
-    constructor(props, data) {
+    constructor(props) {
 
         super(props);
  

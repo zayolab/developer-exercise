@@ -4,14 +4,10 @@ import './App.css';
 
 class Expenses extends React.Component{
 
-    constructor(props, data) {
+    constructor(props) {
 
         super(props);
-        this.state = {
 
-            tableFromParent: null
-
-        };
 
 
     }
