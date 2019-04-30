@@ -3,8 +3,9 @@ import ROITable from './components/ROITable';
 import TotalsTable from './components/TotalsTable';
 import AddExpenseOrRevenueForm from './components/AddExpenseOrRevenueForm'; 
 import ErrorMessage from './components/ErrorMessage';
+import TimeFrameForm from './components/TimeFrameForm';
 import './App.css';
-import { fetchData, postData, deleteData } from './api';
+import { fetchData, postData, deleteData, postTimeFrame } from './api';
 
 class App extends Component {
   constructor() {
@@ -29,6 +30,8 @@ class App extends Component {
       newName: '',
       newOneTime: '',
       newMonthly: '',
+      // for dynamic totals
+      newTimeFrame: '',
       error: false
     }
 
@@ -40,14 +43,39 @@ class App extends Component {
     this.handleNameChange = this.handleNameChange.bind(this)
     this.handleOneTimeChange = this.handleOneTimeChange.bind(this)
     this.handleMonthlyChange = this.handleMonthlyChange.bind(this)
+    this.handleTimeFrameChange = this.handleTimeFrameChange.bind(this)
   }
   
   componentDidMount() {
+    // load data, timeFrame default 12
     this.getROIData();
   }
 
   // calls fetchData api function and then sets state
   getROIData = () => {
+    // If time frame is changed from default 12, persist that when adding or deleting
+    if (this.state.newTimeFrame) {
+      const tfObj = {timeFrame: this.state.newTimeFrame};
+      postTimeFrame(tfObj).then(data => {
+        if (data) {
+          this.setState({
+            revenue: data.revenues,
+            expenses: data.expenses,
+            oneTimeRevenue: data.oneTimeRevenue,
+            oneTimeExpense: data.oneTimeExpense,
+            monthlyRevenue: data.monthlyRevenue,
+            monthlyExpense: data.monthlyExpense,
+            totalRevenue: data.totalRevenue,
+            totalExpense: data.totalExpense,
+            monthlyContributionProfit: data.monthlyContributionProfit,
+            totalContributionProfit: data.totalContributionProfit,
+            contributionMargin: data.contributionMargin,
+            capitalROI: data.capitalROI,
+          })
+        }
+      })
+    }
+    // fetch from GET all roi calculations endpiont with timeframe default 12
     fetchData().then(data => {
       if (data) {
         this.setState({
@@ -99,6 +127,30 @@ class App extends Component {
       newOneTime: Number(e.target.value)
     })
   }
+  handleTimeFrameChange(e) {
+    this.setState({
+      newTimeFrame: Number(e.target.value)
+    })
+    const tfObj = { timeFrame: Number(e.target.value)}
+    postTimeFrame(tfObj).then(data => {
+      if (data) {
+        this.setState({
+          revenue: data.revenues,
+          expenses: data.expenses,
+          oneTimeRevenue: data.oneTimeRevenue,
+          oneTimeExpense: data.oneTimeExpense,
+          monthlyRevenue: data.monthlyRevenue,
+          monthlyExpense: data.monthlyExpense,
+          totalRevenue: data.totalRevenue,
+          totalExpense: data.totalExpense,
+          monthlyContributionProfit: data.monthlyContributionProfit,
+          totalContributionProfit: data.totalContributionProfit,
+          contributionMargin: data.contributionMargin,
+          capitalROI: data.capitalROI,
+        })
+      }
+    })
+  }
 
   // add new expense or revenue
   handleAdd(e) {
@@ -118,7 +170,8 @@ class App extends Component {
         type: typeOfAmount,
         name: this.state.newName,
         oneTime: this.state.newOneTime,
-        monthly: this.state.newMonthly
+        monthly: this.state.newMonthly,
+        timeFrame: this.state.newTimeFrame
       }
       // Sends newItem to POST endpoint
       postData(newItem).then(() => {
@@ -174,6 +227,11 @@ class App extends Component {
             handleDelete ={this.handleDelete}
             type={"expenses"}
           />
+          {/* Time Frame Form */}
+          <TimeFrameForm 
+            handleTimeFrameChange={this.handleTimeFrameChange}
+            newTimeFrame={this.state.newTimeFrame}
+          />
           {/* Totals Table */}
           <TotalsTable 
             oneTimeRevenue={this.state.oneTimeRevenue}
@@ -186,6 +244,8 @@ class App extends Component {
             totalContributionProfit={this.state.totalContributionProfit}
             contributionMargin={this.state.contributionMargin}
             capitalROI={this.state.capitalROI}
+            handleTimeFrameChange={this.handleTimeFrameChange}
+            newTimeFrame={this.state.newTimeFrame}
           />
         </div>
       </div>

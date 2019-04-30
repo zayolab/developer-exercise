@@ -17,8 +17,9 @@ function calculateMonthly(data) {
   return monthly;
 }
 
-function calculateTotal(oneTime, monthly) {
-  let total = oneTime + (monthly * 12);
+// takes a dynamic timeFrame
+function calculateTotal(oneTime, monthly, timeFrame) {
+  let total = oneTime + (monthly * timeFrame);
   return total;
 }
 

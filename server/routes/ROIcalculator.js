@@ -34,8 +34,9 @@ router.get('/', (req, res, next) => {
       const oneTimeExpense = calculateOneTime(expenses);
       const monthlyRevenue = calculateMonthly(revenues);
       const monthlyExpense = calculateMonthly(expenses);
-      const totalRevenue = calculateTotal(oneTimeRevenue, monthlyRevenue);
-      const totalExpense = calculateTotal(oneTimeExpense, monthlyExpense);
+      // send timeFrame as default 12
+      const totalRevenue = calculateTotal(oneTimeRevenue, monthlyRevenue, 12);
+      const totalExpense = calculateTotal(oneTimeExpense, monthlyExpense, 12);
       const monthlyContributionProfit = calculateContributionProfit(monthlyRevenue, monthlyExpense);
       const totalContributionProfit = calculateContributionProfit(totalRevenue, totalExpense);
       const contributionMargin = calculateContributionMargin(totalRevenue, totalContributionProfit);
@@ -108,12 +109,74 @@ router.post('/', (req, res, next) => {
   }
 });
 
+// POST TimeFrame, run calculations with time frame and return new totals, contribution profit and margin, capitalROI
+router.post('/timeframe', (req, res, next) => {
+  const { timeFrame } = req.body;
+  
+  // Validate time frame exists and is number
+  if (!timeFrame || typeof timeFrame !== 'number') {
+    const err = new Error('There is an ussue with `timeFrame` in request body');
+    err.status = 400;
+    return next(err);
+  }
+
+  let revenues;
+  let expenses;
+
+  // Get revenues and expenses and run all the calculations with the new timeframe
+  Models.Revenue.findAll()
+    .then(results => {
+      revenues = JSON.stringify(results);
+      revenues = JSON.parse(revenues);
+      return Models.Expense.findAll();
+    })
+    .then(results => {
+      expenses = JSON.stringify(results);
+      expenses = JSON.parse(expenses);
+    })
+    .then(() => {
+      // ROI calculations
+      const oneTimeRevenue = calculateOneTime(revenues);
+      const oneTimeExpense = calculateOneTime(expenses);
+      const monthlyRevenue = calculateMonthly(revenues);
+      const monthlyExpense = calculateMonthly(expenses);
+      // dynamic timeframe
+      const totalRevenue = calculateTotal(oneTimeRevenue, monthlyRevenue, timeFrame);
+      const totalExpense = calculateTotal(oneTimeExpense, monthlyExpense, timeFrame);
+      const monthlyContributionProfit = calculateContributionProfit(monthlyRevenue, monthlyExpense);
+      const totalContributionProfit = calculateContributionProfit(totalRevenue, totalExpense);
+      const contributionMargin = calculateContributionMargin(totalRevenue, totalContributionProfit);
+      const capitalROI = calculateCapitalROI(totalExpense, totalRevenue, oneTimeExpense, oneTimeRevenue, monthlyContributionProfit);
+
+      // Send data obj with revenues, expenses, and ROI calculations
+      const data = {
+        revenues,
+        expenses,
+        oneTimeRevenue,
+        oneTimeExpense,
+        monthlyRevenue,
+        monthlyExpense,
+        totalRevenue,
+        totalExpense,
+        monthlyContributionProfit,
+        totalContributionProfit,
+        contributionMargin,
+        capitalROI
+      };
+      res.send(data);
+    })
+    .catch(err => {
+      next(err);
+    });
+
+});
+
 // DELETE 
 router.delete('/:type/:id', (req, res, next) => {
   const { type, id } = req.params;
 
-  // Validate params, exists and data type
-  if (!id || typeof id !== 'number') {
+  // Validate params, exists and data type, id comes from req.params as a string
+  if (!id || typeof id !== 'string') {
     const err = new Error('There is an ussue with `id` in request body');
     err.status = 400;
     return next(err);

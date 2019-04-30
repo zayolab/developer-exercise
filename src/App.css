@@ -28,6 +28,10 @@
   color: red;
 }
 
+.timeFrameLabel {
+  font-weight: bold;
+}
+
 @media only screen and (max-width:775px) {
   .input-field, .add-form-button {
     margin-left: .25em;
