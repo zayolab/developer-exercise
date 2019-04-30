@@ -67,20 +67,20 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res, next) => {
   const {type, name, oneTime, monthly} = req.body;
 
-  // Validate request body
-  if (!name) {
+  // Validate request body, exists and is correct data type
+  if (!name || typeof name !== 'string') {
     const err = new Error('There is an ussue with `name` in request body');
     err.status = 400;
     return next(err);
   }
 
-  if (!oneTime && oneTime !== 0) {
+  if (!oneTime && oneTime !== 0 || typeof oneTime !== 'number') {
     const err = new Error('There is an ussue with `oneTime` in request body');
     err.status = 400;
     return next(err);
   }
 
-  if (!monthly && monthly !== 0) {
+  if (!monthly && monthly !== 0 || typeof monthly !== 'number') {
     const err = new Error('There is an ussue with `monthly` in request body');
     err.status = 400;
     return next(err);
@@ -112,15 +112,15 @@ router.post('/', (req, res, next) => {
 router.delete('/:type/:id', (req, res, next) => {
   const { type, id } = req.params;
 
-  // Validate params
-  if (!id) {
-    const err = new Error('The `id` is missing');
+  // Validate params, exists and data type
+  if (!id || typeof id !== 'number') {
+    const err = new Error('There is an ussue with `id` in request body');
     err.status = 400;
     return next(err);
   }
 
-  if (!type) {
-    const err = new Error('The `type` is missing');
+  if (!type || typeof type !== 'string') {
+    const err = new Error('There is an ussue with `type` in request body');
     err.status = 400;
     return next(err);
   }

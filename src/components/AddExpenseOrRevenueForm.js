@@ -13,6 +13,7 @@ function AddExpenseOrRevenueForm(props) {
           <Row className="input-field">
             <Col sm={{ span: 2, offset: 1}} className="input-field">
               <Form.Control
+                required
                 as="select"
                 onChange = {e => props.handleTypeChange(e)}
                 value={props.newType ? props.newType : 'choose'}
@@ -24,6 +25,7 @@ function AddExpenseOrRevenueForm(props) {
             </Col>
             <Col sm={3} className="input-field">
               <Form.Control
+                required
                 type="text"
                 placeholder="Name"
                 onChange = {e => props.handleNameChange(e)}
@@ -32,6 +34,7 @@ function AddExpenseOrRevenueForm(props) {
             </Col>
             <Col sm={2} className="input-field">
               <Form.Control
+                required
                 type="number"
                 placeholder="One-Time Amount"
                 onChange = {e => props.handleOneTimeChange(e)}
@@ -42,6 +45,7 @@ function AddExpenseOrRevenueForm(props) {
             </Col>
             <Col sm={2} className="input-field">
               <Form.Control
+                required
                 type="number"
                 placeholder="Monthly Amount"
                 onChange = {props.handleMonthlyChange}
