@@ -1,0 +1,51 @@
+.addExpenseOrRevenueForm {
+  padding-top: 3em;
+}
+
+.input-field,
+.add-form-button {
+  padding-bottom: 1em;
+}
+
+.expenses-table,
+.revenue-table,
+.totals-table {
+  margin-bottom: 3em;
+}
+.expenses-table th,
+.revenue-table th,
+.totals-table th {
+  width: 200px;
+}
+.expenses-table td,
+.revenue-table td,
+.totals-table td {
+  width: 200px;
+}
+
+.error {
+  color: red;
+}
+
+@media only screen and (max-width: 775px) {
+  .input-field,
+  .add-form-button {
+    margin-left: 0.25em;
+    margin-right: 0.25em;
+  }
+  .roi-tables {
+    padding-left: 1.5em;
+  }
+}
+
+.navbar {
+  color: white;
+  display: flex;
+  justify-content: center;
+}
+
+.table {
+  display: block !important;
+  margin: auto;
+  width: 30%;
+}
