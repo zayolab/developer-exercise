@@ -9,9 +9,17 @@ import './App.css';
 
 // create reusable components
 const form = props =>
-  <tr>
-    <th>{props.title}</th>
-  </tr>;
+  <thead>
+    <tr>
+      <th>{props.title}</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>One-Time</th>
+      <th>Monthly</th>
+      <th></th>
+    </tr>
+  </thead>;
 
 class App extends Component {
   constructor() {
@@ -241,32 +249,14 @@ class App extends Component {
         <div className="roi-tables">
           {/* Revenue Table */}
           <table className="revenue-table">
-            <thead>
               {form({title: 'Revenue'})}
-              <tr>
-                <th></th>
-                <th>One-Time</th>
-                <th>Monthly</th>
-                <th></th>
-              </tr>
-            </thead>
             <tbody>
               {revenueTableData}
             </tbody>
           </table>
           {/* Expenses Table */}
           <table className="expenses-table">
-            <thead>
-              <tr>
-                <th>Expenses</th>
-              </tr>
-              <tr>
-                <th></th>
-                <th>One-Time</th>
-                <th>Monthly</th>
-                <th></th>
-              </tr>
-            </thead>
+            {form({title: 'expense'})}
             <tbody>
               {expensesTableData}
             </tbody>
