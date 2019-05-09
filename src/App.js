@@ -203,10 +203,12 @@ class App extends Component {
         }
         <div className="roi-tables">
           {/* Revenue Table */}
-          <Table data={this.state.revenue} handleClick={this.handleDelete} />
+          <Table data={this.state.revenue} handleClick={this.handleDelete}
+          value={'revenue'}/>
 
           {/* Expenses Table */}
-          <Table data={this.state.expenses} handleClick={this.handleDelete} />
+          <Table data={this.state.expenses} handleClick={this.handleDelete}
+          value={'expenses'}/>
 
           {/* Totals Table */}
           <Calculation data={this.state}/>

@@ -11,19 +11,14 @@ class Table extends React.Component {
 
   // function for handleDelete
   func = (e) => {
-    if ((this.props.data[0].name).charAt(0) == 'I')
-    {
-      this.props.handleClick('revenue', e.target.value)
-    } else {
-      this.props.handleClick('expenses', e.target.value)
-    }
+    this.props.handleClick(e.target.name, e.target.value)
   }
 
   render() {
     // create table rows from revenue or expense state list
     let revenueTableData = this.props.data.map((item, index) => {
       return (
-        <tr key={"id" + index}>
+        <tr key={this.props.value + index}>
           <td>{item.name}</td>
           <td>${item.oneTime.toFixed(2)}</td>
           <td>${item.monthly.toFixed(2)}</td>
@@ -31,6 +26,7 @@ class Table extends React.Component {
           <td>
             <Button
               onClick={this.func}
+              name={this.props.value}
               value={index}
             >Delete
           </Button></td>
@@ -39,12 +35,7 @@ class Table extends React.Component {
     })
 
     // crate table header
-    let tableHeader = '';
-    if ((this.props.data[0].name).charAt(0) == 'I') {
-      tableHeader = 'revenue'
-    } else {
-      tableHeader = 'expenses'
-    }
+    let tableHeader = this.props.value;
 
     return (
       <table className='basic-table'>
