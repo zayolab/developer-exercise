@@ -9,7 +9,9 @@ import './App.css';
 
 // create reusable components
 const form = props =>
-  <th>{props.title}</th>;
+  <tr>
+    <th>{props.title}</th>
+  </tr>;
 
 class App extends Component {
   constructor() {
@@ -240,9 +242,7 @@ class App extends Component {
           {/* Revenue Table */}
           <table className="revenue-table">
             <thead>
-              <tr>
-                {form({title: 'Revenue'})}
-              </tr>
+              {form({title: 'Revenue'})}
               <tr>
                 <th></th>
                 <th>One-Time</th>
