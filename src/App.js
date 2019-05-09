@@ -7,19 +7,22 @@ import {
  } from 'react-bootstrap'
 import './App.css';
 
+import Buttons from './components/Buttons';
+
 // create reusable components
-const form = props =>
-  <thead>
-    <tr>
-      <th>{props.title}</th>
-    </tr>
-    <tr>
-      <th></th>
-      <th>One-Time</th>
-      <th>Monthly</th>
-      <th></th>
-    </tr>
-  </thead>;
+  // table head
+  const form = props =>
+    <thead>
+      <tr>
+        <th>{props.title1}</th>
+      </tr>
+      <tr>
+        <th></th>
+        <th>One-Time</th>
+        <th>Monthly</th>
+        <th></th>
+      </tr>
+    </thead>;
 
 class App extends Component {
   constructor() {
@@ -236,9 +239,7 @@ class App extends Component {
               />
             </Col>
             <Col sm={1} className="add-form-button">
-              <Button type="submit">
-                Add
-              </Button>
+              <Buttons />
             </Col>
           </Row>
         </Form>
@@ -249,14 +250,14 @@ class App extends Component {
         <div className="roi-tables">
           {/* Revenue Table */}
           <table className="revenue-table">
-              {form({title: 'Revenue'})}
+              {form({title1: 'Revenue'})}
             <tbody>
               {revenueTableData}
             </tbody>
           </table>
           {/* Expenses Table */}
           <table className="expenses-table">
-            {form({title: 'expense'})}
+            {form({title1: 'expense'})}
             <tbody>
               {expensesTableData}
             </tbody>
