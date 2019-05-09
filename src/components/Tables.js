@@ -6,7 +6,7 @@ import {
 
 class Table extends React.Component {
   constructor(props) {
-    super(props);
+    super();
   }
 
   render() {

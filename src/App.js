@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
   Row,
   Col,
-  Button,
   Form
  } from 'react-bootstrap'
 import './App.css';
