@@ -8,13 +8,14 @@ import {
 import './App.css';
 
 import Buttons from './components/Buttons';
+import {Table} from './components/Tables';
 
 // create reusable components
   // table head
   const form = props =>
     <thead>
       <tr>
-        <th>{props.title1}</th>
+        <th>{props.title}</th>
       </tr>
       <tr>
         <th></th>
@@ -160,29 +161,6 @@ class App extends Component {
   }
 
   render() {
-    // create table rows from revenue state list
-    let revenueTableData = this.state.revenue.map((item, index) => {
-      return (
-        <tr key={"revenue" + index}>
-          <td>{item.name}</td>
-          <td>${item.oneTime.toFixed(2)}</td>
-          <td>${item.monthly.toFixed(2)}</td>
-          <td><Button onClick={() => this.handleDelete('revenue', index)}>Delete</Button></td>
-        </tr>
-      )
-    })
-    // create table rows from expenses state list
-    let expensesTableData = this.state.expenses.map((expense, index) => {
-      return (
-        <tr key={"expense" + index}>
-          <td>{expense.name}</td>
-          <td>${expense.oneTime.toFixed(2)}</td>
-          <td>${expense.monthly.toFixed(2)}</td>
-          <td><Button onClick={() => this.handleDelete('expenses', index)}>Delete</Button></td>
-        </tr>
-      )
-    })
-
     // Calculations for totals
     let totalRevenue = this.state.oneTimeRevenue + (this.state.monthlyRevenue * 12)
     let totalExpense = this.state.oneTimeExpense + (this.state.monthlyExpense * 12)
@@ -250,17 +228,13 @@ class App extends Component {
         <div className="roi-tables">
           {/* Revenue Table */}
           <table className="revenue-table">
-              {form({title1: 'Revenue'})}
-            <tbody>
-              {revenueTableData}
-            </tbody>
+            {form({title1: 'Revenue'})}
+            <Table data={this.state.revenue} />
           </table>
           {/* Expenses Table */}
           <table className="expenses-table">
             {form({title1: 'expense'})}
-            <tbody>
-              {expensesTableData}
-            </tbody>
+            <Table data={this.state.expenses} />
           </table>
           {/* Totals Table */}
           <table className="totals-table">
