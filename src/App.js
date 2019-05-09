@@ -55,6 +55,7 @@ class App extends Component {
     this.handleDelete = this.handleDelete.bind(this)
     this.handleAdd = this.handleAdd.bind(this)
 
+
     // controlled form elements functions
     this.handleTypeChange = this.handleTypeChange.bind(this)
     this.handleNameChange = this.handleNameChange.bind(this)
@@ -202,10 +203,10 @@ class App extends Component {
         }
         <div className="roi-tables">
           {/* Revenue Table */}
-          <Table data={this.state.revenue} />
+          <Table data={this.state.revenue} handleClick={this.handleDelete} />
 
           {/* Expenses Table */}
-          <Table data={this.state.expenses} />
+          <Table data={this.state.expenses} handleClick={this.handleDelete} />
 
           {/* Totals Table */}
           <Calculation data={this.state}/>

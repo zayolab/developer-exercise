@@ -1,4 +1,4 @@
-import React, {} from 'react';
+import React, { Component } from 'react';
 import {
   Button
  } from 'react-bootstrap'
@@ -6,7 +6,17 @@ import {
 
 class Table extends React.Component {
   constructor(props) {
-    super();
+    super(props);
+  }
+
+  // function for handleDelete
+  func = (e) => {
+    if ((this.props.data[0].name).charAt(0) == 'I')
+    {
+      this.props.handleClick('revenue', e.target.value)
+    } else {
+      this.props.handleClick('expenses', e.target.value)
+    }
   }
 
   render() {
@@ -17,20 +27,23 @@ class Table extends React.Component {
           <td>{item.name}</td>
           <td>${item.oneTime.toFixed(2)}</td>
           <td>${item.monthly.toFixed(2)}</td>
-          <td><Button onClick={() => this.handleDelete('id', index)}>Delete</Button></td>
+
+          <td>
+            <Button
+              onClick={this.func}
+              value={index}
+            >Delete
+          </Button></td>
         </tr>
       )
     })
 
     // crate table header
     let tableHeader = '';
-
-    if (this.props.data[0].name.charAt(0) === 'I') {
-      tableHeader = 'Revenue';
-    }
-
-    if (this.props.data[0].name.charAt(0) === 'E') {
-      tableHeader = 'Expense';
+    if ((this.props.data[0].name).charAt(0) == 'I') {
+      tableHeader = 'revenue'
+    } else {
+      tableHeader = 'expenses'
     }
 
     return (
