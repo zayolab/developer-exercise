@@ -10,21 +10,6 @@ import './App.css';
 import Buttons from './components/Buttons';
 import {Table} from './components/Tables';
 
-// create reusable components
-  // table head
-  const form = props =>
-    <thead>
-      <tr>
-        <th>{props.title}</th>
-      </tr>
-      <tr>
-        <th></th>
-        <th>One-Time</th>
-        <th>Monthly</th>
-        <th></th>
-      </tr>
-    </thead>;
-
 class App extends Component {
   constructor() {
     super()
@@ -227,15 +212,11 @@ class App extends Component {
         }
         <div className="roi-tables">
           {/* Revenue Table */}
-          <table className="revenue-table">
-            {form({title1: 'Revenue'})}
-            <Table data={this.state.revenue} />
-          </table>
+          <Table data={this.state.revenue} />
+
           {/* Expenses Table */}
-          <table className="expenses-table">
-            {form({title1: 'expense'})}
-            <Table data={this.state.expenses} />
-          </table>
+          <Table data={this.state.expenses} />
+
           {/* Totals Table */}
           <table className="totals-table">
             <thead>

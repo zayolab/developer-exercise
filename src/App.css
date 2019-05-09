@@ -14,13 +14,13 @@
   align-items: center;
 }
 
-.expenses-table, .revenue-table, .totals-table {
+.basic-table, .totals-table {
   margin-bottom: 3em;
 }
-.expenses-table th, .revenue-table th, .totals-table th {
+.basic-table th, .totals-table th, .expenses-table th {
   width: 150px;
 }
-.expenses-table td, .revenue-table td, .totals-table td {
+.basic-table th, .totals-table td, .expenses-table th {
   width: 100px
 }
 
