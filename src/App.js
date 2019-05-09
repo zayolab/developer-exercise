@@ -7,6 +7,10 @@ import {
  } from 'react-bootstrap'
 import './App.css';
 
+// create reusable components
+const form = props =>
+  <th>{props.title}</th>;
+
 class App extends Component {
   constructor() {
     super()
@@ -237,7 +241,7 @@ class App extends Component {
           <table className="revenue-table">
             <thead>
               <tr>
-                <th>Revenue</th>
+                {form({title: 'Revenue'})}
               </tr>
               <tr>
                 <th></th>
