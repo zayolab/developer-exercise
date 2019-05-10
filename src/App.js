@@ -132,7 +132,7 @@ class App extends Component {
     fetch('http://localhost:3001/add', {
       method: 'post',
       headers: {'Content-Type':'application/json'},
-      body: {addItems}
+      body: JSON.stringify(addItems)
     })
       .then((res) => {
         if(res.ok) {
