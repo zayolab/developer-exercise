@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {} from 'react';
 import {
   Button
  } from 'react-bootstrap'
@@ -6,7 +6,7 @@ import {
 
 class Table extends React.Component {
   constructor(props) {
-    super(props);
+    super();
   }
 
   // function for handleDelete

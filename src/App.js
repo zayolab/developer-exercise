@@ -15,36 +15,12 @@ class App extends Component {
     super()
     // "seed" data initially
     this.state = {
-      revenue: [
-      {
-        name: 'Item 1',
-        oneTime: 100,
-        monthly: 50
-      },
-      {
-        name: 'Item 2',
-        oneTime: 50,
-        monthly: 25
-      },
-      {
-        name: 'Item 3',
-        oneTime: 25,
-        monthly: 85
-      }],
-      expenses:[{
-        name: 'Expense 1',
-        oneTime: 500,
-        monthly: 20.00
-      },
-      {
-        name: 'Expense 2',
-        oneTime: 200,
-        monthly: 40
-      }],
-      oneTimeRevenue: 175,
-      oneTimeExpense: 700,
-      monthlyRevenue: 160,
-      monthlyExpense: 60,
+      revenue: [],
+      expenses:[],
+      oneTimeRevenue: 0,
+      oneTimeExpense: 0,
+      monthlyRevenue: 0,
+      monthlyExpense: 0,
       newType: '',
       newName: '',
       newOneTime: '',
@@ -55,12 +31,26 @@ class App extends Component {
     this.handleDelete = this.handleDelete.bind(this)
     this.handleAdd = this.handleAdd.bind(this)
 
-
     // controlled form elements functions
     this.handleTypeChange = this.handleTypeChange.bind(this)
     this.handleNameChange = this.handleNameChange.bind(this)
     this.handleOneTimeChange = this.handleOneTimeChange.bind(this)
     this.handleMonthlyChange = this.handleMonthlyChange.bind(this)
+  }
+
+  // fetch data
+  componentDidMount() {
+    // initial value
+    fetch('http://localhost:3001')
+      .then(res => res.json())
+      .then(result => this.setState({
+        revenue:result[0].revenue,
+        expenses: result[0].expenses,
+        oneTimeRevenue: result[0].oneTimeRevenue,
+        oneTimeExpense: result[0].oneTimeExpense,
+        monthlyRevenue: result[0].monthlyRevenue,
+        monthlyExpense: result[0].monthlyExpense
+      }))
   }
 
   // Delete expense or revenue from list
