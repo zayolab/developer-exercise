@@ -26,11 +26,17 @@ class App extends Component {
     this.handleMonthlyChange = this.handleMonthlyChange.bind(this)
   }
 
-  // fetch data
+  // fetch initial data
   componentDidMount() {
     // initial value
     fetch('http://localhost:3001')
-      .then(res => res.json())
+      .then((res) => {
+        if(res.ok) {
+          return res.json()
+        } else {
+          throw new Error()
+        }
+      })
       .then(result => this.setState({
         revenue:result[0].revenue,
         expenses: result[0].expenses,
@@ -44,6 +50,7 @@ class App extends Component {
         newMonthly: result[0].newMonthly,
         error: false
       }))
+      .catch((err) => console.log(err));
   }
 
   // Delete expense or revenue from list
@@ -114,6 +121,28 @@ class App extends Component {
         oneTime:this.state.newOneTime,
         monthly: this.state.newMonthly
       })
+
+    const addItems = {
+      type: this.state.newType,
+      name: this.state.newName,
+      oneTime:this.state.newOneTime,
+      monthly: this.state.newMonthly
+    }
+
+    fetch('http://localhost:3001/add', {
+      method: 'post',
+      headers: {'Content-Type':'application/json'},
+      body: {addItems}
+    })
+      .then((res) => {
+        if(res.ok) {
+          console.log('Added new item.')
+        } else {
+          throw new Error()
+        }
+      })
+      .catch((err)=> console.log(err));
+
       // set state with new totals and items array, clear errors displaying and form contents
       this.setState({
         error: false,

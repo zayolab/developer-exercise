@@ -43,12 +43,19 @@ let items = [
   }
 ]
 
-// route
+// routes
+// initial value
 app.get('', (req, res) =>  {
   res.json(items);
 });
 
+// add items
+app.post('/add', (req, res) =>  {
+  console.log(req.body);
+  res.sendStatus(200);
+});
+
 // port
-  app.listen(3001, function () {
-      console.log('port 3001');
-  });
+app.listen(3001, function () {
+    console.log('port 3001');
+});
