@@ -47,18 +47,17 @@ let items = [
 ]
 
 // routes
-// initial value
+// get initial value
 app.get('', (req, res) =>  {
   res.json(items);
 });
 
-// add items
+// post add items
 app.post('/add', (req, res) =>  {
   let type = req.body.type;
   // delete item type (revenue or expenses before push)
   delete req.body.type;
   items[0][type].push(req.body)
-  res.sendStatus(200);
   res.json(items);
 });
 

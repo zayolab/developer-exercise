@@ -26,7 +26,7 @@ class App extends Component {
     this.handleMonthlyChange = this.handleMonthlyChange.bind(this)
   }
 
-  // fetch initial data
+  // get initial data
   componentDidMount() {
     // initial value
     fetch('http://localhost:3001')
@@ -44,10 +44,10 @@ class App extends Component {
         oneTimeExpense: result[0].oneTimeExpense,
         monthlyRevenue: result[0].monthlyRevenue,
         monthlyExpense: result[0].monthlyExpense,
-        newType: result[0].newType,
-        newName: result[0].newName,
-        newOneTime: result[0].newOneTime,
-        newMonthly: result[0].newMonthly,
+        newType: '',
+        newName: '',
+        newOneTime: '',
+        newMonthly: '',
         error: false
       }))
       .catch((err) => console.log(err));
@@ -110,52 +110,42 @@ class App extends Component {
     }
     // if there are no form errors, add accordingly
     else {
-      // typeOfAmount will be either 'expenses' or 'revenue'
-      let typeOfAmount = this.state.newType
-      let monthly = typeOfAmount === 'expenses' ? 'monthlyExpense' : 'monthlyRevenue'
-      let oneTime = typeOfAmount === 'expenses' ? 'oneTimeExpense' : 'oneTimeRevenue'
-      // grab state array of revenues or expenses
-      let items = this.state[typeOfAmount]
-      items.push({
+      // create body
+      const addItems = {
+        type: this.state.newType,
         name: this.state.newName,
         oneTime:this.state.newOneTime,
         monthly: this.state.newMonthly
-      })
+      }
 
-    const addItems = {
-      type: this.state.newType,
-      name: this.state.newName,
-      oneTime:this.state.newOneTime,
-      monthly: this.state.newMonthly
-    }
-
-    fetch('http://localhost:3001/add', {
-      method: 'post',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify(addItems)
-    })
-      .then((res) => {
-        if(res.ok) {
-          console.log('Added new item.')
-        } else {
-          throw new Error()
-        }
+      // post add items
+      fetch('http://localhost:3001/add', {
+        method: 'post',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(addItems)
       })
-      .catch((err)=> console.log(err));
-
-      // set state with new totals and items array, clear errors displaying and form contents
-      this.setState({
-        error: false,
-        [typeOfAmount]: items,
-        [monthly]: this.state[monthly] + this.state.newMonthly,
-        [oneTime]: this.state[oneTime] + this.state.newOneTime,
-        //  Clear values in form
-        newName: '',
-        newMonthly: '',
-        newOneTime: '',
-        newType: ''
-      })
-    }
+        .then((res) => {
+          if(res.ok) {
+            return res.json()
+          } else {
+            throw new Error()
+          }
+        })
+        .then(result => this.setState({
+          revenue:result[0].revenue,
+          expenses: result[0].expenses,
+          oneTimeRevenue: result[0].oneTimeRevenue,
+          oneTimeExpense: result[0].oneTimeExpense,
+          monthlyRevenue: result[0].monthlyRevenue,
+          monthlyExpense: result[0].monthlyExpense,
+          newType: '',
+          newName: '',
+          newOneTime: '',
+          newMonthly: '',
+          error: false
+        }))
+        .catch((err)=> console.log(err));
+      }
   }
 
   render() {
