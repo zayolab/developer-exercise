@@ -54,8 +54,12 @@ app.get('', (req, res) =>  {
 
 // add items
 app.post('/add', (req, res) =>  {
-  console.log(req.body);
+  let type = req.body.type;
+  // delete item type (revenue or expenses before push)
+  delete req.body.type;
+  items[0][type].push(req.body)
   res.sendStatus(200);
+  res.json(items);
 });
 
 // port
