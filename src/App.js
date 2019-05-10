@@ -13,20 +13,8 @@ import {Calculation} from './calculations';
 class App extends Component {
   constructor() {
     super()
-    // "seed" data initially
-    this.state = {
-      revenue: [],
-      expenses:[],
-      oneTimeRevenue: 0,
-      oneTimeExpense: 0,
-      monthlyRevenue: 0,
-      monthlyExpense: 0,
-      newType: '',
-      newName: '',
-      newOneTime: '',
-      newMonthly: '',
-      error: false
-    }
+    // "seed" data initially >>> move to server/back
+    this.state = {revenue: null}
 
     this.handleDelete = this.handleDelete.bind(this)
     this.handleAdd = this.handleAdd.bind(this)
@@ -49,7 +37,12 @@ class App extends Component {
         oneTimeRevenue: result[0].oneTimeRevenue,
         oneTimeExpense: result[0].oneTimeExpense,
         monthlyRevenue: result[0].monthlyRevenue,
-        monthlyExpense: result[0].monthlyExpense
+        monthlyExpense: result[0].monthlyExpense,
+        newType: result[0].newType,
+        newName: result[0].newName,
+        newOneTime: result[0].newOneTime,
+        newMonthly: result[0].newMonthly,
+        error: false
       }))
   }
 
@@ -137,6 +130,10 @@ class App extends Component {
   }
 
   render() {
+    // block render untill setState call
+    if (!this.state.revenue) {
+      return <div />
+    }
     return (
       <div>
         <h1 className="text-center">ROI Calculator</h1>
