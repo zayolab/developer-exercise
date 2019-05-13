@@ -6,7 +6,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-// data items
+// data initial items
 let items = [
   {revenue: [
     {
@@ -37,12 +37,7 @@ let items = [
     oneTimeRevenue: 175,
     oneTimeExpense: 700,
     monthlyRevenue: 160,
-    monthlyExpense: 60,
-    newType: '',
-    newName: '',
-    newOneTime: '',
-    newMonthly: '',
-    error: false
+    monthlyExpense: 60
   }
 ]
 
@@ -54,10 +49,45 @@ app.get('', (req, res) =>  {
 
 // post add items
 app.post('/add', (req, res) =>  {
+  let data = req.body;
+  if (data.type === 'revenue') {
+    items[0].oneTimeRevenue += data.oneTime;
+    items[0].monthlyRevenue += data.monthly;
+  }
+  if (data.type === 'expenses') {
+    items[0].oneTimeExpense += data.oneTime;
+    items[0].monthlyExpense += data.monthly;
+  }
+
+  // save item type for push
+  let temp = data.type;
+
+  // delete type & index (unnecessary items to push)
+  delete data.type;
+  delete data.index;
+
+  // push item to array
+  items[0][temp].push(data);
+
+  res.json(items);
+});
+
+// delete item
+app.delete('/delete', (req, res) =>  {
   let type = req.body.type;
-  // delete item type (revenue or expenses before push)
-  delete req.body.type;
-  items[0][type].push(req.body)
+  let index = req.body.index;
+  if (type === 'revenue') {
+    items[0].oneTimeRevenue -= items[0][type][index].oneTime;
+    items[0].monthlyRevenue -= items[0][type][index].monthly;
+  }
+  if (type === 'expenses') {
+    items[0].oneTimeExpense -= items[0][type][index].oneTime;
+    items[0].monthlyExpense -= items[0][type][index].monthly;
+  }
+
+  // remove list item from array
+  items[0][type].splice(index, 1);
+
   res.json(items);
 });
 

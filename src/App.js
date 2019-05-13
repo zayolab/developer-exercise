@@ -55,25 +55,34 @@ class App extends Component {
 
   // Delete expense or revenue from list
   handleDelete(type, index) {
-    // listType will be 'expenses' or 'revenue' depending on item to delete
-    let listType = this.state[type]
-    // recalculate and set totals in state
-    if (type === 'expenses') {
-      this.setState({
-        oneTimeExpense: this.state.oneTimeExpense - this.state.expenses[index]['oneTime'],
-        monthlyExpense: this.state.monthlyExpense - this.state.expenses[index]['monthly'],
-      })
-    } else {
-      // for revenue
-      this.setState({
-        oneTimeRevenue: this.state.oneTimeRevenue - this.state.revenue[index]['oneTime'],
-        monthlyRevenue: this.state.monthlyRevenue - this.state.revenue[index]['monthly'],
-      })
+    // create body
+    const deleteItem = {
+      type: type,
+      index: index
     }
-    // remove list item from state array
-    this.setState({
-      [listType]: listType.splice(index, 1),
+
+    // delete item
+    fetch('http://localhost:3001/delete', {
+      method: 'delete',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(deleteItem)
     })
+      .then((res) => {
+        if(res.ok) {
+          return res.json()
+        } else {
+          throw new Error()
+        }
+      })
+      .then(result => this.setState({
+          revenue:result[0].revenue,
+          expenses: result[0].expenses,
+          oneTimeRevenue: result[0].oneTimeRevenue,
+          oneTimeExpense: result[0].oneTimeExpense,
+          monthlyRevenue: result[0].monthlyRevenue,
+          monthlyExpense: result[0].monthlyExpense
+        }))
+      .catch((err)=> console.log(err))
   }
 
   // controlled form elements, watch for changes
@@ -111,18 +120,18 @@ class App extends Component {
     // if there are no form errors, add accordingly
     else {
       // create body
-      const addItems = {
+      const addItem = {
         type: this.state.newType,
         name: this.state.newName,
         oneTime:this.state.newOneTime,
         monthly: this.state.newMonthly
       }
 
-      // post add items
+      // post add item
       fetch('http://localhost:3001/add', {
         method: 'post',
         headers: {'Content-Type':'application/json'},
-        body: JSON.stringify(addItems)
+        body: JSON.stringify(addItem)
       })
         .then((res) => {
           if(res.ok) {
@@ -132,20 +141,21 @@ class App extends Component {
           }
         })
         .then(result => this.setState({
-          revenue:result[0].revenue,
-          expenses: result[0].expenses,
-          oneTimeRevenue: result[0].oneTimeRevenue,
-          oneTimeExpense: result[0].oneTimeExpense,
-          monthlyRevenue: result[0].monthlyRevenue,
-          monthlyExpense: result[0].monthlyExpense,
-          newType: '',
-          newName: '',
-          newOneTime: '',
-          newMonthly: '',
-          error: false
-        }))
-        .catch((err)=> console.log(err));
+            revenue:result[0].revenue,
+            expenses: result[0].expenses,
+            oneTimeRevenue: result[0].oneTimeRevenue,
+            oneTimeExpense: result[0].oneTimeExpense,
+            monthlyRevenue: result[0].monthlyRevenue,
+            monthlyExpense: result[0].monthlyExpense,
+            newType: '',
+            newName: '',
+            newOneTime: '',
+            newMonthly: '',
+            error: false
+          }))
+        .catch((err)=> console.log(err))
       }
+
   }
 
   render() {
