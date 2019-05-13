@@ -8,13 +8,14 @@ import './App.css';
 
 import Buttons from './components/Buttons';
 import {Table} from './components/Tables';
+import {Term} from './components/Term';
 import {Calculation} from './calculations';
 
 class App extends Component {
   constructor() {
     super()
     // "seed" data initially >>> move to server/back
-    this.state = {revenue: null}
+    this.state = {term: 12}
 
     this.handleDelete = this.handleDelete.bind(this)
     this.handleAdd = this.handleAdd.bind(this)
@@ -24,6 +25,7 @@ class App extends Component {
     this.handleNameChange = this.handleNameChange.bind(this)
     this.handleOneTimeChange = this.handleOneTimeChange.bind(this)
     this.handleMonthlyChange = this.handleMonthlyChange.bind(this)
+    this.handleTerm = this.handleTerm.bind(this);
   }
 
   // get initial data
@@ -106,6 +108,12 @@ class App extends Component {
     this.setState({
       newOneTime: Number(e.target.value)
     })
+  }
+
+  handleTerm(num) {
+    this.setState({
+      term: num
+    });
   }
 
   // add new expense or revenue
@@ -226,8 +234,13 @@ class App extends Component {
           <Table data={this.state.expenses} handleClick={this.handleDelete}
           value={'expenses'}/>
 
+          {/* Total Term */}
+          <Term data={this.state.term}
+          handleSelect={this.handleTerm}/>
+
           {/* Totals Table */}
-          <Calculation data={this.state}/>
+          <Calculation data={this.state}
+          value={this.state.term}/>
         </div>
       </div>
     );

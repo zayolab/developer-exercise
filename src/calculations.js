@@ -7,8 +7,8 @@ class Calculation extends React.Component {
 
   render() {
     // Calculations for totals
-    let totalRevenue = this.props.data.oneTimeRevenue + (this.props.data.monthlyRevenue * 12)
-    let totalExpense = this.props.data.oneTimeExpense + (this.props.data.monthlyExpense * 12)
+    let totalRevenue = this.props.data.oneTimeRevenue + (this.props.data.monthlyRevenue * this.props.value)
+    let totalExpense = this.props.data.oneTimeExpense + (this.props.data.monthlyExpense * this.props.value)
     let monthlyContributionProfit = this.props.data.monthlyRevenue - this.props.data.monthlyExpense
     let totalContributionProfit = totalRevenue - totalExpense
     // handle case where totalRevenue is 0 (to avoid -Infinity and NaN)
