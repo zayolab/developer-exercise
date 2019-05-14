@@ -8,7 +8,7 @@ import './App.css';
 
 import Buttons from './components/Buttons';
 import {Table} from './components/Tables';
-import {Term} from './components/Term';
+import {Term} from './components/Terms';
 import {Calculation} from './calculations';
 
 class App extends Component {

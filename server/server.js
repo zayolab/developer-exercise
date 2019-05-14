@@ -74,21 +74,26 @@ app.post('/add', (req, res) =>  {
 
 // delete item
 app.delete('/delete', (req, res) =>  {
-  let type = req.body.type;
-  let index = req.body.index;
-  if (type === 'revenue') {
-    items[0].oneTimeRevenue -= items[0][type][index].oneTime;
-    items[0].monthlyRevenue -= items[0][type][index].monthly;
-  }
-  if (type === 'expenses') {
-    items[0].oneTimeExpense -= items[0][type][index].oneTime;
-    items[0].monthlyExpense -= items[0][type][index].monthly;
-  }
+  // basic validation - req body is not empty
+  if (!req.body.type || !req.body.index) {
+    res.sendStatus(400)
+  } else {
+    let type = req.body.type;
+    let index = req.body.index;
+    if (type === 'revenue') {
+      items[0].oneTimeRevenue -= items[0][type][index].oneTime;
+      items[0].monthlyRevenue -= items[0][type][index].monthly;
+    }
+    if (type === 'expenses') {
+      items[0].oneTimeExpense -= items[0][type][index].oneTime;
+      items[0].monthlyExpense -= items[0][type][index].monthly;
+    }
 
-  // remove list item from array
-  items[0][type].splice(index, 1);
+    // remove list item from array
+    items[0][type].splice(index, 1);
 
-  res.json(items);
+    res.json(items);
+  }
 });
 
 // port
