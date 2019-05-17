@@ -42,7 +42,8 @@ To get started:
 
 $ cd developer-exercise/
 $ yarn                       // to install dependencies
-$ yarn start                 // to start the server
+$ yarn start                 // to start the frontend react server
+$ yarn server                // to start the backend express node server
 ```
 
 
