@@ -1,6 +1,6 @@
 {
-  "name": "express-example",
-  "version": "0.1.0",
+  "name": "roi-calculator",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "cors": "^2.8.5",
@@ -13,7 +13,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "server": "node server/app.js"
   },
