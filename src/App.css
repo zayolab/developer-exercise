@@ -17,11 +17,16 @@
 .expenses-table, .revenue-table, .totals-table {
   margin-bottom: 3em;
 }
+
 .expenses-table th, .revenue-table th, .totals-table th {
   width: 150px;
+  text-align: center;
+  vertical-align: middle !important;
 }
+
 .expenses-table td, .revenue-table td, .totals-table td {
-  width: 100px
+  width: 100px;
+  text-align: center;
 }
 
 .error {
@@ -36,4 +41,47 @@
   .roi-tables {
     padding-left: 1.5em;
   }
+}
+
+.modalTitle {
+  text-transform: capitalize;
+}
+
+.mt20 {
+  margin-top: 20px;
+}
+
+.fwbold {
+  font-weight: bold;
+}
+
+.title {
+  background: #007bff;
+  color: #fff;
+}
+
+h1{
+  font-weight: 400 !important;
+}
+
+.monthTermDropDown {
+  display: inline-block;
+  vertical-align: middle;
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+  font-weight: 400;
+  text-align: center;
+  cursor: pointer;
+  margin: 5px;
+  border: 1px solid transparent;
+  padding: 5px;
+  font-size: 15px;
+  line-height: 1.5;
+  border-radius: .25rem;
+}
+
+.table-striped>tbody>tr:nth-child(odd)>td, 
+.table-striped>tbody>tr:nth-child(odd)>th {
+  background-color: #f2f8ff; 
 }
