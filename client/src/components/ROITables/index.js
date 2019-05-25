@@ -1,10 +1,11 @@
 import React from "react"
+import PropTypes from "prop-types"
 import ContentTable from "../ContentTable"
 import TotalsTable from "../TotalsTable"
 import TableRow from "../TableRow"
 import "./roitable.css"
 
-const ROITables = ({ revenue, expenses, handleDelete }) => {
+const ROITables = ({ revenue, expenses, handleDelete, timePeriod }) => {
   let revenueTableData = revenue.map(item => (
     <TableRow
       type="revenue"
@@ -23,15 +24,24 @@ const ROITables = ({ revenue, expenses, handleDelete }) => {
     />
   ))
 
-  return revenue.length > 0 && expenses.length > 0 ? (
+  return (
     <div className="roi-tables">
       <ContentTable type="revenue" data={revenueTableData} />
       <ContentTable type="expenses" data={expensesTableData} />
-      <TotalsTable revenue={revenue} expenses={expenses} />
+      <TotalsTable
+        revenue={revenue}
+        expenses={expenses}
+        timePeriod={timePeriod}
+      />
     </div>
-  ) : (
-    <div>Loading...</div>
   )
+}
+
+ROITables.propTypes = {
+  revenue: PropTypes.array.isRequired,
+  expenses: PropTypes.array.isRequired,
+  handleDelete: PropTypes.func.isRequired,
+  timePeriod: PropTypes.number.isRequired
 }
 
 export default ROITables

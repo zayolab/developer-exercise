@@ -7,7 +7,7 @@ const getOneTime = list =>
 const getMonthly = list =>
   list.reduce((acc, item) => acc + Number(item.monthly), 0)
 
-const TotalsTable = ({ revenue, expenses }) => {
+const TotalsTable = ({ revenue, expenses, timePeriod }) => {
   /* *** CHANGE THIS FOR VARIABLE TIME PERIOD *** */
   const oneTimeRevenue = getOneTime(revenue)
   const monthlyRevenue = getMonthly(revenue)
@@ -15,8 +15,8 @@ const TotalsTable = ({ revenue, expenses }) => {
   const monthlyExpense = getMonthly(expenses)
 
   // Calculations for totals
-  let totalRevenue = oneTimeRevenue + monthlyRevenue * 12
-  let totalExpense = oneTimeExpense + monthlyExpense * 12
+  let totalRevenue = oneTimeRevenue + monthlyRevenue * timePeriod
+  let totalExpense = oneTimeExpense + monthlyExpense * timePeriod
   let monthlyContributionProfit = monthlyRevenue - monthlyExpense
   let totalContributionProfit = totalRevenue - totalExpense
 
@@ -82,7 +82,8 @@ const TotalsTable = ({ revenue, expenses }) => {
 
 TotalsTable.propTypes = {
   revenue: PropTypes.array.isRequired,
-  expenses: PropTypes.array.isRequired
+  expenses: PropTypes.array.isRequired,
+  timePeriod: PropTypes.number.isRequired
 }
 
 export default TotalsTable

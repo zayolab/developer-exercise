@@ -1,17 +1,19 @@
 import React, { Component } from "react"
 import AddItem from "../AddItem/index"
 import ROITables from "../ROITables"
-import seedData from "../../seed/seedData"
+import LoadingSpinner from "../LoadingSpinner"
+import SetTimePeriod from "../SetTimePeriod"
 import "./App.css"
 
 class App extends Component {
   constructor() {
     super()
     this.state = {
-      //...seedData,
       revenue: [],
       expenses: [],
+      timePeriod: 12,
       error: false,
+      loading: false,
       errorMsg: ""
     }
 
@@ -19,6 +21,7 @@ class App extends Component {
     this.handleAdd = this.handleAdd.bind(this)
     this.triggerError = this.triggerError.bind(this)
     this.fetchTransactions = this.fetchTransactions.bind(this)
+    this.handleTimePeriodChange = this.handleTimePeriodChange.bind(this)
   }
 
   componentDidMount() {
@@ -27,6 +30,7 @@ class App extends Component {
   }
 
   fetchTransactions(type) {
+    this.setState({ loading: true })
     fetch(`http://localhost:4000/api/${type}`)
       .then(res => res.json())
       .then(({ success, res }) => {
@@ -39,6 +43,9 @@ class App extends Component {
       .catch(err => {
         console.error(err)
         this.triggerError(true, "Could not load data")
+      })
+      .finally(() => {
+        this.setState({ loading: false })
       })
   }
 
@@ -103,23 +110,43 @@ class App extends Component {
       })
   }
 
+  handleTimePeriodChange(e) {
+    this.setState({ timePeriod: Number(e.target.value) })
+  }
+
   triggerError(error = true, errorMsg) {
     this.setState({ error, errorMsg })
   }
 
   render() {
-    const { revenue, expenses, error, errorMsg } = this.state
+    const {
+      revenue,
+      expenses,
+      error,
+      errorMsg,
+      loading,
+      timePeriod
+    } = this.state
 
     return (
       <div>
         <h1 className="text-center">ROI Calculator</h1>
         <AddItem triggerError={this.triggerError} handleAdd={this.handleAdd} />
-        {error && <h4 className="error text-center">{errorMsg}</h4>}
-        <ROITables
-          revenue={revenue}
-          expenses={expenses}
-          handleDelete={this.handleDelete}
+        <SetTimePeriod
+          timePeriod={timePeriod}
+          handleTimePeriodChange={this.handleTimePeriodChange}
         />
+        {error && <h4 className="error text-center">{errorMsg}</h4>}
+        {loading ? (
+          <LoadingSpinner />
+        ) : (
+          <ROITables
+            revenue={revenue}
+            expenses={expenses}
+            handleDelete={this.handleDelete}
+            timePeriod={timePeriod}
+          />
+        )}
       </div>
     )
   }

@@ -1,0 +1,8 @@
+.set-time-period {
+  display: flex;
+  justify-content: center;
+}
+
+.time-period-select {
+  width: 25vw;
+}
