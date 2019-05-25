@@ -1,0 +1,12 @@
+.expenses-table,
+.revenue-table {
+  margin-bottom: 3em;
+}
+.expenses-table th,
+.revenue-table th {
+  width: 150px;
+}
+.expenses-table td,
+.revenue-table td {
+  width: 100px;
+}

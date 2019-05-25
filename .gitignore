@@ -1,3 +1,5 @@
+server/nodemon.json
+
 # Logs
 logs
 *.log

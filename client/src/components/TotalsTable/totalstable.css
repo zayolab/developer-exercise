@@ -1,0 +1,11 @@
+.totals-table {
+  margin-bottom: 3em;
+}
+
+.totals-table th {
+  width: 150px;
+}
+
+.totals-table td {
+  width: 100px;
+}
