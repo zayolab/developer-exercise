@@ -7,6 +7,7 @@ import { transactionProp } from "../../proptypes/transaction"
 const TransactionRow = ({ type, item, handleDelete, handleUpdate }) => (
   <tr key={item.id}>
     <td>
+      {/* Editable field */}
       <TransactionField
         format="string"
         id={item.id}
@@ -17,6 +18,7 @@ const TransactionRow = ({ type, item, handleDelete, handleUpdate }) => (
       />
     </td>
     <td>
+      {/* Editable field */}
       <TransactionField
         format="number"
         id={item.id}
@@ -27,6 +29,7 @@ const TransactionRow = ({ type, item, handleDelete, handleUpdate }) => (
       />
     </td>
     <td>
+      {/* Editable field */}
       <TransactionField
         format="number"
         id={item.id}
@@ -37,9 +40,7 @@ const TransactionRow = ({ type, item, handleDelete, handleUpdate }) => (
       />
     </td>
     <td>
-      <Button variant="danger" onClick={() => handleDelete(type, item)}>
-        Delete
-      </Button>
+      <Button onClick={() => handleDelete(type, item)}>Delete</Button>
     </td>
   </tr>
 )

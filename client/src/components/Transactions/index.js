@@ -19,7 +19,7 @@ const Transactions = ({ type, transactions, handleDelete, handleUpdate }) => {
     <table className={`${type}-table`}>
       <thead>
         <tr>
-          <th>{type.toUpperCase()}</th>
+          <th>{type[0].toUpperCase() + type.substring(1)}</th>
         </tr>
         <tr>
           <th />
