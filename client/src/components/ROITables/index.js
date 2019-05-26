@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useMemo } from "react"
 import PropTypes from "prop-types"
 import Transactions from "../Transactions"
 import Totals from "../Totals"
@@ -16,7 +16,13 @@ import {
 } from "../../utils/roiCalc"
 import "./roitable.css"
 
-const ROITables = ({ revenue, expenses, handleDelete, timePeriod }) => {
+const ROITables = ({
+  revenue,
+  expenses,
+  handleDelete,
+  handleUpdate,
+  timePeriod
+}) => {
   let oneTimeRevenue = getOneTime(revenue)
   let oneTimeExpense = getOneTime(expenses)
   let monthlyRevenue = getMonthly(revenue)
@@ -40,12 +46,16 @@ const ROITables = ({ revenue, expenses, handleDelete, timePeriod }) => {
     totalRevenue
   )
 
-  let capitalROI = getCapitalROI(
-    totalRevenue,
-    totalExpense,
-    oneTimeRevenue,
-    oneTimeExpense,
-    monthlyContributionProfit
+  let capitalROI = useMemo(
+    () =>
+      getCapitalROI(
+        totalRevenue,
+        totalExpense,
+        oneTimeRevenue,
+        oneTimeExpense,
+        monthlyContributionProfit
+      ),
+    [totalRevenue, totalExpense]
   )
 
   return (
@@ -54,11 +64,13 @@ const ROITables = ({ revenue, expenses, handleDelete, timePeriod }) => {
         type="revenue"
         transactions={revenue}
         handleDelete={handleDelete}
+        handleUpdate={handleUpdate}
       />
       <Transactions
         type="expenses"
         transactions={expenses}
         handleDelete={handleDelete}
+        handleUpdate={handleUpdate}
       />
       <Totals>
         <TransactionTotalsRow
@@ -88,6 +100,7 @@ ROITables.propTypes = {
   revenue: PropTypes.array.isRequired,
   expenses: PropTypes.array.isRequired,
   handleDelete: PropTypes.func.isRequired,
+  handleUpdate: PropTypes.func.isRequired,
   timePeriod: PropTypes.number.isRequired
 }
 

@@ -20,6 +20,7 @@ class App extends Component {
 
     this.handleDelete = this.handleDelete.bind(this)
     this.handleAdd = this.handleAdd.bind(this)
+    this.handleUpdate = this.handleUpdate.bind(this)
     this.triggerError = this.triggerError.bind(this)
     this.fetchTransactions = this.fetchTransactions.bind(this)
     this.fetchAllTransactions = this.fetchAllTransactions.bind(this)
@@ -93,23 +94,49 @@ class App extends Component {
         if (!success) {
           this.triggerError(true, "Could not add transaction")
         } else {
-          let monthly =
-            newType === "expenses" ? "monthlyExpense" : "monthlyRevenue"
-          let oneTime =
-            newType === "expenses" ? "oneTimeExpense" : "oneTimeRevenue"
           let items = [...this.state[newType]]
           items.push(res)
           this.setState({
             error: false,
-            [newType]: items,
-            [monthly]: this.state[monthly] + newMonthly,
-            [oneTime]: this.state[oneTime] + newOneTime
+            [newType]: items
           })
         }
       })
       .catch(err => {
         console.error(err)
         this.triggerError(true, "Could not add transaction")
+      })
+  }
+
+  handleUpdate(id, type, field, value) {
+    const fieldUpdate = {
+      [field]: value
+    }
+
+    fetch(`http://localhost:4000/api/${type}/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(fieldUpdate),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(res => res.json())
+      .then(({ success, res }) => {
+        if (!success) {
+          this.triggerError(true, "Could not update transaction")
+        } else {
+          const transactionList = [...this.state[type]]
+          this.setState({
+            [type]: transactionList.map(transaction => {
+              return transaction.id === id ? res : transaction
+            }),
+            error: false
+          })
+        }
+      })
+      .catch(err => {
+        console.error(err)
+        this.triggerError(true, "Could not update transaction")
       })
   }
 
@@ -150,6 +177,7 @@ class App extends Component {
             revenue={revenue}
             expenses={expenses}
             handleDelete={this.handleDelete}
+            handleUpdate={this.handleUpdate}
             timePeriod={timePeriod}
           />
         )}
