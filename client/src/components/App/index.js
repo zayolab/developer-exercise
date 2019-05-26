@@ -1,8 +1,9 @@
 import React, { Component } from "react"
-import AddItem from "../AddItem/index"
+import AddTransaction from "../AddTransaction"
 import ROITables from "../ROITables"
 import LoadingSpinner from "../LoadingSpinner"
 import SetTimePeriod from "../SetTimePeriod"
+import ErrorMessage from "../ErrorMessage"
 import "./App.css"
 
 class App extends Component {
@@ -21,10 +22,15 @@ class App extends Component {
     this.handleAdd = this.handleAdd.bind(this)
     this.triggerError = this.triggerError.bind(this)
     this.fetchTransactions = this.fetchTransactions.bind(this)
+    this.fetchAllTransactions = this.fetchAllTransactions.bind(this)
     this.handleTimePeriodChange = this.handleTimePeriodChange.bind(this)
   }
 
   componentDidMount() {
+    this.fetchAllTransactions()
+  }
+
+  fetchAllTransactions() {
     this.fetchTransactions("expenses")
     this.fetchTransactions("revenue")
   }
@@ -35,18 +41,16 @@ class App extends Component {
       .then(res => res.json())
       .then(({ success, res }) => {
         if (!success) {
-          this.triggerError(true, "Could not load data")
+          this.triggerError(true, "Could not load transactions")
         } else {
           this.setState({ [type]: res, error: false })
         }
       })
       .catch(err => {
         console.error(err)
-        this.triggerError(true, "Could not load data")
+        this.triggerError(true, "Could not load transactions")
       })
-      .finally(() => {
-        this.setState({ loading: false })
-      })
+      .finally(() => this.setState({ loading: false }))
   }
 
   handleDelete(type, item) {
@@ -56,7 +60,7 @@ class App extends Component {
       .then(res => res.json())
       .then(({ success }) => {
         if (!success) {
-          this.triggerError(true, "Could not delete row")
+          this.triggerError(true, "Could not delete transaction")
         } else {
           let listType = this.state[type]
 
@@ -67,7 +71,7 @@ class App extends Component {
       })
       .catch(err => {
         console.error(err)
-        this.triggerError(true, "Could not delete row")
+        this.triggerError(true, "Could not delete transaction")
       })
   }
 
@@ -77,7 +81,6 @@ class App extends Component {
       one_time: newOneTime,
       monthly: newMonthly
     }
-
     fetch(`http://localhost:4000/api/${newType}`, {
       method: "POST",
       body: JSON.stringify(transactionBody),
@@ -88,7 +91,7 @@ class App extends Component {
       .then(res => res.json())
       .then(({ success, res }) => {
         if (!success) {
-          this.triggerError(true, "Could not add row")
+          this.triggerError(true, "Could not add transaction")
         } else {
           let monthly =
             newType === "expenses" ? "monthlyExpense" : "monthlyRevenue"
@@ -106,12 +109,12 @@ class App extends Component {
       })
       .catch(err => {
         console.error(err)
-        this.triggerError(true, "Could not add row")
+        this.triggerError(true, "Could not add transaction")
       })
   }
 
-  handleTimePeriodChange(e) {
-    this.setState({ timePeriod: Number(e.target.value) })
+  handleTimePeriodChange(timePeriod) {
+    this.setState({ timePeriod })
   }
 
   triggerError(error = true, errorMsg) {
@@ -131,12 +134,15 @@ class App extends Component {
     return (
       <div>
         <h1 className="text-center">ROI Calculator</h1>
-        <AddItem triggerError={this.triggerError} handleAdd={this.handleAdd} />
+        <AddTransaction
+          triggerError={this.triggerError}
+          handleAdd={this.handleAdd}
+        />
         <SetTimePeriod
           timePeriod={timePeriod}
           handleTimePeriodChange={this.handleTimePeriodChange}
         />
-        {error && <h4 className="error text-center">{errorMsg}</h4>}
+        {error && <ErrorMessage errorMsg={errorMsg} />}
         {loading ? (
           <LoadingSpinner />
         ) : (

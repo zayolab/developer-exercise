@@ -1,6 +1,7 @@
 import React from "react"
 import { Button } from "react-bootstrap"
 import PropTypes from "prop-types"
+import { transactionProp } from "../../proptypes/transaction"
 
 const TableRow = ({ type, item, handleDelete }) => (
   <tr key={item.id}>
@@ -15,11 +16,7 @@ const TableRow = ({ type, item, handleDelete }) => (
 
 TableRow.propTypes = {
   type: PropTypes.oneOf(["revenue", "expenses"]).isRequired,
-  item: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    one_time: PropTypes.string.isRequired,
-    monthly: PropTypes.string.isRequired
-  }).isRequired,
+  item: transactionProp.isRequired,
   handleDelete: PropTypes.func.isRequired
 }
 

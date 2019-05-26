@@ -1,9 +1,9 @@
 import React, { Component } from "react"
 import { Row, Col, Button, Form } from "react-bootstrap"
 import PropTypes from "prop-types"
-import "./additem.css"
+import "./addtransaction.css"
 
-class AddItem extends Component {
+class AddTransaction extends Component {
   static propTypes = {
     triggerError: PropTypes.func.isRequired,
     handleAdd: PropTypes.func.isRequired
@@ -127,4 +127,4 @@ class AddItem extends Component {
   }
 }
 
-export default AddItem
+export default AddTransaction
