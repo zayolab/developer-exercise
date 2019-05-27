@@ -2,14 +2,7 @@ import React from "react"
 import { shallow } from "../../enzyme"
 
 import TransactionRow from "./index"
-import { isRegExp } from "util"
-
-const mockTransaction = {
-  id: 1,
-  name: "Transaction 1",
-  one_time: "300.00",
-  monthly: "25.00"
-}
+import { mockRevenue } from "../../mocks"
 
 describe("TransactionRow tests", () => {
   let wrapper
@@ -22,7 +15,7 @@ describe("TransactionRow tests", () => {
     wrapper = shallow(
       <TransactionRow
         type={type}
-        item={mockTransaction}
+        item={mockRevenue[0]}
         handleDelete={handleDelete}
         handleUpdate={handleUpdate}
       />

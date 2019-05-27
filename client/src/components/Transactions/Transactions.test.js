@@ -1,28 +1,7 @@
 import React from "react"
 import { mount } from "../../enzyme"
-
 import Transactions from "./index"
-
-const mockTransactions = [
-  {
-    id: 1,
-    name: "Transaction 1",
-    one_time: "300",
-    monthly: "25"
-  },
-  {
-    id: 2,
-    name: "Transaction 2",
-    one_time: "125.00",
-    monthly: "50.00"
-  },
-  {
-    id: 3,
-    name: "Transaction 3",
-    one_time: "450.00",
-    monthly: "75.00"
-  }
-]
+import { mockRevenue } from "../../mocks"
 
 describe("Transactions tests", () => {
   let wrapper
@@ -34,7 +13,7 @@ describe("Transactions tests", () => {
     wrapper = mount(
       <Transactions
         type={type}
-        transactions={mockTransactions}
+        transactions={mockRevenue}
         handleDelete={handleDelete}
         handleUpdate={handleUpdate}
       />
