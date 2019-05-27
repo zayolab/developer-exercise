@@ -25,12 +25,12 @@ class AddTransaction extends Component {
     this.handleAdd = this.handleAdd.bind(this)
   }
 
-  // controlled form elements, watch for changes
   handleTypeChange(e) {
     this.setState({
       newType: e.target.value
     })
   }
+
   handleNameChange(e) {
     this.setState({
       newName: e.target.value
@@ -42,6 +42,7 @@ class AddTransaction extends Component {
       newMonthly: Number(e.target.value)
     })
   }
+
   handleOneTimeChange(e) {
     this.setState({
       newOneTime: Number(e.target.value)
@@ -50,7 +51,6 @@ class AddTransaction extends Component {
 
   handleAdd(e) {
     e.preventDefault()
-    // handle form errors, allows one-time and revenue amounts to be 0
     if (
       !this.state.newType ||
       !this.state.newName ||
@@ -62,7 +62,6 @@ class AddTransaction extends Component {
       const { newName, newMonthly, newOneTime, newType } = this.state
       this.props.handleAdd({ newName, newMonthly, newOneTime, newType })
       this.setState({
-        //  Clear values in form
         newName: "",
         newMonthly: "",
         newOneTime: "",
@@ -119,7 +118,9 @@ class AddTransaction extends Component {
             />
           </Col>
           <Col sm={1} className="add-form-button">
-            <Button type="submit">Add</Button>
+            <Button className="add-transaction-button" type="submit">
+              Add
+            </Button>
           </Col>
         </Row>
       </Form>
