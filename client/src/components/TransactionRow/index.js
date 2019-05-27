@@ -5,7 +5,7 @@ import TransactionField from "../TransactionField"
 import { transactionProp } from "../../proptypes/transaction"
 
 const TransactionRow = ({ type, item, handleDelete, handleUpdate }) => (
-  <tr key={item.id}>
+  <tr className="transaction-row" key={item.id}>
     <td>
       {/* Editable field */}
       <TransactionField
@@ -40,7 +40,12 @@ const TransactionRow = ({ type, item, handleDelete, handleUpdate }) => (
       />
     </td>
     <td>
-      <Button onClick={() => handleDelete(type, item)}>Delete</Button>
+      <Button
+        className="transaction-delete-button"
+        onClick={() => handleDelete(type, item)}
+      >
+        Delete
+      </Button>
     </td>
   </tr>
 )
