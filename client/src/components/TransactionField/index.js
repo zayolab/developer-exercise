@@ -49,8 +49,11 @@ class TransactionField extends Component {
   }
 
   handleFieldUpdate() {
-    const { id, type, field } = this.props
-    this.props.handleUpdate(id, type, field, this.state.newValue)
+    const { id, type, field, value } = this.props
+    const { newValue } = this.state
+    if (newValue !== value) {
+      this.props.handleUpdate(id, type, field, newValue)
+    }
     this.toggleEdit()
   }
 
@@ -68,6 +71,7 @@ class TransactionField extends Component {
       format === "string" ? (
         <Form.Control
           type="text"
+          className="transaction-field-edit"
           onChange={this.handleNewFieldChange}
           onBlur={this.handleFieldUpdate}
           value={newValue}
@@ -76,6 +80,7 @@ class TransactionField extends Component {
       ) : (
         <Form.Control
           type="number"
+          className="transaction-field-edit"
           onChange={this.handleNewFieldChange}
           onBlur={this.handleFieldUpdate}
           value={newValue}
@@ -93,7 +98,7 @@ class TransactionField extends Component {
         onMouseOut={this.toggleEditIcon}
       >
         {format === "string" ? value : value.toFixed(2)}
-        {editIcon && <img src={EditIcon} className="ml-1" />}
+        {editIcon && <img src={EditIcon} className="edit-icon ml-1" />}
       </span>
     )
   }
