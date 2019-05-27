@@ -1,9 +1,9 @@
-.set-time-period {
+.set-time-period-wrapper {
   display: flex;
   justify-content: center;
 }
 
-.time-period-select {
+.time-period-select-wrapper {
   width: 25vw;
   display: grid;
   grid-template-columns: 1fr auto;

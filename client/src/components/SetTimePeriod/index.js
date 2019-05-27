@@ -23,13 +23,16 @@ class SetTimePeriod extends Component {
   }
 
   updateTimePeriod() {
-    this.props.handleTimePeriodChange(this.state.newTimePeriod)
+    const { newTimePeriod } = this.state
+    if (newTimePeriod !== this.props.timePeriod) {
+      this.props.handleTimePeriodChange(newTimePeriod)
+    }
   }
 
   render() {
     return (
-      <div className="set-time-period">
-        <div className="time-period-select">
+      <div className="set-time-period-wrapper">
+        <div className="time-period-select-wrapper">
           <Form.Control
             as="select"
             onChange={this.handleNewPeriodChange}
@@ -42,7 +45,12 @@ class SetTimePeriod extends Component {
             <option value={60}>5 years</option>
             <option value={120}>10 years</option>
           </Form.Control>
-          <Button onClick={this.updateTimePeriod}>Set Time Period</Button>
+          <Button
+            className="time-period-update-button"
+            onClick={this.updateTimePeriod}
+          >
+            Set Time Period
+          </Button>
         </div>
       </div>
     )

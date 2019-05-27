@@ -39,13 +39,13 @@ describe("TransactionField tests", () => {
     expect(wrapper.find(".edit-icon")).toHaveLength(0)
   })
 
-  it("show the edit input on transaction field click", () => {
+  it("show the edit input field on transaction field click", () => {
     wrapper.find(".transaction-field").simulate("click")
     expect(wrapper.find(".transaction-field")).toHaveLength(0)
     expect(wrapper.find(".transaction-field-edit input")).toBeDefined()
   })
 
-  it("hides the edit input on blur", () => {
+  it("hides the edit input field on blur", () => {
     wrapper.find(".transaction-field").simulate("click")
     expect(wrapper.find(".transaction-field")).toHaveLength(0)
     expect(wrapper.find(".transaction-field-edit input")).toBeDefined()
@@ -55,7 +55,7 @@ describe("TransactionField tests", () => {
     expect(wrapper.find(".transaction-field-edit input")).toHaveLength(0)
   })
 
-  it("triggers the update callback on transaction edit field change", () => {
+  it("triggers the update callback on edit input field change", () => {
     wrapper.find(".transaction-field").simulate("click")
     wrapper
       .find(".transaction-field-edit input")

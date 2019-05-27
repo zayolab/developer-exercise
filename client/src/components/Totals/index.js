@@ -12,7 +12,7 @@ const Totals = ({ children }) => (
         <th>Total</th>
       </tr>
     </thead>
-    <tbody>{children}</tbody>
+    <tbody className="totals-table-body">{children}</tbody>
   </table>
 )
 
