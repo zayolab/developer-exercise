@@ -7,7 +7,7 @@ const CapitalROIRow = ({ capitalROI }) => {
       <td>Capital ROI (monthly)</td>
       <td />
       <td />
-      <td>{capitalROI}</td>
+      <td className="capital-roi">{capitalROI}</td>
     </tr>
   )
 }

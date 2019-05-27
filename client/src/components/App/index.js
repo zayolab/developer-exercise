@@ -144,7 +144,7 @@ class App extends Component {
     this.setState({ timePeriod })
   }
 
-  triggerError(error = true, errorMsg) {
+  triggerError(error, errorMsg) {
     this.setState({ error, errorMsg })
   }
 

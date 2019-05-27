@@ -9,8 +9,12 @@ const ContributionProfitRow = ({
     <tr>
       <td>Contribution Profit</td>
       <td />
-      <td>${monthlyContributionProfit.toFixed(2)}</td>
-      <td>${totalContributionProfit.toFixed(2)}</td>
+      <td className="monthly-contribution-profit">
+        ${monthlyContributionProfit.toFixed(2)}
+      </td>
+      <td className="total-contribution-profit">
+        ${totalContributionProfit.toFixed(2)}
+      </td>
     </tr>
   )
 }

@@ -1,4 +1,4 @@
-import React, { Component, createRef } from "react"
+import React, { Component } from "react"
 import { Form } from "react-bootstrap"
 import PropTypes from "prop-types"
 import EditIcon from "../../assets/edit.png"
@@ -56,7 +56,7 @@ class TransactionField extends Component {
 
   toggleEditIcon(e, value) {
     this.setState(prevState => ({
-      editIcon: typeof value !== "undefined" ? value : !prevState.editIcon
+      editIcon: typeof value === "undefined" ? !prevState.editIcon : value
     }))
   }
 

@@ -15,6 +15,7 @@ import {
   getCapitalROI
 } from "../../utils/roiCalc"
 import "./roitable.css"
+import { transactionProp } from "../../proptypes/transaction"
 
 const ROITables = ({
   revenue,
@@ -97,8 +98,8 @@ const ROITables = ({
 }
 
 ROITables.propTypes = {
-  revenue: PropTypes.array.isRequired,
-  expenses: PropTypes.array.isRequired,
+  revenue: PropTypes.arrayOf(transactionProp.isRequired).isRequired,
+  revenue: PropTypes.arrayOf(transactionProp.isRequired).isRequired,
   handleDelete: PropTypes.func.isRequired,
   handleUpdate: PropTypes.func.isRequired,
   timePeriod: PropTypes.number.isRequired

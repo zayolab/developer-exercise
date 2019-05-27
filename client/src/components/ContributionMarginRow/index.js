@@ -7,7 +7,7 @@ const ContributionMarginRow = ({ contributionMargin }) => {
       <td>Contribution Margin</td>
       <td />
       <td />
-      <td>{contributionMargin}%</td>
+      <td className="contribution-margin">{contributionMargin}%</td>
     </tr>
   )
 }
