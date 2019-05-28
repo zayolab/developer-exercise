@@ -38,12 +38,11 @@ class SetTimePeriod extends Component {
             onChange={this.handleNewPeriodChange}
             value={this.state.newTimePeriod}
           >
-            <option value={3}>3 months</option>
-            <option value={6}>6 months</option>
             <option value={12}>1 year</option>
             <option value={24}>2 years</option>
+            <option value={36}>3 years</option>
+            <option value={48}>4 years</option>
             <option value={60}>5 years</option>
-            <option value={120}>10 years</option>
           </Form.Control>
           <Button
             className="time-period-update-button"
