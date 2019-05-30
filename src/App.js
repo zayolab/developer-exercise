@@ -9,6 +9,7 @@ import './App.css';
 import Header from './components/Header.js';
 import InputForm from './components/InputForm.js';
 import Results from './components/Results.js';
+import DataTable from './components/DataTable.js';
 
 class App extends Component {
   constructor() {
@@ -146,6 +147,7 @@ class App extends Component {
   }
 
   render() {
+
     // create table rows from revenue state list
     let revenueTableData = this.state.revenue.map((item, index) => {
       return (
@@ -169,15 +171,7 @@ class App extends Component {
       )
     })
 
-    // Calculations for totals
-    let totalRevenue = this.state.oneTimeRevenue + (this.state.monthlyRevenue * 12)
-    let totalExpense = this.state.oneTimeExpense + (this.state.monthlyExpense * 12)
-    let monthlyContributionProfit = this.state.monthlyRevenue - this.state.monthlyExpense
-    let totalContributionProfit = totalRevenue - totalExpense
-    // handle case where totalRevenue is 0 (to avoid -Infinity and NaN)
-    let contributionMargin = totalRevenue !== 0 ? (totalContributionProfit / totalRevenue * 100).toFixed(0) : 0
-    // handle case where totalExpense and totalRevenue are 0 (to avoid NaN)
-    let capitalROI = (totalExpense === 0 && totalRevenue === 0) ? 0 : ((this.state.oneTimeExpense - this.state.oneTimeRevenue) / monthlyContributionProfit).toFixed(1)
+
 
     return (
       <div className="App">
@@ -185,44 +179,7 @@ class App extends Component {
           <Header />
           <InputForm />
           <Results />
-        </div>
-
-        <div className="roi-tables">
-          {/* Revenue Table */}
-          <table className="revenue-table">
-            <thead>
-              <tr>
-                <th>Revenue</th>
-              </tr>
-              <tr>
-                <th></th>
-                <th>One-Time</th>
-                <th>Monthly</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {revenueTableData}
-            </tbody>
-          </table>
-          {/* Expenses Table */}
-          <table className="expenses-table">
-            <thead>
-              <tr>
-                <th>Expenses</th>
-              </tr>
-              <tr>
-                <th></th>
-                <th>One-Time</th>
-                <th>Monthly</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {expensesTableData}
-            </tbody>
-          </table>
-
+          <DataTable />
         </div>
       </div>
     );
