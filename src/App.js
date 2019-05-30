@@ -6,6 +6,9 @@ import {
   Form
  } from 'react-bootstrap'
 import './App.css';
+import Header from './components/Header.js';
+import InputForm from './components/InputForm.js';
+import Results from './components/Results.js';
 
 class App extends Component {
   constructor() {
@@ -177,61 +180,13 @@ class App extends Component {
     let capitalROI = (totalExpense === 0 && totalRevenue === 0) ? 0 : ((this.state.oneTimeExpense - this.state.oneTimeRevenue) / monthlyContributionProfit).toFixed(1)
 
     return (
-      <div>
-        <h1 className="text-center">ROI Calculator</h1>
-        {/* Add new expense or revenue form */}
-        <Form className="addExpenseOrRevenueForm" onSubmit={this.handleAdd}>
-          <Row className="input-field">
-            <Col sm={{ span: 2, offset: 1}} className="input-field">
-              <Form.Control
-                as="select"
-                onChange = {this.handleTypeChange}
-                value={this.state.newType ? this.state.newType : 'choose'}
-                >
-                <option value="choose" disabled={true}>Select Type</option>
-                <option value="revenue">Revenue</option>
-                <option value="expenses">Expense</option>
-              </Form.Control>
-            </Col>
-            <Col sm={3} className="input-field">
-              <Form.Control
-                type="text"
-                placeholder="Name"
-                onChange = {this.handleNameChange}
-                value={this.state.newName ? this.state.newName : ''}
-              />
-            </Col>
-            <Col sm={2} className="input-field">
-              <Form.Control
-                type="number"
-                placeholder="One-Time Amount"
-                onChange = {this.handleOneTimeChange}
-                step="0.01"
-                min="0"
-                value={(this.state.newOneTime || this.state.newOneTime === 0) ? this.state.newOneTime : ''}
-              />
-            </Col>
-            <Col sm={2} className="input-field">
-              <Form.Control
-                type="number"
-                placeholder="Monthly Amount"
-                onChange = {this.handleMonthlyChange}
-                step="0.01"
-                min="0"
-                value={(this.state.newMonthly || this.state.newMonthly === 0) ? this.state.newMonthly : ''}
-              />
-            </Col>
-            <Col sm={1} className="add-form-button">
-              <Button type="submit">
-                Add
-              </Button>
-            </Col>
-          </Row>
-        </Form>
-        {/* form errors */}
-        { this.state.error &&
-          <h4 className="error text-center">Please fill out all fields</h4>
-        }
+      <div className="App">
+        <div className="container">
+          <Header />
+          <InputForm />
+          <Results />
+        </div>
+
         <div className="roi-tables">
           {/* Revenue Table */}
           <table className="revenue-table">
@@ -267,49 +222,7 @@ class App extends Component {
               {expensesTableData}
             </tbody>
           </table>
-          {/* Totals Table */}
-          <table className="totals-table">
-            <thead>
-              <tr>
-                <th></th>
-                <th>One-Time</th>
-                <th>Monthly</th>
-                <th>Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Revenue</td>
-                <td>${(this.state.oneTimeRevenue).toFixed(2)}</td>
-                <td>${(this.state.monthlyRevenue).toFixed(2)}</td>
-                <td>${totalRevenue.toFixed(2)}</td>
-              </tr>
-              <tr>
-                <td>Expenses</td>
-                <td>${(this.state.oneTimeExpense).toFixed(2)}</td>
-                <td>${(this.state.monthlyExpense).toFixed(2)}</td>
-                <td>${totalExpense.toFixed(2)}</td>
-              </tr>
-              <tr>
-                <td>Contribution Profit</td>
-                <td></td>
-                <td>${ monthlyContributionProfit.toFixed(2)}</td>
-                <td>${ totalContributionProfit.toFixed(2)}</td>
-              </tr>
-              <tr>
-                <td>Contribution Margin</td>
-                <td></td>
-                <td></td>
-                <td>{contributionMargin}%</td>
-              </tr>
-              <tr>
-                <td>Capital ROI (monthly)</td>
-                <td></td>
-                <td></td>
-                <td>{capitalROI}</td>
-              </tr>
-            </tbody>
-          </table>
+
         </div>
       </div>
     );
