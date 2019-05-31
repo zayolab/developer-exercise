@@ -6,48 +6,48 @@ Thank you for giving me the opportunity to learn how to build an ROI calculator 
 
 While reviewing the existing code, I made some observations about works and what could be improved. Here’s my take on the pros and cons of this app:
 
-PROS
+#### PROS
 The app in its initial state is . . .
--Simple and straightforward
--The user could quickly add and delete a revenue or expense item
--The user would be warned if incorrect data was entered or missing
--The calculations worked
--The code base was well-written
--Good commenting within the code
+- Simple and straightforward
+- The user could quickly add and delete a revenue or expense item
+- The user would be warned if incorrect data was entered or missing
+- The calculations worked
+- The code base was well-written
+- Good commenting within the code
 
-CONS
+#### CONS
 User Interface:
--The user interface for the calculator could be improved by incorporating:
--Comma separated formatting for integers
--More accurate placeholder and form field labeling
--Highlighting or focus on key fields such as totals, particularly the total ROI
--The ability to clear all the data fields
--The ability to edit an entry
--More specific error alerts
--Improved form styling for visual interest and proper alignment
--A way to import/export data
+- The user interface for the calculator could be improved by incorporating:
+- Comma separated formatting for integers
+- More accurate placeholder and form field labeling
+- Highlighting or focus on key fields such as totals, particularly the total ROI
+- The ability to clear all the data fields
+- The ability to edit an entry
+- More specific error alerts
+- Improved form styling for visual interest and proper alignment
+- A way to import/export data
 
 Codebase:
 The app is written within one file. Reasons this isn’t a great solution:
--Difficult to separate concerns
--Hard to find and make changes
--Hard to reuse code
--Duplication of code
+- Difficult to separate concerns
+- Hard to find and make changes
+- Hard to reuse code
+- Duplication of code
 Use of Bind:
 	I didn’t change this as I felt it was important to respect the “tone” of the original code, however I would likely change this if I were creating my own application. I don’t think the implicitness of bind is necessary and would have rewritten using ES6+ fat arrow functions.
 
 Things I’ve implemented:
--Restructured the app by creating components for specific features
--Created a reusable data table component for revenue and expense tables
--Started to improve the styling
+- Restructured the app by creating components for specific features
+- Created a reusable data table component for revenue and expense tables
+- Started to improve the styling
 
 
 Improvements I’d make moving forward:
--Add functionality and calculations to make it an Internal Rate of Return
+- Add functionality and calculations to make it an Internal Rate of Return
 Calculator, which allows a user to look at the bottom line of an investment by calculating an annualized rate of return and net present value to support both irregular length periods and exact date data entry for the cash flows.
--Add the function to upload CSV files or download results
--Put the calculator in a modal or toast to allow the user to access information on a webpage and pop open the calculator when needed
--Add the ability to download the calculator and persist the user’s data in a database
+- Add the function to upload CSV files or download results
+- Put the calculator in a modal or toast to allow the user to access information on a webpage and pop open the calculator when needed
+- Add the ability to download the calculator and persist the user’s data in a database
 
 ### ROI Calculator
 
