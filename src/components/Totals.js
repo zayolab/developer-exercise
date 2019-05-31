@@ -1,12 +1,26 @@
 import React from 'react'
 import { Container, Form, Row, Col, Button } from 'react-bootstrap'
 
-const Results = props => {
+const Totals = props => {
 
 
 return (
     /* Totals Table */
-    <table className="totals-table">
+    <div className="flex-large">
+      <h2>Results</h2>
+      <p>Select the term length in months</p>
+      <Col sm={{ span: 2, offset: 0}} className="input-field">
+        <Form.Control as="select" name="term" value={term} onChange={handleTermChange}>
+            <option value="default" name="default" disabled={false}>Select Type</option>
+            <option value={12} name="12 months">12-months</option>
+            <option value={24} name="24 months">24-months</option>
+            <option value={36} name="36 moths">36-months</option>
+            <option value={48} name="48 months">48-months</option>
+            <option value={60} name="60 months">60-months</option>
+        </Form.Control>
+      </Col>
+
+    <Table striped bordered hover className="totals-table">
       <thead>
         <tr>
           <th></th>
@@ -47,7 +61,7 @@ return (
           <td>{capitalROI}</td>
         </tr>
       </tbody>
-    </table>
+    </Table>
   )
 }
-export default Results
+export default Totals

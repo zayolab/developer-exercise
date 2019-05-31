@@ -1,50 +1,33 @@
 import React from 'react'
-import '../App.css';
-import { Form } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 
 
-const DataTable = props => {
+const DataTable = ({revenueList, handleDelete, expenseList}) => {
+  // create table rows from revenue state list
+  let revenueTableData = revenueList.map((item, index) => {
+    return (
+      <tr key={"revenue" + index}>
+        <td>{item.name}</td>
+        <td>${item.oneTime.toFixed(2)}</td>
+        <td>${item.monthly.toFixed(2)}</td>
+        <td><Button onClick={() => this.handleDelete('revenue', index)}>Delete</Button></td>
+      </tr>
+    )
+  })
+  // create table rows from expenses state list
+  let expensesTableData = expenseList.map((expense, index) => {
+    return (
+      <tr key={"expense" + index}>
+        <td>{expense.name}</td>
+        <td>${expense.oneTime.toFixed(2)}</td>
+        <td>${expense.monthly.toFixed(2)}</td>
+        <td><Button onClick={() => this.handleDelete('expenses', index)}>Delete</Button></td>
+      </tr>
+    )
+  })
 
+return DataTable
 
-return (
-  <Form className="roi-tables">
-    {/* Revenue Table */}
-    <table className="revenue-table">
-      <thead>
-        <tr>
-          <th>Revenue</th>
-        </tr>
-        <tr>
-          <th></th>
-          <th>One-Time</th>
-          <th>Monthly</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        {revenueTableData}
-      </tbody>
-    </table>
-    {/* Expenses Table */}
-    <table className="expenses-table">
-      <thead>
-        <tr>
-          <th>Expenses</th>
-        </tr>
-        <tr>
-          <th></th>
-          <th>One-Time</th>
-          <th>Monthly</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        {expensesTableData}
-      </tbody>
-    </table>
-  </Form>
-
- )
 }
 
 export default DataTable

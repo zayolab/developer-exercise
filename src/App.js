@@ -1,15 +1,9 @@
 import React, { Component } from 'react';
-import {
-  Row,
-  Col,
-  Button,
-  Form
- } from 'react-bootstrap'
 import './App.css';
 import Header from './components/Header.js';
 import InputForm from './components/InputForm.js';
-import Results from './components/Results.js';
-import DataTable from './components/DataTable.js';
+// import Totals from './components/Totals.js';
+// import DataTable from './components/DataTable.js';
 
 class App extends Component {
   constructor() {
@@ -148,42 +142,19 @@ class App extends Component {
 
   render() {
 
-    // create table rows from revenue state list
-    let revenueTableData = this.state.revenue.map((item, index) => {
       return (
-        <tr key={"revenue" + index}>
-          <td>{item.name}</td>
-          <td>${item.oneTime.toFixed(2)}</td>
-          <td>${item.monthly.toFixed(2)}</td>
-          <td><Button onClick={() => this.handleDelete('revenue', index)}>Delete</Button></td>
-        </tr>
-      )
-    })
-    // create table rows from expenses state list
-    let expensesTableData = this.state.expenses.map((expense, index) => {
-      return (
-        <tr key={"expense" + index}>
-          <td>{expense.name}</td>
-          <td>${expense.oneTime.toFixed(2)}</td>
-          <td>${expense.monthly.toFixed(2)}</td>
-          <td><Button onClick={() => this.handleDelete('expenses', index)}>Delete</Button></td>
-        </tr>
-      )
-    })
+        <div className="App">
+          <div className="container">
+              <Header />
 
-
-
-    return (
-      <div className="App">
-        <div className="container">
-          <Header />
-          <InputForm />
-          <Results />
-          <DataTable />
+              {/*<InputForm />
+                <Totals />
+              <DataTable />*/}
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
-}
+
 
 export default App;
