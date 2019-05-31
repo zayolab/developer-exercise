@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
 import Header from './components/Header.js';
-import InputForm from './components/InputForm.js';
-// import Totals from './components/Totals.js';
-// import DataTable from './components/DataTable.js';
+// import InputForm from './components/InputForm.js';
+import Totals from './components/Totals.js';
+import DataTable from './components/DataTable.js';
 
 class App extends Component {
   constructor() {
@@ -46,15 +46,8 @@ class App extends Component {
       newMonthly: '',
       error: false
     }
-
     this.handleDelete = this.handleDelete.bind(this)
     this.handleAdd = this.handleAdd.bind(this)
-
-    // controlled form elements functions
-    this.handleTypeChange = this.handleTypeChange.bind(this)
-    this.handleNameChange = this.handleNameChange.bind(this)
-    this.handleOneTimeChange = this.handleOneTimeChange.bind(this)
-    this.handleMonthlyChange = this.handleMonthlyChange.bind(this)
   }
 
   // Delete expense or revenue from list
@@ -77,29 +70,6 @@ class App extends Component {
     // remove list item from state array
     this.setState({
       [listType]: listType.splice(index, 1),
-    })
-  }
-
-  // controlled form elements, watch for changes
-  handleTypeChange(e) {
-    this.setState({
-      newType: e.target.value
-    })
-  }
-  handleNameChange(e) {
-    this.setState({
-      newName: e.target.value
-    })
-  }
-
-  handleMonthlyChange(e) {
-    this.setState({
-      newMonthly: Number(e.target.value)
-    })
-  }
-  handleOneTimeChange(e) {
-    this.setState({
-      newOneTime: Number(e.target.value)
     })
   }
 
@@ -131,25 +101,58 @@ class App extends Component {
         [typeOfAmount]: items,
         [monthly]: this.state[monthly] + this.state.newMonthly,
         [oneTime]: this.state[oneTime] + this.state.newOneTime,
-        //  Clear values in form
-        newName: '',
-        newMonthly: '',
-        newOneTime: '',
-        newType: ''
       })
     }
   }
 
   render() {
 
+    // Calculations for totals
+    let totalRevenue = this.state.oneTimeRevenue + (this.state.monthlyRevenue * 12)
+
+    let totalExpense = this.state.oneTimeExpense + (this.state.monthlyExpense * 12)
+
+    let monthlyContributionProfit = this.state.monthlyRevenue - this.state.monthlyExpense
+
+    let totalContributionProfit = totalRevenue - totalExpense
+
+    // handle case where totalRevenue is 0 (to avoid -Infinity and NaN)
+    let contributionMargin = totalRevenue !== 0 ? (totalContributionProfit / totalRevenue * 100).toFixed(0) : 0
+
+    // handle case where totalExpense and totalRevenue are 0 (to avoid NaN)
+    let capitalROI = (totalExpense === 0 && totalRevenue === 0) ? 0 : ((this.state.oneTimeExpense - this.state.oneTimeRevenue) / monthlyContributionProfit).toFixed(1)
+
       return (
         <div className="App">
           <div className="container">
+
               <Header />
 
-              {/*<InputForm />
-                <Totals />
-              <DataTable />*/}
+              {/*<InputForm
+                handleTypeChange={this.handleTypeChange}
+                handleNameChange={this.handleNameChange}
+                handleMonthlyChange={this.handleMonthlyChange}
+                handleOneTimeChange={this.handleOneTimeChange}
+                handleAdd={this.handleAdd}/>*/}
+
+              <DataTable
+                moneyList = {this.state.revenue}
+                handleDelete = {this.handleDelete}
+                name={"revenue"}
+              />
+
+              <DataTable
+                handleDelete = {this.handleDelete}
+                moneyList = {this.state.expenses}
+                name={"expenses"}
+              />
+
+              <Totals
+                monthlyContributionProfit = { monthlyContributionProfit }
+                totalContributionProfit = { totalContributionProfit }
+                contributionMargin = { contributionMargin }
+                capitalROI = { capitalROI }
+              />
           </div>
         </div>
       );
