@@ -6,9 +6,10 @@ import {
   Form
  } from 'react-bootstrap'
 import './App.css';
+import Input from './components/inputNewLineItem/input';
 
 class App extends Component {
-  constructor() {
+  constructor() { //Constructor not needed anymore (automatically included in newer versions of Babel)
     super()
     // "seed" data initially
     this.state = {
@@ -42,25 +43,29 @@ class App extends Component {
       oneTimeExpense: 700,
       monthlyRevenue: 160,
       monthlyExpense: 60,
-      newType: '',
-      newName: '',
-      newOneTime: '',
-      newMonthly: '',
-      error: false
-    }
+      formInfo: 
+        {
+          newType: '',
+          newName: '',
+          newOneTime: '',
+          newMonthly: '',
+          error: false
+        }
+    };
 
-    this.handleDelete = this.handleDelete.bind(this)
-    this.handleAdd = this.handleAdd.bind(this)
+    //NOTE: If arrow functions are used, binding isn't necessary anymore
+    // this.handleDelete = this.handleDelete.bind(this)
+    // this.handleAdd = this.handleAdd.bind(this)
 
-    // controlled form elements functions
-    this.handleTypeChange = this.handleTypeChange.bind(this)
-    this.handleNameChange = this.handleNameChange.bind(this)
-    this.handleOneTimeChange = this.handleOneTimeChange.bind(this)
-    this.handleMonthlyChange = this.handleMonthlyChange.bind(this)
+    // // controlled form elements functions
+    // this.handleTypeChange = this.handleTypeChange.bind(this)
+    // this.handleNameChange = this.handleNameChange.bind(this)
+    // this.handleOneTimeChange = this.handleOneTimeChange.bind(this)
+    // this.handleMonthlyChange = this.handleMonthlyChange.bind(this)
   }
 
   // Delete expense or revenue from list
-  handleDelete(type, index) {
+  handleDelete = (type, index) => {
     // listType will be 'expenses' or 'revenue' depending on item to delete
     let listType = this.state[type]
     // recalculate and set totals in state
@@ -82,34 +87,22 @@ class App extends Component {
     })
   }
 
+  //NOTE: Modified change event to encompass all changes in form
   // controlled form elements, watch for changes
-  handleTypeChange(e) {
+  handleChange = (e) => {
+    console.log(e.target);
+    const formInfo = {...this.state.formInfo};
+    isNaN(e.target.value) ? formInfo[e.target.name] = e.target.value : formInfo[e.target.name] = Number(e.target.value) ;
     this.setState({
-      newType: e.target.value
-    })
-  }
-  handleNameChange(e) {
-    this.setState({
-      newName: e.target.value
-    })
-  }
-
-  handleMonthlyChange(e) {
-    this.setState({
-      newMonthly: Number(e.target.value)
-    })
-  }
-  handleOneTimeChange(e) {
-    this.setState({
-      newOneTime: Number(e.target.value)
-    })
-  }
+      formInfo
+    });
+  };
 
   // add new expense or revenue
-  handleAdd(e) {
+  handleAdd = (e) => {
     e.preventDefault()
     // handle form errors, allows one-time and revenue amounts to be 0
-    if (!this.state.newType || !this.state.newName || (!this.state.newOneTime && this.state.newOneTime !== 0) || (!this.state.newMonthly && this.state.newMonthly !== 0)) {
+    if (!this.state.formInfo.newType || !this.state.formInfo.newName || (!this.state.formInfo.newOneTime && this.state.formInfo.newOneTime !== 0) || (!this.state.formInfo.newMonthly && this.state.formInfo.newMonthly !== 0)) {
       this.setState({
         error: true
       })
@@ -117,22 +110,22 @@ class App extends Component {
     // if there are no form errors, add accordingly
     else {
       // typeOfAmount will be either 'expenses' or 'revenue'
-      let typeOfAmount = this.state.newType
+      let typeOfAmount = this.state.formInfo.newType
       let monthly = typeOfAmount === 'expenses' ? 'monthlyExpense' : 'monthlyRevenue'
       let oneTime = typeOfAmount === 'expenses' ? 'oneTimeExpense' : 'oneTimeRevenue'
       // grab state array of revenues or expenses
       let items = this.state[typeOfAmount]
       items.push({
-        name: this.state.newName,
-        oneTime:this.state.newOneTime,
-        monthly: this.state.newMonthly
+        name: this.state.formInfo.newName,
+        oneTime:this.state.formInfo.newOneTime,
+        monthly: this.state.formInfo.newMonthly
       })
       // set state with new totals and items array, clear errors displaying and form contents
       this.setState({
         error: false,
         [typeOfAmount]: items,
-        [monthly]: this.state[monthly] + this.state.newMonthly,
-        [oneTime]: this.state[oneTime] + this.state.newOneTime,
+        [monthly]: this.state[monthly] + this.state.formInfo.newMonthly,
+        [oneTime]: this.state[oneTime] + this.state.formInfo.newOneTime,
         //  Clear values in form
         newName: '',
         newMonthly: '',
@@ -179,8 +172,25 @@ class App extends Component {
     return (
       <div>
         <h1 className="text-center">ROI Calculator</h1>
+        <Input 
+          handleChange = {this.handleChange}
+          formInfo = {this.state.formInfo}
+          handleTypeChange = {this.handleTypeChange} 
+          handleNameChange = {this.handleNameChange}
+          handleMonthlyChange = {this.handleMonthlyChange}
+          handleOneTimeChange = {this.handleOneTimeChange}
+          onAdd = {this.handleAdd} 
+          newType = {this.state.newType} 
+          newName = {this.state.newName}
+          newOneTime = {this.state.newOneTime}
+          newMonthly = {this.state.newMonthly}
+          revenue = {this.state.revenue} 
+          expenses = {this.state.expenses} 
+          oneTimeRevenue = {this.state.oneTimeRevenue} 
+          oneTimeExpense = {this.state.monthlyExpense}
+        />
         {/* Add new expense or revenue form */}
-        <Form className="addExpenseOrRevenueForm" onSubmit={this.handleAdd}>
+        {/* <Form className="addExpenseOrRevenueForm" onSubmit={this.handleAdd}>
           <Row className="input-field">
             <Col sm={{ span: 2, offset: 1}} className="input-field">
               <Form.Control
@@ -227,11 +237,12 @@ class App extends Component {
               </Button>
             </Col>
           </Row>
-        </Form>
+        </Form> */}
+        
         {/* form errors */}
-        { this.state.error &&
+        {/* { this.state.error &&
           <h4 className="error text-center">Please fill out all fields</h4>
-        }
+        } */}
         <div className="roi-tables">
           {/* Revenue Table */}
           <table className="revenue-table">
