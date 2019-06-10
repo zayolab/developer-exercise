@@ -3,10 +3,16 @@ import {
   Row,
   Col,
   Button,
-  Form
+  Form,
+  Table
  } from 'react-bootstrap'
 import './App.css';
-import Input from './components/inputNewLineItem/input';
+import Input from './components/inputNewLineItem/Input';
+import Revenue from './components/revenue/Revenue';
+import Expenses from './components/expenses/Expenses';
+import Totals from './components/totals/Totals';
+
+
 
 class App extends Component {
   constructor() { //Constructor not needed anymore (automatically included in newer versions of Babel)
@@ -136,29 +142,6 @@ class App extends Component {
   }
 
   render() {
-    // create table rows from revenue state list
-    let revenueTableData = this.state.revenue.map((item, index) => {
-      return (
-        <tr key={"revenue" + index}>
-          <td>{item.name}</td>
-          <td>${item.oneTime.toFixed(2)}</td>
-          <td>${item.monthly.toFixed(2)}</td>
-          <td><Button onClick={() => this.handleDelete('revenue', index)}>Delete</Button></td>
-        </tr>
-      )
-    })
-    // create table rows from expenses state list
-    let expensesTableData = this.state.expenses.map((expense, index) => {
-      return (
-        <tr key={"expense" + index}>
-          <td>{expense.name}</td>
-          <td>${expense.oneTime.toFixed(2)}</td>
-          <td>${expense.monthly.toFixed(2)}</td>
-          <td><Button onClick={() => this.handleDelete('expenses', index)}>Delete</Button></td>
-        </tr>
-      )
-    })
-
     // Calculations for totals
     let totalRevenue = this.state.oneTimeRevenue + (this.state.monthlyRevenue * 12)
     let totalExpense = this.state.oneTimeExpense + (this.state.monthlyExpense * 12)
@@ -175,153 +158,37 @@ class App extends Component {
         <Input 
           handleChange = {this.handleChange}
           formInfo = {this.state.formInfo}
-          handleTypeChange = {this.handleTypeChange} 
-          handleNameChange = {this.handleNameChange}
-          handleMonthlyChange = {this.handleMonthlyChange}
-          handleOneTimeChange = {this.handleOneTimeChange}
+
           onAdd = {this.handleAdd} 
           newType = {this.state.newType} 
           newName = {this.state.newName}
           newOneTime = {this.state.newOneTime}
           newMonthly = {this.state.newMonthly}
-          revenue = {this.state.revenue} 
-          expenses = {this.state.expenses} 
-          oneTimeRevenue = {this.state.oneTimeRevenue} 
-          oneTimeExpense = {this.state.monthlyExpense}
-        />
-        {/* Add new expense or revenue form */}
-        {/* <Form className="addExpenseOrRevenueForm" onSubmit={this.handleAdd}>
-          <Row className="input-field">
-            <Col sm={{ span: 2, offset: 1}} className="input-field">
-              <Form.Control
-                as="select"
-                onChange = {this.handleTypeChange}
-                value={this.state.newType ? this.state.newType : 'choose'}
-                >
-                <option value="choose" disabled={true}>Select Type</option>
-                <option value="revenue">Revenue</option>
-                <option value="expenses">Expense</option>
-              </Form.Control>
-            </Col>
-            <Col sm={3} className="input-field">
-              <Form.Control
-                type="text"
-                placeholder="Name"
-                onChange = {this.handleNameChange}
-                value={this.state.newName ? this.state.newName : ''}
-              />
-            </Col>
-            <Col sm={2} className="input-field">
-              <Form.Control
-                type="number"
-                placeholder="One-Time Amount"
-                onChange = {this.handleOneTimeChange}
-                step="0.01"
-                min="0"
-                value={(this.state.newOneTime || this.state.newOneTime === 0) ? this.state.newOneTime : ''}
-              />
-            </Col>
-            <Col sm={2} className="input-field">
-              <Form.Control
-                type="number"
-                placeholder="Monthly Amount"
-                onChange = {this.handleMonthlyChange}
-                step="0.01"
-                min="0"
-                value={(this.state.newMonthly || this.state.newMonthly === 0) ? this.state.newMonthly : ''}
-              />
-            </Col>
-            <Col sm={1} className="add-form-button">
-              <Button type="submit">
-                Add
-              </Button>
-            </Col>
-          </Row>
-        </Form> */}
-        
-        {/* form errors */}
-        {/* { this.state.error &&
-          <h4 className="error text-center">Please fill out all fields</h4>
-        } */}
-        <div className="roi-tables">
-          {/* Revenue Table */}
-          <table className="revenue-table">
-          <caption>
-            Revenue
-          </caption>
-            <thead>
 
-              <tr>
-                <th>Name</th>
-                <th>One-Time</th>
-                <th>Monthly</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {revenueTableData}
-            </tbody>
-          </table>
-          {/* Expenses Table */}
-          <table className="expenses-table">
-          <caption>
-            Expenses
-          </caption>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>One-Time</th>
-                <th>Monthly</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {expensesTableData}
-            </tbody>
-          </table>
-          {/* Totals Table */}
-          <table className="totals-table">
-            <thead>
-              <tr>
-                <th></th>
-                <th>One-Time</th>
-                <th>Monthly</th>
-                <th>Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Revenue</td>
-                <td>${(this.state.oneTimeRevenue).toFixed(2)}</td>
-                <td>${(this.state.monthlyRevenue).toFixed(2)}</td>
-                <td>${totalRevenue.toFixed(2)}</td>
-              </tr>
-              <tr>
-                <td>Expenses</td>
-                <td>${(this.state.oneTimeExpense).toFixed(2)}</td>
-                <td>${(this.state.monthlyExpense).toFixed(2)}</td>
-                <td>${totalExpense.toFixed(2)}</td>
-              </tr>
-              <tr>
-                <td>Contribution Profit</td>
-                <td></td>
-                <td>${ monthlyContributionProfit.toFixed(2)}</td>
-                <td>${ totalContributionProfit.toFixed(2)}</td>
-              </tr>
-              <tr>
-                <td>Contribution Margin</td>
-                <td></td>
-                <td></td>
-                <td>{contributionMargin}%</td>
-              </tr>
-              <tr>
-                <td>Capital ROI (monthly)</td>
-                <td></td>
-                <td></td>
-                <td>{capitalROI}</td>
-              </tr>
-            </tbody>
-          </table>
+        />
+        <div className="roi-tables">
+          <Revenue 
+            revenue = {this.state.revenue} 
+            oneTimeRevenue = {this.state.oneTimeRevenue} 
+            handleDelete = {this.handleDelete}
+          />
+          <Expenses 
+            expenses = {this.state.expenses} 
+            oneTimeExpense = {this.state.monthlyExpense}
+            handleDelete = {this.handleDelete}
+          />
+          <Totals 
+          oneTimeRevenue = {this.state.oneTimeRevenue}
+          monthlyRevenue = {this.state.monthlyRevenue}
+          oneTimeExpense = {this.state.oneTimeExpense}
+          monthlyExpense = {this.state.monthlyExpense}
+          totalRevenue = {totalRevenue}
+          totalExpense = {totalExpense}
+          totalContributionProfit = {totalContributionProfit}
+          monthlyContributionProfit = {monthlyContributionProfit}
+          contributionMargin = {contributionMargin}
+          capitalROI = {capitalROI}
+          />
         </div>
       </div>
     );

@@ -18,7 +18,7 @@ class Input extends Component {
         {/* Add new expense or revenue form */}
         <Form className="addExpenseOrRevenueForm" onSubmit={this.props.onAdd}>
           <Row className="input-field">
-            <Col sm={{ span: 2, offset: 1}} className="input-field">
+            <Col sm={{ span: 3}} className="input-field">
               <Form.Control
                 as="select"
                 onChange = {this.props.handleChange}
@@ -61,7 +61,7 @@ class Input extends Component {
                 name="newMonthly"
               />
             </Col>
-            <Col sm={1} className="add-form-button">
+            <Col sm={2} className="add-form-button">
               <Button type="submit">
                 Add
               </Button>
