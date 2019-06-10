@@ -246,12 +246,13 @@ class App extends Component {
         <div className="roi-tables">
           {/* Revenue Table */}
           <table className="revenue-table">
+          <caption>
+            Revenue
+          </caption>
             <thead>
+
               <tr>
-                <th>Revenue</th>
-              </tr>
-              <tr>
-                <th></th>
+                <th>Name</th>
                 <th>One-Time</th>
                 <th>Monthly</th>
                 <th></th>
@@ -263,12 +264,12 @@ class App extends Component {
           </table>
           {/* Expenses Table */}
           <table className="expenses-table">
+          <caption>
+            Expenses
+          </caption>
             <thead>
               <tr>
-                <th>Expenses</th>
-              </tr>
-              <tr>
-                <th></th>
+                <th>Name</th>
                 <th>One-Time</th>
                 <th>Monthly</th>
                 <th></th>

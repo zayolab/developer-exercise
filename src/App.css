@@ -14,6 +14,10 @@
   align-items: center;
 }
 
+caption {
+  caption-side: top;
+}
+
 .expenses-table, .revenue-table, .totals-table {
   margin-bottom: 3em;
 }
