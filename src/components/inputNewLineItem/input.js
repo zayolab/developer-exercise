@@ -30,18 +30,6 @@ class Input extends Component {
                 <option value="expenses">Expense</option>
               </Form.Control>
             </Col>
-            <Col sm={{ span: 3}} className="input-field">
-              <Form.Control
-                as="select"
-                onChange = {this.props.handleChange}
-                value={this.props.formInfo.newTerm ? this.props.formInfo.newTerm : 'choose'}
-                name="newTerm"
-                >
-                <option value="choose" disabled={true}>Select Length</option>
-                <option value="12">12 months</option>
-                <option value="48">48 months</option>
-              </Form.Control>
-            </Col>
           </Row>
           <Row className="input-field">
             <Col sm={3} className="input-field">
@@ -58,7 +46,7 @@ class Input extends Component {
                 type="number"
                 placeholder="One-Time Amount"
                 onChange = {this.props.handleChange}
-                step="0.01"
+                step="1"
                 min="0"
                 value={(this.props.formInfo.newOneTime || this.props.formInfo.newOneTime === 0) ? this.props.formInfo.newOneTime : ''}
                 name="newOneTime"
@@ -69,7 +57,7 @@ class Input extends Component {
                 type="number"
                 placeholder="Monthly Amount"
                 onChange = {this.props.handleChange}
-                step="0.01"
+                step="1"
                 min="0"
                 value={(this.props.formInfo.newMonthly || this.props.formInfo.newMonthly === 0) ? this.props.formInfo.newMonthly : ''}
                 name="newMonthly"
