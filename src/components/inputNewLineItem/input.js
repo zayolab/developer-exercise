@@ -30,6 +30,20 @@ class Input extends Component {
                 <option value="expenses">Expense</option>
               </Form.Control>
             </Col>
+            <Col sm={{ span: 3}} className="input-field">
+              <Form.Control
+                as="select"
+                onChange = {this.props.handleChange}
+                value={this.props.formInfo.newTerm ? this.props.formInfo.newTerm : 'choose'}
+                name="newTerm"
+                >
+                <option value="choose" disabled={true}>Select Length</option>
+                <option value="12">12 months</option>
+                <option value="48">48 months</option>
+              </Form.Control>
+            </Col>
+          </Row>
+          <Row className="input-field">
             <Col sm={3} className="input-field">
               <Form.Control
                 type="text"
@@ -39,7 +53,7 @@ class Input extends Component {
                 name="newName"
               />
             </Col>
-            <Col sm={2} className="input-field">
+            <Col sm={3} className="input-field">
               <Form.Control
                 type="number"
                 placeholder="One-Time Amount"
@@ -50,7 +64,7 @@ class Input extends Component {
                 name="newOneTime"
               />
             </Col>
-            <Col sm={2} className="input-field">
+            <Col sm={3} className="input-field">
               <Form.Control
                 type="number"
                 placeholder="Monthly Amount"
@@ -67,9 +81,11 @@ class Input extends Component {
               </Button>
             </Col>
           </Row>
+
+          
         
         {/* form errors */}
-        { this.props.formInfo.error &&
+        { this.props.formError &&
           <h4 className="error text-center">Please fill out all fields</h4>
         }
         </Form>

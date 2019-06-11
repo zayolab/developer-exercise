@@ -49,25 +49,18 @@ class App extends Component {
       oneTimeExpense: 700,
       monthlyRevenue: 160,
       monthlyExpense: 60,
+      formError: false,
       formInfo: 
         {
           newType: '',
+          newTerm: '',
           newName: '',
           newOneTime: '',
           newMonthly: '',
-          error: false
+
         }
     };
-
-    //NOTE: If arrow functions are used, binding isn't necessary anymore
-    // this.handleDelete = this.handleDelete.bind(this)
-    // this.handleAdd = this.handleAdd.bind(this)
-
-    // // controlled form elements functions
-    // this.handleTypeChange = this.handleTypeChange.bind(this)
-    // this.handleNameChange = this.handleNameChange.bind(this)
-    // this.handleOneTimeChange = this.handleOneTimeChange.bind(this)
-    // this.handleMonthlyChange = this.handleMonthlyChange.bind(this)
+    // --> NOTE: If arrow functions are used, binding isn't necessary anymore, binding taken out
   }
 
   // Delete expense or revenue from list
@@ -93,12 +86,12 @@ class App extends Component {
     })
   }
 
-  //NOTE: Modified change event to encompass all changes in form
   // controlled form elements, watch for changes
+  // --> NOTE: Modified the change event to encompass all present changes in form
   handleChange = (e) => {
     console.log(e.target);
-    const formInfo = {...this.state.formInfo};
-    isNaN(e.target.value) ? formInfo[e.target.name] = e.target.value : formInfo[e.target.name] = Number(e.target.value) ;
+    const formInfo = {...this.state.formInfo}; // --> NOTE: Best practice to make a copy of data b/f manipulating
+    isNaN(e.target.value) ? formInfo[e.target.name] = e.target.value : formInfo[e.target.name] = Number(e.target.value); 
     this.setState({
       formInfo
     });
@@ -107,10 +100,15 @@ class App extends Component {
   // add new expense or revenue
   handleAdd = (e) => {
     e.preventDefault()
+    let newType = this.state.formInfo.newType;
+    let newTerm = this.state.formInfo.newTerm;
+    let newName = this.state.formInfo.newName;
+    let newOneTime = this.state.formInfo.newOneTime;
+    let newMonthly = this.state.formInfo.newMonthly;
     // handle form errors, allows one-time and revenue amounts to be 0
-    if (!this.state.formInfo.newType || !this.state.formInfo.newName || (!this.state.formInfo.newOneTime && this.state.formInfo.newOneTime !== 0) || (!this.state.formInfo.newMonthly && this.state.formInfo.newMonthly !== 0)) {
+    if (!newType || !newName || (!newOneTime && newOneTime !== 0) || (!newMonthly && newMonthly !== 0)) {
       this.setState({
-        error: true
+        formError: true
       })
     }
     // if there are no form errors, add accordingly
@@ -124,7 +122,8 @@ class App extends Component {
       items.push({
         name: this.state.formInfo.newName,
         oneTime:this.state.formInfo.newOneTime,
-        monthly: this.state.formInfo.newMonthly
+        monthly: this.state.formInfo.newMonthly,
+        term: this.state.formInfo.newTerm
       })
       // set state with new totals and items array, clear errors displaying and form contents
       this.setState({
@@ -136,15 +135,17 @@ class App extends Component {
         newName: '',
         newMonthly: '',
         newOneTime: '',
-        newType: ''
+        newType: '',
+        newTerm: 0
       })
     }
   }
 
   render() {
     // Calculations for totals
-    let totalRevenue = this.state.oneTimeRevenue + (this.state.monthlyRevenue * 12)
-    let totalExpense = this.state.oneTimeExpense + (this.state.monthlyExpense * 12)
+    let newTerm = this.state.newTerm
+    let totalRevenue = this.state.oneTimeRevenue + (this.state.monthlyRevenue * Number(newTerm))
+    let totalExpense = this.state.oneTimeExpense + (this.state.monthlyExpense * Number(newTerm))
     let monthlyContributionProfit = this.state.monthlyRevenue - this.state.monthlyExpense
     let totalContributionProfit = totalRevenue - totalExpense
     // handle case where totalRevenue is 0 (to avoid -Infinity and NaN)
@@ -158,13 +159,8 @@ class App extends Component {
         <Input 
           handleChange = {this.handleChange}
           formInfo = {this.state.formInfo}
-
+          formError = {this.state.formError}
           onAdd = {this.handleAdd} 
-          newType = {this.state.newType} 
-          newName = {this.state.newName}
-          newOneTime = {this.state.newOneTime}
-          newMonthly = {this.state.newMonthly}
-
         />
         <div className="roi-tables">
           <Revenue 
