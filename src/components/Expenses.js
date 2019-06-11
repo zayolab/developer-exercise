@@ -1,16 +1,12 @@
-import React, { Component } from 'react'; 
+import React, { Component } from 'react';
 import {
-  Row,
-  Col,
   Button,
-  Form,
   Table
- } from 'react-bootstrap'
- import '../../App.css';
+ } from 'react-bootstrap';
+ import '../App.css';
 
 class Expenses extends Component {
-  state = {  }
-  render() { 
+  render() {
     // create table rows from expenses state list
     let expensesTableData = this.props.expenses.map((expense, index) => {
       return (

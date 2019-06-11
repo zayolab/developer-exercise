@@ -5,15 +5,12 @@ import {
   Button,
   Form
 } from 'react-bootstrap';
-import '../../App.css';
-
-
+import '../App.css';
 
 class Input extends Component {
-    
-  render() { 
-    console.log("propsz", this.props);
-    return ( 
+
+  render() {
+    return (
       <div>
         {/* Add new expense or revenue form */}
         <Form className="addExpenseOrRevenueForm" onSubmit={this.props.onAdd}>

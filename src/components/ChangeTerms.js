@@ -2,17 +2,14 @@ import React, { Component } from 'react';
 import {
   Row,
   Col,
-  Button,
-  Form,
-  Table
+  Form
  } from 'react-bootstrap';
- import '../../App.css';
+ import '../App.css';
 
 class ChangeTerms extends Component {
-  state = {  }
-  render() { 
-    return ( 
-      <Form className="addExpenseOrRevenueForm" onSubmit={this.props.calculateNewTerms}>
+  render() {
+    return (
+      <Form className="changeTermsForm" onSubmit={this.props.calculateNewTerms}>
         <Form.Label>Choose a new term length!</Form.Label>
         <Row className="input-field">
           <Col sm={{ span: 3}} className="input-field">
@@ -31,12 +28,7 @@ class ChangeTerms extends Component {
             <Form.Text className="text-muted">
               This will recalculate your totals.
             </Form.Text>
-          </Col>
-          <Col sm={2} className="add-form-button">
-            <Button type="submit">
-              Calculate new Totals
-            </Button>
-          </Col>        
+          </Col>       
         </Row>
       </Form>
      );

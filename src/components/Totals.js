@@ -1,32 +1,12 @@
-import React, { Component } from 'react'; 
+import React, { Component } from 'react';
 import {
-  Row,
-  Col,
-  Button,
-  Form,
   Table
- } from 'react-bootstrap'
- import '../../App.css';
+ } from 'react-bootstrap';
+ import '../App.css';
 
 class Totals extends Component {
-
-  componentDidUpdate() {
-    // let newTerm = this.state.newTerm
-    // let totalRevenue = this.state.oneTimeRevenue + (this.state.monthlyRevenue * newTerm)
-    console.log("Updated")
-  }
-     
-    //  let totalRevenue = this.state.oneTimeRevenue + (this.state.monthlyRevenue * 12)
-    //  let totalExpense = this.state.oneTimeExpense + (this.state.monthlyExpense * 12)
-    //  let monthlyContributionProfit = this.state.monthlyRevenue - this.state.monthlyExpense
-    //  let totalContributionProfit = totalRevenue - totalExpense
-    //  // handle case where totalRevenue is 0 (to avoid -Infinity and NaN)
-    //  let contributionMargin = totalRevenue !== 0 ? (totalContributionProfit / totalRevenue * 100).toFixed(0) : 0
-    //  // handle case where totalExpense and totalRevenue are 0 (to avoid NaN)
-    //  let capitalROI = (totalExpense === 0 && totalRevenue === 0) ? 0 : ((this.state.oneTimeExpense - this.state.oneTimeRevenue) / monthlyContributionProfit).toFixed(1)
-
-  render() { 
-    return ( 
+  render() {
+    return (
       <React.Fragment>
           {/* Totals Table */}
           <Table bordered hover className="totals-table">
